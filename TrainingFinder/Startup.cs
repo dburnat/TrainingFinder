@@ -30,6 +30,8 @@ namespace TrainingFinder
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<ITrainingRepository, TrainingRepository>();
+            services.AddTransient<IGymRepository, GymRepository>();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -65,6 +67,7 @@ namespace TrainingFinder
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            SeedData.EnsurePopulated(app);
         }
     }
 }

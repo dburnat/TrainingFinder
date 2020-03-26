@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Training>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+@foreach (var t in Model)
+{
+    <div>
+        <h2>id: @t.TrainingId</h2>
+        <h3>@t.Description</h3>
+        <h4>@t.DateTime</h4>
+    </div>
+}
+
