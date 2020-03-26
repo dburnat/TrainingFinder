@@ -8,7 +8,7 @@ namespace TrainingFinder.Data
 {
     public interface ITrainingRepository
     {
-        IQueryable<Training> trainings { get; }
+        IQueryable<Training> Trainings { get; }
         bool DeleteTraining(int id);
         bool SaveTraining(Training entity);
         ResultModel<Training> GetBtId(int id);
