@@ -1,7 +1,36 @@
-﻿
+﻿@model Training
 @{
     ViewData["Title"] = "Edit";
 }
+    <div class="row">
+        <div class="col-sm-12 col-md-8 offset-md-2  col-lg-4 offset-lg-4 p-3 border-radius" style="background: #e1e1e1">
+            <form asp-controller="Training" asp-action="Save" method="post" enctype="application/x-www-form-urlencoded">
 
-<h1>Edit</h1>
+                <div class="form-group" style="display: none">
+                    <label for="TrainingId">
+                       Training ID
+                    </label>
+                    <input id="TrainingId" class="form-control" name="Id" type="text" value="@Model.TrainingId" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Description">
+                        Description
+                    </label>
+                    <input id="Description" class="form-control" name="Description" type="text" value="@Model.Description" />
+                </div>
+
+                <div class="form-group">
+                    <label for="DateTime">
+                        DateTime
+                    </label>
+                    <input id="DateTime" name="DateTime" class="form-control" type="text" value="@Model.DateTime" />
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-light" value="submit">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 

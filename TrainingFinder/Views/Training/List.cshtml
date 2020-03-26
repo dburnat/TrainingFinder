@@ -4,12 +4,20 @@
     ViewData["Title"] = "List";
 }
 
-@foreach (var t in Model)
-{
-    <div>
-        <h2>id: @t.TrainingId</h2>
-        <h3>@t.Description</h3>
-        <h4>@t.DateTime</h4>
-    </div>
-}
-
+<div class="row">
+    @foreach (var t in Model)
+    {
+        <div class="col-sm-12 col-lg-6 col-xl-4 pt-1 border">
+            <div class=" training-tile border-radius p-3">
+                <h4>
+                   Id: @t.TrainingId
+                </h4>
+                   Opis: @t.Description
+                <h5>
+                   Data: @t.DateTime.Date.ToString("d")
+                   Godzina: @t.DateTime.Hour : @t.DateTime.Minute
+                </h5>
+            </div>
+        </div>
+    }
+</div>

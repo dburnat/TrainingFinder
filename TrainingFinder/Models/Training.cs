@@ -10,7 +10,7 @@ namespace TrainingFinder.Models
     {
         [Required]
         public int TrainingId { get; set; }
-        public int? GymId { get; set; }
+        
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
