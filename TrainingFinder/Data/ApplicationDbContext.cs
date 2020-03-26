@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -29,6 +30,7 @@ namespace TrainingFinder.Data
                 .HasForeignKey(c => c.AppUserId);
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
