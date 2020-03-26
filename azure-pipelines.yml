@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- auth
 
 pool:
   vmImage: 'windows-latest'
