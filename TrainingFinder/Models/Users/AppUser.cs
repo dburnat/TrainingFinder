@@ -9,7 +9,7 @@ namespace TrainingFinder.Models
     public class AppUser
     {
         [Required]
-        public int AppUserId { get; set; }
+        public int Id { get; set; }
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
