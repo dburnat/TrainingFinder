@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,45 +15,157 @@ namespace TrainingFinder.Data
             _ctx = ctx;
         }
         public IQueryable<Gym> Gyms => _ctx.Gyms;
-
-        public ResultModel<Gym> Create(Gym entiti)
+        public bool DeleteGym(int id)
         {
-            throw new NotImplementedException();
+            var entityToDelete = _ctx.Gyms.FirstOrDefault(g => g.GymId == id);
+
+            if (entityToDelete != null)
+            {
+                _ctx.Gyms.Remove(entityToDelete);
+                _ctx.SaveChanges();
+                return true;
+            }
+            else
+                return false;
+
+        }
+        public bool SaveGym(Gym entity)
+        {
+            if (entity.GymId == 0)
+            {
+                _ctx.Gyms.Add(entity);
+                _ctx.SaveChanges();
+                return true;
+            }
+            else if (entity.GymId != 0)
+            {
+                var entityToUpdate = _ctx.Gyms.FirstOrDefault(g => g.GymId == entity.GymId);
+
+                entityToUpdate.Name = entity.Name;
+                entityToUpdate.Address = entity.Address;
+                entityToUpdate.Latitude = entity.Latitude;
+                entityToUpdate.Longitude = entity.Longitude;
+                entityToUpdate.Trainings = entity.Trainings;
+
+                if (entityToUpdate == null)
+                    return false;
+
+                _ctx.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+
+        public ResultModel<Gym> Create(Gym entity)
+        {
+            try
+            {
+                if (entity.GymId == 0)
+                {
+                    _ctx.Gyms.Add(entity);
+                    _ctx.SaveChanges();
+                    return new ResultModel<Gym>(entity, 201);
+                }
+                else
+                {
+                    if (entity != null)
+                        return new ResultModel<Gym>(entity, 409);
+                }
+                return new ResultModel<Gym>(entity, 409);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Gym>(null, 500);
+            }
         }
 
         public ResultModel<Gym> Delete(int id)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var entityToDelete = _ctx.Gyms.FirstOrDefault(x => x.GymId == id);
 
-        public bool DeleteGym(int id)
-        {
-            throw new NotImplementedException();
-        }
+                if (entityToDelete == null)
+                    return new ResultModel<Gym>(null, 404);
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+                _ctx.Gyms.Remove(entityToDelete);
+                _ctx.SaveChanges();
+                return new ResultModel<Gym>(null, 204);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Gym>(null, 500);
+            }
+        }       
+        
 
         public ResultModel<IEnumerable<Gym>> GetAllInCity(string city)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Gym> gyms;
+                if (string.IsNullOrWhiteSpace(city))
+                    gyms = _ctx.Gyms.ToList();
+                else
+                    gyms = _ctx.Gyms.Where(x => x.Address == city).ToList();
+
+                return new ResultModel<IEnumerable<Gym>>(gyms, 200);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<IEnumerable<Gym>>(null, 500);
+            }
         }
 
         public ResultModel<Gym> GetById(int id)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var entity = _ctx.Gyms.FirstOrDefault(x => x.GymId == id);
 
-        public bool SaveGym(Gym entity)
-        {
-            throw new NotImplementedException();
-        }
+                if (entity == null)
+                    return new ResultModel<Gym>(null, 404);
+                else
+                    return new ResultModel<Gym>(entity, 200);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Gym>(null, 500);
+            }
+        }       
 
         public ResultModel<Gym> Update(Gym entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var getResponse = _ctx.Gyms.FirstOrDefault(x => x.GymId == entity.GymId);
+
+                if (getResponse == null)
+                    return new ResultModel<Gym>(null, 404);
+
+                _ctx.Entry(getResponse).State = EntityState.Detached;
+
+                var updateResponse = _ctx.Update(entity);
+                _ctx.SaveChanges();
+
+                return new ResultModel<Gym>(entity, 200);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Gym>(null, 500);
+            }
+        }
+        public void Dispose()
+        {
+            _ctx?.Dispose();
         }
     }
 }
