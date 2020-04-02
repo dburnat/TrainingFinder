@@ -16,7 +16,6 @@ using AutoMapper;
 using TrainingFinder.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TrainingFinder.Services;
 using Microsoft.IdentityModel.Tokens;
 
 namespace TrainingFinder
@@ -61,9 +60,9 @@ namespace TrainingFinder
                 {
                     OnTokenValidated = context =>
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
                         var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
+                        var user = userRepository.GetById(userId);
                         if (user == null)
                         {
                             // return unauthorized if user no longer exists
@@ -83,7 +82,7 @@ namespace TrainingFinder
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,28 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using TrainingFinder.Data;
 using TrainingFinder.Entities;
 using TrainingFinder.Helpers;
 
-namespace TrainingFinder.Services
+namespace TrainingFinder.Data
 {
-    public interface IUserService
+    public class UserRepository : IUserRepository
     {
-        User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void Delete(int id);
-    }
+        private readonly ApplicationDbContext _dbContext;
 
-    public class UserService : IUserService
-    {
-        private ApplicationDbContext _dbContext;
-
-        public UserService(ApplicationDbContext dbContext)
+        public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

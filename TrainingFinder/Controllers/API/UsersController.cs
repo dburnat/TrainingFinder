@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrainingFinder.Services;
 using AutoMapper;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models.Users;
@@ -13,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using TrainingFinder.Data;
 using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
@@ -23,13 +23,13 @@ namespace TrainingFinder.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private IUserRepository _userRepository;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UsersController(IUserService userService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -38,7 +38,7 @@ namespace TrainingFinder.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userRepository.Authenticate(model.Username, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -78,7 +78,7 @@ namespace TrainingFinder.Controllers
 
             try
             {
-                _userService.Create(user, model.Password);
+                _userRepository.Create(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -90,7 +90,7 @@ namespace TrainingFinder.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _userService.GetAll();
+            var users = _userRepository.GetAll();
             var model = _mapper.Map<IList<AppUser>>(users);
             return Ok(model);
         }
@@ -98,7 +98,7 @@ namespace TrainingFinder.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _userService.GetById(id);
+            var user = _userRepository.GetById(id);
             var model = _mapper.Map<AppUser>(user);
             return Ok(model);
         }
@@ -112,7 +112,7 @@ namespace TrainingFinder.Controllers
 
             try
             {
-                _userService.Update(user, model.Password);
+                _userRepository.Update(user, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -124,7 +124,7 @@ namespace TrainingFinder.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
+            _userRepository.Delete(id);
             return Ok();
         }
     }
