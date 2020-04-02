@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using TrainingFinder.Helpers;
-using TrainingFinder.Models.Users;
-using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using TrainingFinder.Data;
 using TrainingFinder.Entities;
+using TrainingFinder.Helpers;
 using TrainingFinder.Models;
+using TrainingFinder.Models.Users;
 
-namespace TrainingFinder.Controllers
+namespace TrainingFinder.Controllers.API
 {
     [Authorize]
     [ApiController]
