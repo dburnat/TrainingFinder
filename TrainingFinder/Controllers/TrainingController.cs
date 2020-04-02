@@ -9,6 +9,7 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers
 {
+        
         public class TrainingController : Controller
         {
         private readonly ITrainingRepository _trainingRepository;
@@ -25,6 +26,7 @@ namespace TrainingFinder.Controllers
         {
             return View("Edit", new Training());
         }
+        [HttpGet]
         public ViewResult List() => View(_trainingRepository.Trainings);
 
         [HttpPost("save")]
