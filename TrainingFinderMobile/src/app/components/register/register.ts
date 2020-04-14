@@ -8,9 +8,9 @@ import "rxjs/Rx";
 
 @Component({
     selector: "login",
-    templateUrl: "login.html",
+    templateUrl: "register.html",
 })
-export class LoginComponent {
+export class RegisterComponent {
 
     public constructor(private http: HttpClient, private router: Router) { }
 

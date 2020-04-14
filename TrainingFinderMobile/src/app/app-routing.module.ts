@@ -4,12 +4,12 @@ import { Routes } from "@angular/router";
 
 import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
-import { LoginComponent } from "./components/login/login";
+import { RegisterComponent } from "./components/register/register";
 import { HomeComponent } from "./components/home/home";
 import { AuthGuard } from "./helpers/authguard";
 
 const routes: Routes = [
-    {path: "", component: LoginComponent},
+    {path: "", component: RegisterComponent},
     {path: "home", component: HomeComponent, canActivate: [AuthGuard]}
 ];
 

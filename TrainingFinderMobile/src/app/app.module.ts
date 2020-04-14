@@ -8,11 +8,11 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import {LoginComponent} from "./components/login/login";
+import {RegisterComponent} from "./components/register/register";
 import {HomeComponent} from "./components/home/home";
 
 let routes = [
-    {path: "", component: LoginComponent},
+    {path: "", component: RegisterComponent},
     {path: "home", component: HomeComponent, canActivate: [AuthGuard]}
 ];
 
@@ -31,7 +31,7 @@ let routes = [
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
+        RegisterComponent,
         HomeComponent
     ],
     providers: [],
