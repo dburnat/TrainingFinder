@@ -1,16 +1,20 @@
+import { AuthGuard } from './helpers/authguard';
+import { CanActivate } from '@angular/router';
+import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ItemsComponent } from "./item/items.component";
-import { ItemDetailComponent } from "./item/item-detail.component";
+import {LoginComponent} from "./components/login/login";
+import {HomeComponent} from "./components/home/home";
 
-// Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from "nativescript-angular/forms";
-
-// Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
-// import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+let routes = [
+    {path: "", component: LoginComponent},
+    {path: "home", component: HomeComponent, canActivate: [AuthGuard]}
+];
 
 @NgModule({
     bootstrap: [
@@ -18,12 +22,17 @@ import { ItemDetailComponent } from "./item/item-detail.component";
     ],
     imports: [
         NativeScriptModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NativeScriptFormsModule,
+        NativeScriptHttpClientModule,
+        NativeScriptRouterModule,
+        NativeScriptRouterModule.forRoot(routes)
+
     ],
     declarations: [
         AppComponent,
-        ItemsComponent,
-        ItemDetailComponent
+        LoginComponent,
+        HomeComponent
     ],
     providers: [],
     schemas: [
