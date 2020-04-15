@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Models.Users;
@@ -9,6 +10,7 @@ using TrainingFinder.Models.ViewModels;
 
 namespace TrainingFinder.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private SignInManager<AdminUser> _signInManager;
@@ -20,17 +22,21 @@ namespace TrainingFinder.Controllers
             _userManager = userManager;
         }
 
+
         public IActionResult Index()
         {
             return View();
         }
-        
+
+        [AllowAnonymous]
         [HttpGet]
         public ViewResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -63,6 +69,7 @@ namespace TrainingFinder.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string returnUrl = "")
         {
@@ -70,12 +77,13 @@ namespace TrainingFinder.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,false,false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -85,10 +93,11 @@ namespace TrainingFinder.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Admin"); 
+                        return RedirectToAction("Index", "Admin");
                     }
                 }
             }
+
             ModelState.AddModelError("", "Invalid login attempt");
             return View(model);
         }

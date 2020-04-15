@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using TrainingFinder.Models.Users
+@inject SignInManager<AdminUser> SignInManager
+@inject UserManager<AdminUser> UserManager
+@{
     ViewBag.Title = "Admin page";
     Layout = "_Layout";
 }
@@ -6,4 +10,5 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Admin page of Training Finder</p>
+    <p>@SignInManager.IsSignedIn(User)</p>
 </div>

@@ -35,7 +35,7 @@ namespace TrainingFinder
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddIdentity<AdminUser, IdentityRole>(options =>
+            services.AddDefaultIdentity<AdminUser>(options =>
                 {
                     options.Password.RequiredLength = 6;
                     options.Password.RequireDigit = true;
@@ -54,12 +54,8 @@ namespace TrainingFinder
 
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
+             services.AddAuthentication()
+                 .AddJwtBearer(x =>
             {
                 x.Events = new JwtBearerEvents
                 {
