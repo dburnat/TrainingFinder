@@ -1,0 +1,29 @@
+﻿@model AppUser
+
+@{
+    ViewBag.Title = "Edit user";
+    Layout = "_Layout";
+}
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Id">ID</label>
+        <input asp-for="Id" class="form-control" disabled/>
+    </div>
+    <div class="form-group">
+        <label asp-for="FirstName">Name</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+            <label asp-for="LastName">Surname</label>
+            <input asp-for="LastName" class="form-control" />
+        </div>
+    <div class="form-group">
+        <label asp-for="Birthday">Birthday</label>
+        <input asp-for="Birthday" class="form-control" />
+    </div>
+    <button type="submit" class="btn  btn-primary">Edit</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
