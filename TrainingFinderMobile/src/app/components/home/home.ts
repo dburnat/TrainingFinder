@@ -16,14 +16,13 @@ export class HomeComponent implements OnInit {
     }
 
     public ngOnInit() {
-        // this.route.queryParams.subscribe(params => {
-        //     let headers = new HttpHeaders({ "Authorization": "Basic " + params["jwt"] });
-        //     let options = new HttpRequest({ headers: headers });
-        //     this.http.get("https://localhost:4000/users", options)
-        //         .subscribe(result => {
-        //             this.content = result.message;
-        //         });
-        // });
+        this.route.queryParams.subscribe(params => {
+            let headers = new HttpHeaders({ "Authorization": "Basic " + params["jwt"] });
+            this.http.get("http://192.168.0.104:4000/users",{ headers: headers })
+                .subscribe(result => {
+                    this.content = result.toString();
+                });
+        });
     }
 
 }

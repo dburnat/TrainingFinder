@@ -1,17 +1,25 @@
-<ActionBar title="{N} Login"></ActionBar>
+<ActionBar title="{N} Register"></ActionBar>
 <StackLayout verticalAlignment="center">
-    <Label text="Sign into the application" class="h2 text-center"></Label>
+    <Label text="Register into the application" class="h2 text-center"></Label>
     <StackLayout class="form">
         <StackLayout class="input-field">
             <Label class="label" text="Username:"></Label>
-            <TextField #username class="input input-border" autocorrect="false" autocapitalizationType="none"></TextField>
+            <TextField #userName class="input input-border" autocorrect="false" autocapitalizationType="none"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="First Name:"></Label>
+            <TextField #firstName class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="Last Name:"></Label>
+            <TextField #lastName class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
         </StackLayout>
         <StackLayout class="input-field">
             <Label class="label" text="Password:"></Label>
             <TextField #password class="input input-border" secure="true" autocorrect="false" autocapitalizationType="none"></TextField>
         </StackLayout>
         <StackLayout class="input-field">
-            <Button text="Login" (tap)="login(username.text, password.text)" class="btn btn-primary btn-active w-full"></Button>
+            <Button text="Login" (tap)="register(userName.text, firstName.text, lastName.text, password.text)" class="btn btn-primary btn-active w-full"></Button>
         </StackLayout>
     </StackLayout>
 </StackLayout>
