@@ -1,2 +1,37 @@
-<!-- https://docs.nativescript.org/angular/core-concepts/angular-navigation.html#page-router-outlet -->
-<page-router-outlet></page-router-outlet>
+<RadSideDrawer [drawerTransition]="sideDrawerTransition">
+    <GridLayout tkDrawerContent rows="auto, *" class="nt-drawer__content">
+        <StackLayout row="0" class="nt-drawer__header">
+            <Image class="nt-drawer__header-image fas t-36" src="font://&#xf2bd;"></Image>
+            <Label class="nt-drawer__header-brand" text="User Name"></Label>
+            <Label class="nt-drawer__header-footnote" text="username@gmail.com"></Label>
+        </StackLayout>
+
+        <ScrollView row="1" class="nt-drawer__body">
+            <StackLayout>
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/home')" (tap)="onNavItemTap('/home')">
+                    <Label col="0" text="&#xf015;" class="nt-icon fas"></Label>
+                    <Label col="1" text="Home" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/gym')" (tap)="onNavItemTap('/gym')">
+                    <Label col="0" text="&#xf1ea;" class="nt-icon far"></Label>
+                    <Label col="1" text="Gyms" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/training')" (tap)="onNavItemTap('/training')">
+                    <Label col="0" text="&#xf002;" class="nt-icon fas"></Label>
+                    <Label col="1" text="My trainings" class="p-r-10"></Label>
+                </GridLayout>
+
+                <StackLayout class="hr"></StackLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/settings')" (tap)="logoutTap()">
+                    <Label col="0" text="&#xf08b;" class="nt-icon fas"></Label>
+                    <Label col="1" text="Logout" class="p-r-10"></Label>
+                </GridLayout>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+
+    <page-router-outlet tkMainContent></page-router-outlet>
+</RadSideDrawer>

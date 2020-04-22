@@ -40,5 +40,6 @@ export class AuthenticationService {
     logout() {
         appSettings.remove("currentUser");
         this.currentUserSubject.next(null);
+        console.log("user logged out");
     }
 }

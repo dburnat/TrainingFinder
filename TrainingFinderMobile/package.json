@@ -23,6 +23,7 @@
     "@nativescript/theme": "~2.3.3",
     "nativescript-angular": "~8.21.0",
     "nativescript-toast": "^2.0.0",
+    "nativescript-ui-sidedrawer": "^8.0.1",
     "reflect-metadata": "~0.1.12",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
@@ -33,6 +34,7 @@
     "@angular/compiler-cli": "^8.2.14",
     "@ngtools/webpack": "^9.1.1",
     "nativescript-dev-webpack": "~1.5.1",
+    "node-sass": "^4.13.1",
     "typescript": "^3.5.3"
   },
   "gitHead": "2250137db8c1e0bd0eb543e8e4563cb71480c00d",
