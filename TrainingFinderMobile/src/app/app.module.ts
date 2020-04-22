@@ -1,3 +1,4 @@
+import { LoginComponent } from './components/login/login';
 import { AuthGuard } from './helpers/authguard';
 import { CanActivate } from '@angular/router';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
@@ -32,7 +33,8 @@ let routes = [
     declarations: [
         AppComponent,
         RegisterComponent,
-        HomeComponent
+        HomeComponent,
+        LoginComponent
     ],
     providers: [],
     schemas: [

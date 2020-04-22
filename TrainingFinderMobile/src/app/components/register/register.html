@@ -1,5 +1,5 @@
-<ActionBar title="{N} Register"></ActionBar>
-<StackLayout verticalAlignment="center">
+<ActionBar title="Register"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="20" paddingRight="20">
     <Label text="Register into the application" class="h2 text-center"></Label>
     <StackLayout class="form">
         <StackLayout class="input-field">
@@ -19,7 +19,7 @@
             <TextField #password class="input input-border" secure="true" autocorrect="false" autocapitalizationType="none"></TextField>
         </StackLayout>
         <StackLayout class="input-field">
-            <Button text="Login" (tap)="register(userName.text, firstName.text, lastName.text, password.text)" class="btn btn-primary btn-active w-full"></Button>
+            <Button text="Register" (tap)="register(userName.text, firstName.text, lastName.text, password.text)" class="-primary -rounded-sm"></Button>
         </StackLayout>
     </StackLayout>
 </StackLayout>

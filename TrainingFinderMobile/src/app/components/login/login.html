@@ -1,0 +1,18 @@
+<ActionBar title="Login"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="20" paddingRight="20">
+    <Label text="Login into the application" class="h2 text-center"></Label>
+    <StackLayout class="form">
+        <StackLayout class="input-field">
+            <Label class="label" text="Username:"></Label>
+            <TextField #userName class="input input-border" autocorrect="false" autocapitalizationType="none"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="Password:"></Label>
+            <TextField #password class="input input-border" secure="true" autocorrect="false" autocapitalizationType="none"></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <Button text="Login" (tap)="login(userName.text, password.text)" class="-primary -rounded-sm"></Button>
+            <Button text="Register" (tap)="goToRegister()" class="-outline -rounded-sm"></Button>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

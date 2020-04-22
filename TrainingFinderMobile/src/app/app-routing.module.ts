@@ -1,3 +1,4 @@
+import { LoginComponent } from './components/login/login';
 import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
@@ -9,8 +10,9 @@ import { HomeComponent } from "./components/home/home";
 import { AuthGuard } from "./helpers/authguard";
 
 const routes: Routes = [
-    {path: "", component: RegisterComponent},
-    {path: "home", component: HomeComponent, canActivate: [AuthGuard]}
+    {path: "", component: HomeComponent, canActivate: [AuthGuard]},
+    {path: "login", component: LoginComponent},
+    {path: "register", component: RegisterComponent}
 ];
 
 @NgModule({
