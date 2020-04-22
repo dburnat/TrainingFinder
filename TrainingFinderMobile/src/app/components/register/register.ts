@@ -18,10 +18,6 @@ export class RegisterComponent {
         lastName: string,
         password: string
     ) {
-        let headers = new HttpHeaders();
-        headers.append("Content-Type", "application/json");
-        headers.append("Access-Control-Allow-Origin", "*");
-        // headers.append('Accept', '*/*');
         this.http
             .post(
                 `${environment.apiUrl}/users/register`,
@@ -30,15 +26,15 @@ export class RegisterComponent {
                     lastName: lastName,
                     username: userName,
                     password: password,
-                },
-                { headers: headers }
+                }
             )
             .subscribe(
                 (result) => {
+                    Toast.makeText("Account created", "long").show();
                     this.router.navigate(["login"]);
                 },
                 (error) => {
-                    Toast.makeText(error.json().message, "long").show();
+                    Toast.makeText(error.message, "long").show();
                     console.log(error);
                 }
             );

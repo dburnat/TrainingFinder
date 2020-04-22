@@ -58,6 +58,6 @@ export class AppComponent implements OnInit {
 
     logoutTap() {
         this.authenticationService.logout();
-        console.log("tap");
+        this.router.navigate(["login"]);
     }
 }

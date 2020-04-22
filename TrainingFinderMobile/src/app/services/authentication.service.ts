@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { JsonPipe } from "@angular/common";
 const appSettings = require("application-settings");
 
 @Injectable({ providedIn: "root" })
@@ -22,9 +23,11 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(userName: string, password: string) {
+    login(userName: string, password: string) : Observable<any> {
+
         return this.http
-            .post<any>(`${environment.apiUrl}/users/authenticate`, {
+            .post<any>(`${environment.apiUrl}/users/authenticate`,
+            {
                 username: userName,
                 password: password,
             })
@@ -32,6 +35,8 @@ export class AuthenticationService {
                 map((user) => {
                     appSettings.setString("currentUser", JSON.stringify(user));
                     this.currentUserSubject.next(user);
+                    console.log(JSON.stringify(user.token));
+                    console.log("auth service login");
                     return user;
                 })
             );
