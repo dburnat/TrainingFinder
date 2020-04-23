@@ -1,6 +1,6 @@
+import { GymCreateComponent } from './components/gymcreate/gymcreate';
 import { LoginComponent } from './components/login/login';
 import { AuthGuard } from './helpers/authguard';
-import { CanActivate } from '@angular/router';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
@@ -12,6 +12,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import {RegisterComponent} from "./components/register/register";
 import {HomeComponent} from "./components/home/home";
+import { GymComponent } from './components/gym/gym';
 
 let routes = [
     {path: "", component: RegisterComponent},
@@ -36,7 +37,9 @@ let routes = [
         AppComponent,
         RegisterComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        GymComponent,
+        GymCreateComponent
     ],
     providers: [],
     schemas: [
