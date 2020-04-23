@@ -28,7 +28,7 @@
             </StackLayout>
             <StackLayout class="input-field" horizontalAlignment="right" width="50%">
                 <Label class="label" text="Number" ></Label>
-                <TextField #lastName class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+                <TextField #number class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
             </StackLayout>
         </StackLayout>
 
@@ -45,7 +45,7 @@
         </StackLayout>
 
         <StackLayout class="input-field">
-            <Button text="Add gym" (tap)="createGym()" class="-primary -rounded-sm"></Button>
+            <Button text="Add gym" (tap)="createGym(gymName.text, street.text, number.text, zipCode.text, city.text)" class="-primary -rounded-sm"></Button>
         </StackLayout>
     </StackLayout>
 </StackLayout>
