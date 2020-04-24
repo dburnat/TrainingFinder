@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers
 {
+    [Authorize]
     /// <summary>
     /// Constructor for gym views
     /// </summary>
@@ -15,6 +17,7 @@ namespace TrainingFinder.Controllers
     public class GymController : Controller
     {
         private readonly IGymRepository _gymRepository;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -23,6 +26,7 @@ namespace TrainingFinder.Controllers
         {
             _gymRepository = gymRepository;
         }
+
         /// <summary>
         /// Main view with gyms
         /// </summary>
@@ -60,11 +64,10 @@ namespace TrainingFinder.Controllers
                 {
                     Console.WriteLine(e);
                     ViewData["Message"] = "Gym could not be added to the database.";
-
                 }
+
                 return View("List", _gymRepository.Gyms);
             }
-
         }
     }
 }

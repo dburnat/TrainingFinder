@@ -9,13 +9,15 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers
 {
-        /// <summary>
-        /// Controller of trainings view
-        /// </summary>
-        [Route("training")]
-        public class TrainingController : Controller
-        {
+    [Authorize]
+    /// <summary>
+    /// Controller of trainings view
+    /// </summary>
+    [Route("training")]
+    public class TrainingController : Controller
+    {
         private readonly ITrainingRepository _trainingRepository;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -24,6 +26,7 @@ namespace TrainingFinder.Controllers
         {
             _trainingRepository = trainingRepository;
         }
+
         /// <summary>
         /// Redirects to create training view
         /// </summary>
@@ -37,7 +40,7 @@ namespace TrainingFinder.Controllers
             };
             return View("Edit", new Training());
         }
-        
+
 
         /// <summary>
         /// Redirects to view with training added to selected gym
@@ -60,12 +63,11 @@ namespace TrainingFinder.Controllers
                 ViewData["Message"] = "Given data is not valid!";
                 return RedirectToAction("List", "Gym");
             }
-            else 
+            else
             {
                 try
                 {
                     var result = _trainingRepository.SaveTraining(training);
-
                 }
                 catch (Exception e)
                 {
@@ -73,9 +75,8 @@ namespace TrainingFinder.Controllers
                     ViewData["Message"] = "Training could not be added to the database.";
                 }
             }
+
             return RedirectToAction("List", "Gym");
-
         }
-
     }
 }
