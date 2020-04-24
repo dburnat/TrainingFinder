@@ -14,14 +14,17 @@ namespace TrainingFinder.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
         [Required]
-        [Display(Name = "Address")]
-        public string Address { get; set; }
+        [Display(Name = "City")]
+        public string City { get; set; }
         [Required]
-        [Display(Name = "Latitude")]
-        public string Latitude { get; set; }
+        [Display(Name = "Street")]
+        public string Street { get; set; }
         [Required]
-        [Display(Name = "Longitude")]
-        public string Longitude { get; set; }
+        [Display(Name = "Number")]
+        public string Number { get; set; }
+
+        [Display(Name = "PostCode")]
+        public string PostCode { get; set; }
 
         public ICollection<Training> Trainings { get; set; }
     }

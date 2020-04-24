@@ -1,34 +1,26 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Models.Users;
 using TrainingFinder.Models.ViewModels;
-=======
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
->>>>>>> origin/trainingFinder-szymon
+
 
 namespace TrainingFinder.Controllers
 {
     [Authorize]
-<<<<<<< HEAD
     public class AdminController : Controller
     {
-        private SignInManager<AdminUser> _signInManager;
-        private UserManager<AdminUser> _userManager;
+        private readonly SignInManager<AdminUser> _signInManager;
+        private readonly UserManager<AdminUser> _userManager;
         private readonly IGymRepository _gymRepository;
 
-        public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager, IGymRepository gymRepository)
+        public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager,
+            IGymRepository gymRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -114,13 +106,15 @@ namespace TrainingFinder.Controllers
             ModelState.AddModelError("", "Invalid login attempt");
             return View(model);
         }
-        
+
 
         [HttpGet]
         public IActionResult List() => View(_gymRepository.Gyms);
-        [HttpGet("create")]
+
+        [HttpGet]
         public IActionResult Create() => View("Edit", new Gym());
-        [HttpGet("edit")]
+
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
@@ -130,7 +124,8 @@ namespace TrainingFinder.Controllers
 
             return View(gym);
         }
-        [HttpPost("save")]
+
+        [HttpPost]
         public IActionResult Save(Gym gym)
         {
             if (!ModelState.IsValid || gym == null)
@@ -148,12 +143,35 @@ namespace TrainingFinder.Controllers
                 {
                     Console.WriteLine(e);
                     ViewData["Message"] = "Gym could not be added to the database.";
-
                 }
+
                 return View("List", _gymRepository.Gyms);
             }
-
         }
+        /// <summary>
+        /// Deletes gym
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("delete")]
+        public IActionResult Delete(int id)
+        {
+            var gymToDelete = _gymRepository.Gyms.SingleOrDefault(x => x.GymId == id);
 
+            if (gymToDelete != null)
+            {
+                try
+                {
+                    var result = _gymRepository.DeleteGym(id);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    ViewData["Message"] = "Gym could not be deleted from the database.";
+                }
+                return View("list", _gymRepository.Gyms);
+            }
+            return View("List", _gymRepository.Gyms);
         }
+    }
 }

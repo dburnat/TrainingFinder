@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Data
@@ -42,9 +41,10 @@ namespace TrainingFinder.Data
                 var entityToUpdate = _ctx.Gyms.FirstOrDefault(g => g.GymId == entity.GymId);
 
                 entityToUpdate.Name = entity.Name;
-                entityToUpdate.Address = entity.Address;
-                entityToUpdate.Latitude = entity.Latitude;
-                entityToUpdate.Longitude = entity.Longitude;
+                entityToUpdate.City = entity.City;
+                entityToUpdate.Street = entity.Street;
+                entityToUpdate.Number = entity.Number;
+                entityToUpdate.PostCode = entity.PostCode;
                 entityToUpdate.Trainings = entity.Trainings;
 
                 if (entityToUpdate == null)
@@ -111,7 +111,7 @@ namespace TrainingFinder.Data
                 if (string.IsNullOrWhiteSpace(city))
                     gyms = _ctx.Gyms.ToList();
                 else
-                    gyms = _ctx.Gyms.Where(x => x.Address == city).ToList();
+                    gyms = _ctx.Gyms.Where(x => x.City == city).ToList();
 
                 return new ResultModel<IEnumerable<Gym>>(gyms, 200);
             }

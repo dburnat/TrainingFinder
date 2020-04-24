@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -12,6 +15,10 @@ using TrainingFinder.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using TrainingFinder.Helpers;
+using TrainingFinder.Models.Users;
 
 namespace TrainingFinder
 {
@@ -30,11 +37,9 @@ namespace TrainingFinder
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITrainingRepository, TrainingRepository>();
             services.AddTransient<IGymRepository, GymRepository>();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddDefaultIdentity<AdminUser>(options =>
                 {
                     options.Password.RequiredLength = 6;
@@ -47,6 +52,12 @@ namespace TrainingFinder
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TrainingFinder API", Version = "v1" });
+                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}TrainingFinder.xml");
+            });
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -83,7 +94,7 @@ namespace TrainingFinder
                 };
             });
 
-            services.AddScoped<IUserRepository, UserRepository>();
+           // services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,14 +111,19 @@ namespace TrainingFinder
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSwagger();
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TrainingFinder API V1");
+            });
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

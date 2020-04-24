@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Gym>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "_Layout";
+}
+
+
+<div class="row">
+    @foreach (var g in Model)
+    {
+        <div class="col-sm-12 col-lg-6 col-xl-4 pt-1 border">
+            <div class=" training-tile border-radius p-3">
+                @if (g.PostCode != null)
+                {
+                    <h4>
+                        @g.Name
+                    </h4>
+                    <p>@g.City</p>
+                    <p>@g.Street @g.Number</p>
+                    <p>@g.PostCode @g.City</p>
+                    <h5>
+                        @g.Trainings
+                    </h5>
+                }
+                else
+                {
+                    <h4>
+                        @g.Name
+                    </h4>
+                    <p>@g.City</p>
+                    <p>@g.Street @g.Number</p>
+                    <h5>
+                        @g.Trainings
+                    </h5>
+                }
+
+                <a asp-controller="Training"
+                   asp-action="Create"
+                   asp-route-id="@g.GymId">
+                    <button class="btn btn-dark w-100"> Add new training </button>
+                </a>
+                <a asp-controller="Training"
+                   asp-action="List"
+                   asp-route-id="@g.GymId">
+                    <button class="btn btn-dark w-100"> View trainings on this gym </button>
+                </a>
+            </div>
+        </div>
+    }
+</div>

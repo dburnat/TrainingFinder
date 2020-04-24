@@ -10,13 +10,13 @@ namespace TrainingFinder.Models
     {
         [Required]
         public int TrainingId { get; set; }
-        
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Required]
         [Display(Name = "Date and time")]
         public DateTime DateTime { get; set; }
+        public int GymId { get; set; }
 
         public ICollection<TrainingAppUser> TrainingAppUsers { get; set; }
 

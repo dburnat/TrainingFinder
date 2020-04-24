@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Data
@@ -54,22 +53,89 @@ namespace TrainingFinder.Data
 
         public ResultModel<Training> Create(Training entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (entity.TrainingId == 0)
+                {
+                    _ctx.Trainings.Add(entity);
+                    _ctx.SaveChanges();
+                    return new ResultModel<Training>(entity, 201);
+                }
+                else
+                {
+                    if (entity != null)
+                        return new ResultModel<Training>(entity, 409);
+                }
+                return new ResultModel<Training>(entity, 409);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Training>(null, 500);
+            }
         }
 
         public ResultModel<Training> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entityToDelete = _ctx.Trainings.FirstOrDefault(x => x.TrainingId == id);
+
+                if (entityToDelete == null)
+                    return new ResultModel<Training>(null, 404);
+
+                _ctx.Trainings.Remove(entityToDelete);
+                _ctx.SaveChanges();
+                return new ResultModel<Training>(null, 204);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Training>(null, 500);
+            }
         }       
 
-        public ResultModel<Training> GetBtId(int id)
+        public ResultModel<Training> GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = _ctx.Trainings.FirstOrDefault(x => x.TrainingId == id);
+
+                if (entity == null)
+                    return new ResultModel<Training>(null, 404);
+                else
+                    return new ResultModel<Training>(entity, 200);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Training>(null, 500);
+            }
         }      
 
         public ResultModel<Training> Update(Training entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var getResponse = _ctx.Trainings.FirstOrDefault(x => x.TrainingId == entity.TrainingId);
+
+                if (getResponse == null)
+                    return new ResultModel<Training>(null, 404);
+
+                _ctx.Entry(getResponse).State = EntityState.Detached;
+
+                var updateResponse = _ctx.Update(entity);
+                _ctx.SaveChanges();
+
+                return new ResultModel<Training>(entity, 200);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<Training>(null, 500);
+            }
         }
     }
 }

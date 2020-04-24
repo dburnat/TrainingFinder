@@ -21,7 +21,7 @@ namespace TrainingFinder
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                        .UseUrls("https://localhost:4000");
+                        .UseUrls("http://192.168.0.104:4000");
                 });
     }
 }

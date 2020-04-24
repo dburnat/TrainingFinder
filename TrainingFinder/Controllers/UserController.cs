@@ -6,6 +6,7 @@ using TrainingFinder.Models.Users;
 
 namespace TrainingFinder.Controllers
 {
+    //TODO Edit and delete method
     [Authorize]
     public class UserController : Controller
     {

@@ -11,7 +11,7 @@ namespace TrainingFinder.Data
         IQueryable<Training> Trainings { get; }
         bool DeleteTraining(int id);
         bool SaveTraining(Training entity);
-        ResultModel<Training> GetBtId(int id);
+        ResultModel<Training> GetById(int id);
         ResultModel<Training> Update(Training entity);
         ResultModel<Training> Create(Training entity);
         ResultModel<Training> Delete(int id);

@@ -9,10 +9,17 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers
 {
-        
+        /// <summary>
+        /// Controller of trainings view
+        /// </summary>
+        [Route("training")]
         public class TrainingController : Controller
         {
         private readonly ITrainingRepository _trainingRepository;
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="trainingRepository"></param>
         public TrainingController(ITrainingRepository trainingRepository)
         {
             _trainingRepository = trainingRepository;
@@ -22,26 +29,43 @@ namespace TrainingFinder.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("create")]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            ViewBag.Training = new Training()
+            {
+                GymId = id
+            };
             return View("Edit", new Training());
         }
-        [HttpGet]
-        public ViewResult List() => View(_trainingRepository.Trainings);
+        
 
+        /// <summary>
+        /// Redirects to view with training added to selected gym
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ViewResult List(int id) => View(_trainingRepository.Trainings.Where(x => x.GymId == id));
+
+        /// <summary>
+        /// Saves or edits training
+        /// </summary>
+        /// <param name="training"></param>
+        /// <returns></returns>
         [HttpPost("save")]
         public IActionResult Save(Training training)
         {
             if (!ModelState.IsValid || training == null)
             {
                 ViewData["Message"] = "Given data is not valid!";
-                return View("Index", _trainingRepository.Trainings);
+                return RedirectToAction("List", "Gym");
             }
-            else
+            else 
             {
                 try
                 {
                     var result = _trainingRepository.SaveTraining(training);
+
                 }
                 catch (Exception e)
                 {
@@ -49,7 +73,8 @@ namespace TrainingFinder.Controllers
                     ViewData["Message"] = "Training could not be added to the database.";
                 }
             }
-            return View("List", _trainingRepository.Trainings);
+            return RedirectToAction("List", "Gym");
+
         }
 
     }

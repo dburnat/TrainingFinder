@@ -13,8 +13,9 @@ namespace TrainingFinder.Data
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
-            ApplicationDbContext context = app.ApplicationServices
-                .GetRequiredService<ApplicationDbContext>();
+            var scope = app.ApplicationServices.CreateScope();
+
+            ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             context.Database.Migrate();
             if (!context.Trainings.Any())
             {
@@ -22,23 +23,27 @@ namespace TrainingFinder.Data
                     new Training
                     {
                         Description = "Klata",
-                        DateTime = new DateTime(2020, 3, 27, 10, 0, 0)
+                        DateTime = new DateTime(2020, 3, 27, 10, 0, 0),
+                        GymId = 3
                     },
                     new Training
                     {
                         Description = "Plecy",
-                        DateTime = new DateTime(2020, 3, 27, 12, 0, 0)
+                        DateTime = new DateTime(2020, 3, 27, 12, 0, 0),
+                        GymId = 4
                     },
                     new Training
                     {
                         Description = "Barki",
-                        DateTime = new DateTime(2020, 3, 27, 11, 30, 0)
+                        DateTime = new DateTime(2020, 3, 27, 11, 30, 0),
+                        GymId = 2
                     },
                     new Training
                     {
                         Description = "Triceps",
-                        DateTime = new DateTime(2020, 3, 27, 17, 45, 0)
-                    });
+                        DateTime = new DateTime(2020, 3, 27, 17, 45, 0),
+                        GymId = 2
+                    }); ;
             }
             if (!context.Gyms.Any())
             {
@@ -46,30 +51,33 @@ namespace TrainingFinder.Data
                     new Gym
                     {
                         Name = "Fitness Land",
-                        Address = "Krakow",
-                        Latitude = "30",
-                        Longitude = "10"
+                        City = "Krakow",
+                        Street = "al. Adama Mickiewicza",
+                        Number = "34/2"
                     },
                     new Gym
                     {
                         Name = "Body Fitness",
-                        Address = "Rabka Zdroj",
-                        Latitude = "30",
-                        Longitude = "10"
+                        City = "Rabka Zdroj",
+                        Street = "Pawia",
+                        Number = "5"
+
                     },
                     new Gym
                     {
                         Name = "Fitness Platinum",
-                        Address = "Sosnowiec",
-                        Latitude = "30",
-                        Longitude = "10"
+                        City = "Sosnowiec",
+                        Street = "Łokietka",
+                        Number = "15/2"
+
                     },
                     new Gym
                     {
                         Name = "Pure Gyn",
-                        Address = "Warszawa",
-                        Latitude = "30",
-                        Longitude = "10"
+                        City = "Warszawa",
+                        Street = "Raciborska",
+                        Number = "74"
+
                     });
             }
 
