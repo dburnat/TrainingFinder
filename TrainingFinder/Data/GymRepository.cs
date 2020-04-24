@@ -57,22 +57,22 @@ namespace TrainingFinder.Data
         }
 
 
-        public ResultModel<Gym> Create(GymModel entity)
+        public ResultModel<Gym> Create(Gym gym)
         {
             try
             {
-                if (entity.GymId == 0)
+                if (gym.GymId == 0)
                 {
-                    _ctx.Gyms.Add(entity);
+                    _ctx.Gyms.Add(gym);
                     _ctx.SaveChanges();
-                    return new ResultModel<Gym>(entity, 201);
+                    return new ResultModel<Gym>(gym, 201);
                 }
                 else
                 {
-                    if (entity != null)
-                        return new ResultModel<Gym>(entity, 409);
+                    if (gym != null)
+                        return new ResultModel<Gym>(gym, 409);
                 }
-                return new ResultModel<Gym>(entity, 409);
+                return new ResultModel<Gym>(gym, 409);
 
             }
             catch (Exception e)
@@ -141,21 +141,21 @@ namespace TrainingFinder.Data
             }
         }       
 
-        public ResultModel<Gym> Update(Gym entity)
+        public ResultModel<Gym> Update(Gym gym)
         {
             try
             {
-                var getResponse = _ctx.Gyms.FirstOrDefault(x => x.GymId == entity.GymId);
+                var getResponse = _ctx.Gyms.FirstOrDefault(x => x.GymId == gym.GymId);
 
                 if (getResponse == null)
                     return new ResultModel<Gym>(null, 404);
 
                 _ctx.Entry(getResponse).State = EntityState.Detached;
 
-                var updateResponse = _ctx.Update(entity);
+                var updateResponse = _ctx.Update(gym);
                 _ctx.SaveChanges();
 
-                return new ResultModel<Gym>(entity, 200);
+                return new ResultModel<Gym>(gym, 200);
             }
             catch (Exception e)
             {

@@ -12,8 +12,8 @@ namespace TrainingFinder.Data
         bool DeleteGym(int id);
         bool SaveGym(Gym entity);
         ResultModel<Gym> GetById(int id);
-        ResultModel<Gym> Create(Gym entiti);
-        ResultModel<Gym> Update(Gym entity);
+        ResultModel<Gym> Create(Gym gym);
+        ResultModel<Gym> Update(Gym gym);
         ResultModel<Gym> Delete(int id);
         ResultModel<IEnumerable<Gym>> GetAllInCity(string city);
     }

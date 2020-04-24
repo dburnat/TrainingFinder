@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
@@ -13,13 +14,15 @@ namespace TrainingFinder.Controllers.API
     public class GymApiController : ControllerBase
     {
         private readonly IGymRepository _gymRepository;
+        private IMapper _mapper;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="gymRepository"></param>
-        public GymApiController(IGymRepository gymRepository)
+        public GymApiController(IGymRepository gymRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _gymRepository = gymRepository;
         }
 
@@ -46,8 +49,11 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateGym(Gym gym)
+        public IActionResult CreateGym([FromBody] GymModel gymModel)
         {
+            //map model to entity
+            var gym = _mapper.Map<Gym>(gymModel);
+
             try
             {
                 if (ModelState.IsValid)
