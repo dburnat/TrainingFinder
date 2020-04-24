@@ -47,7 +47,7 @@ namespace TrainingFinder.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AdminUser {UserName = model.UserName};
+                var user = new AdminUser {UserName = model.UserName, Email = model.Email};
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -148,6 +148,7 @@ namespace TrainingFinder.Controllers
                 return View("List", _gymRepository.Gyms);
             }
         }
+
         /// <summary>
         /// Deletes gym
         /// </summary>
@@ -169,8 +170,10 @@ namespace TrainingFinder.Controllers
                     Console.WriteLine(e);
                     ViewData["Message"] = "Gym could not be deleted from the database.";
                 }
+
                 return View("list", _gymRepository.Gyms);
             }
+
             return View("List", _gymRepository.Gyms);
         }
     }
