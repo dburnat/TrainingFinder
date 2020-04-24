@@ -28,7 +28,7 @@ namespace TrainingFinder.Controllers
         /// Redirects to create training view
         /// </summary>
         /// <returns></returns>
-        [HttpGet("create")]
+        [HttpGet]
         public IActionResult Create(int id)
         {
             ViewBag.Training = new Training()
@@ -52,7 +52,7 @@ namespace TrainingFinder.Controllers
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
-        [HttpPost("save")]
+        [HttpPost]
         public IActionResult Save(Training training)
         {
             if (!ModelState.IsValid || training == null)
