@@ -1,15 +1,18 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TrainingApiController : ControllerBase
     {
         private readonly ITrainingRepository _trainingRepository;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -18,6 +21,7 @@ namespace TrainingFinder.Controllers.API
         {
             _trainingRepository = trainingRepository;
         }
+
         /// <summary>
         /// Gets one training by id
         /// </summary>
@@ -37,7 +41,6 @@ namespace TrainingFinder.Controllers.API
             catch (Exception)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
-
             }
         }
 
@@ -61,10 +64,10 @@ namespace TrainingFinder.Controllers.API
             }
             catch (Exception)
             {
-
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
+
         /// <summary>
         /// Updates training
         /// </summary>
@@ -86,14 +89,11 @@ namespace TrainingFinder.Controllers.API
                     return StatusCode(updateResponse.StatusCode);
                 else
                     return StatusCode(updateResponse.StatusCode);
-
             }
             catch (Exception)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
-
-
     }
 }

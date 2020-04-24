@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GymApiController : ControllerBase
     {
         private readonly IGymRepository _gymRepository;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -37,6 +40,7 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
+
         /// <summary>
         /// Creates gym
         /// </summary>
@@ -59,6 +63,5 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
-
     }
 }
