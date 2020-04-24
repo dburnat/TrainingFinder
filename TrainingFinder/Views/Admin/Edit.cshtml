@@ -1,0 +1,51 @@
+﻿@model Gym
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "List";
+}
+
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-8 offset-md-2  col-lg-4 offset-lg-4 p-3 border-radius" style="background: #e1e1e1">
+        <form asp-controller="Admin" asp-action="Save" method="post" enctype="application/x-www-form-urlencoded">
+
+            <div class="form-group" style="display: none">
+                <label for="GymId">
+                    Gym Id:
+                </label>
+                <input id="GymId" class="form-control" name="Id" type="text" value="@Model.GymId" />
+            </div>
+
+            <div class="form-group">
+                <label for="Name">
+                    Name:
+                </label>
+                <input id="Name" class="form-control" name="Name" type="text" value="@Model.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="Address">
+                    Address:
+                </label>
+                <input id="Address" name="Address" class="form-control" type="text" value="@Model.Address" />
+            </div>
+            <div class="form-group">
+                <label for="Latitude">
+                    Latitude:
+                </label>
+                <input id="Latitude" name="Latitude" class="form-control" type="text" value="@Model.Latitude" />
+            </div>
+            <div class="form-group">
+                <label for="Longitude">
+                    Longitude:
+                </label>
+                <input id="Longitude" name="Longitude" class="form-control" type="text" value="@Model.Longitude" />
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-light" value="submit">submit</button>
+            </div>
+        </form>
+    </div>
+</div>

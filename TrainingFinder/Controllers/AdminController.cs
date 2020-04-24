@@ -1,4 +1,5 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,19 +8,31 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Models.Users;
 using TrainingFinder.Models.ViewModels;
+=======
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TrainingFinder.Data;
+using TrainingFinder.Models;
+>>>>>>> origin/trainingFinder-szymon
 
 namespace TrainingFinder.Controllers
 {
     [Authorize]
+<<<<<<< HEAD
     public class AdminController : Controller
     {
         private SignInManager<AdminUser> _signInManager;
         private UserManager<AdminUser> _userManager;
+        private readonly IGymRepository _gymRepository;
 
-        public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager)
+        public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager, IGymRepository gymRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _gymRepository = gymRepository;
         }
 
 
@@ -101,16 +114,46 @@ namespace TrainingFinder.Controllers
             ModelState.AddModelError("", "Invalid login attempt");
             return View(model);
         }
+        
 
-        /*public virtual bool IsSignedIn(ClaimsPrincipal principal)
+        [HttpGet]
+        public IActionResult List() => View(_gymRepository.Gyms);
+        [HttpGet("create")]
+        public IActionResult Create() => View("Edit", new Gym());
+        [HttpGet("edit")]
+        public IActionResult Edit(int id)
         {
-            if (principal == null)
+            var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
+
+            if (gym == null)
+                return View("List");
+
+            return View(gym);
+        }
+        [HttpPost("save")]
+        public IActionResult Save(Gym gym)
+        {
+            if (!ModelState.IsValid || gym == null)
             {
-                throw new ArgumentNullException(nameof(principal));
+                ViewData["message"] = "Given data is not valid!";
+                return View("Edit", gym);
+            }
+            else
+            {
+                try
+                {
+                    var result = _gymRepository.SaveGym(gym);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    ViewData["Message"] = "Gym could not be added to the database.";
+
+                }
+                return View("List", _gymRepository.Gyms);
             }
 
-            return principal?.Identities != null &&
-                   principal.Identities.Any(c => c.AuthenticationType == "cookie");
-        }*/
-    }
+        }
+
+        }
 }
