@@ -31,14 +31,14 @@ namespace TrainingFinder.Controllers
         /// Main view with gyms
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult List() => View(_gymRepository.Gyms);
 
         /// <summary>
         /// Redirects to create view
         /// </summary>
         /// <returns></returns>
-        [HttpGet("create")]
+        [HttpGet]
         public IActionResult Create() => View("Edit", new Gym());
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace TrainingFinder.Controllers
         /// </summary>
         /// <param name="gym"></param>
         /// <returns></returns>
-        [HttpPost("save")]
+        [HttpPost]
         public IActionResult Save(Gym gym)
         {
             if (!ModelState.IsValid || gym == null)

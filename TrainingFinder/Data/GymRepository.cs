@@ -57,7 +57,7 @@ namespace TrainingFinder.Data
         }
 
 
-        public ResultModel<Gym> Create(Gym entity)
+        public ResultModel<Gym> Create(GymModel entity)
         {
             try
             {
