@@ -17,9 +17,10 @@ namespace TrainingFinder.Controllers.API
         private IMapper _mapper;
 
         /// <summary>
-        /// Default constructor
+        /// 
         /// </summary>
         /// <param name="gymRepository"></param>
+        /// <param name="mapper"></param>
         public GymApiController(IGymRepository gymRepository, IMapper mapper)
         {
             _mapper = mapper;

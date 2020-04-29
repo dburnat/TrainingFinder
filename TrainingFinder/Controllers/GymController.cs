@@ -10,9 +10,6 @@ using TrainingFinder.Models;
 namespace TrainingFinder.Controllers
 {
     [Authorize]
-    /// <summary>
-    /// Constructor for gym views
-    /// </summary>
     [Route("Gym")]
     public class GymController : Controller
     {
