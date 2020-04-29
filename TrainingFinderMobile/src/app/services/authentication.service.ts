@@ -26,7 +26,7 @@ export class AuthenticationService {
     login(userName: string, password: string) : Observable<any> {
 
         return this.http
-            .post<any>(`${environment.apiUrl}/users/authenticate`,
+            .post<any>(`${environment.apiUrl}/api/user/authenticate`,
             {
                 username: userName,
                 password: password,

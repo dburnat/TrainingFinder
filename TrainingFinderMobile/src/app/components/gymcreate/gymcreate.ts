@@ -29,7 +29,7 @@ export class GymCreateComponent implements OnInit {
         city: string
     ) {
         this.http
-            .post(`${environment.apiUrl}/gym/create`, {
+            .post(`${environment.apiUrl}/api/gym`, {
                 gymName: gymName,
                 street: street,
                 number: number,

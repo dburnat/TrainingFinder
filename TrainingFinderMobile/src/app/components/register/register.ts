@@ -20,7 +20,7 @@ export class RegisterComponent {
     ) {
         this.http
             .post(
-                `${environment.apiUrl}/users/register`,
+                `${environment.apiUrl}/api/user/register`,
                 {
                     firstName: firstName,
                     lastName: lastName,
