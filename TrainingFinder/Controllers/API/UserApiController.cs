@@ -18,7 +18,7 @@ namespace TrainingFinder.Controllers.API
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/user")]
     public class UserApiController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

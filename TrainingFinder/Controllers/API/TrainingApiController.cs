@@ -7,7 +7,7 @@ using TrainingFinder.Models;
 namespace TrainingFinder.Controllers.API
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/training")]
     [ApiController]
     public class TrainingApiController : ControllerBase
     {
