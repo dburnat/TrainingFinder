@@ -10,6 +10,7 @@ using TrainingFinder.Models;
 namespace TrainingFinder.Controllers
 {
     [Authorize]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("training")]
     public class TrainingController : Controller
     {
