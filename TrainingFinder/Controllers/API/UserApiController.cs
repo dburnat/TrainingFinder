@@ -47,7 +47,7 @@ namespace TrainingFinder.Controllers.API
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Data.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
@@ -59,10 +59,10 @@ namespace TrainingFinder.Controllers.API
             // return basic user info and authentication token
             return Ok(new
             {
-                Id = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Id = user.Data.Id,
+                Username = user.Data.Username,
+                FirstName = user.Data.FirstName,
+                LastName = user.Data.LastName,
                 Token = tokenString
             });
         }
