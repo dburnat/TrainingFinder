@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TrainingFinder.Entities;
 using TrainingFinder.Helpers;
+using TrainingFinder.Models;
 
 namespace TrainingFinder.Data
 {
@@ -14,14 +17,15 @@ namespace TrainingFinder.Data
         {
             _dbContext = dbContext;
         }
-        public User Authenticate(string username, string password)
+
+        public ResultModel<User> Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                return null;
+                return new ResultModel<User>(null, StatusCodes.Status400BadRequest);
 
             var user = _dbContext.Users.SingleOrDefault(c => c.Username == username);
             if (user == null)
-                return null;
+                return new ResultModel<User>(null, StatusCodes.Status404NotFound);
 
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
@@ -29,10 +33,10 @@ namespace TrainingFinder.Data
             }
 
             //On successful authentication
-            return user;
+            return new ResultModel<User>(user, StatusCodes.Status200OK);
         }
 
-        public User Create(User user, string password)
+        public ResultModel<User> Create(User user, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
@@ -53,7 +57,7 @@ namespace TrainingFinder.Data
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
-            return user;
+            return new ResultModel<User>(user, StatusCodes.Status200OK);
         }
 
         public void Delete(int id)
@@ -71,53 +75,76 @@ namespace TrainingFinder.Data
             return _dbContext.Users;
         }
 
-        public User GetById(int id)
+        public ResultModel<User> GetById(int id)
         {
-            return _dbContext.Users.Find(id);
+            try
+            {
+                var user = _dbContext.Users.FirstOrDefault(c => c.Id == id);
+
+                if (user == null)
+                    return new ResultModel<User>(null, StatusCodes.Status404NotFound);
+
+                return new ResultModel<User>(user, StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<User>(null, StatusCodes.Status500InternalServerError);
+            }
         }
 
-        public void Update(User userToUpdate, string password = null)
+        public ResultModel<User> Update(User userToUpdate, string password = null)
         {
-            var user = _dbContext.Users.Find(userToUpdate.Id);
-
-            if (user == null)
-                throw new AppException("User not found");
-
-            // Update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userToUpdate.Username) && userToUpdate.Username != user.Username)
+            try
             {
-                // throw error if the new username is already taken
-                if (_dbContext.Users.Any(x => x.Username == userToUpdate.Username))
-                    throw new AppException("Username " + userToUpdate.Username + " is already taken");
+                var user = _dbContext.Users.Find(userToUpdate.Id);
 
-                user.Username = userToUpdate.Username;
+                if (user == null)
+                    throw new AppException("User not found");
+
+                // Update username if it has changed
+                if (!string.IsNullOrWhiteSpace(userToUpdate.Username) && userToUpdate.Username != user.Username)
+                {
+                    // throw error if the new username is already taken
+                    if (_dbContext.Users.Any(x => x.Username == userToUpdate.Username))
+                        throw new AppException("Username " + userToUpdate.Username + " is already taken");
+
+                    user.Username = userToUpdate.Username;
+                }
+
+                // Update user properties if provided
+                if (!string.IsNullOrWhiteSpace(userToUpdate.FirstName))
+                    user.FirstName = userToUpdate.FirstName;
+
+                if (!string.IsNullOrWhiteSpace(userToUpdate.LastName))
+                    user.LastName = userToUpdate.LastName;
+
+                // pdate password if provided
+                if (!string.IsNullOrWhiteSpace(password))
+                {
+                    byte[] passwordHash, passwordSalt;
+                    CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+                }
+
+                _dbContext.Users.Update(user);
+                _dbContext.SaveChanges();
+                return new ResultModel<User>(user, StatusCodes.Status200OK);
             }
-
-            // Update user properties if provided
-            if (!string.IsNullOrWhiteSpace(userToUpdate.FirstName))
-                user.FirstName = userToUpdate.FirstName;
-
-            if (!string.IsNullOrWhiteSpace(userToUpdate.LastName))
-                user.LastName = userToUpdate.LastName;
-
-            // pdate password if provided
-            if (!string.IsNullOrWhiteSpace(password))
+            catch (Exception e)
             {
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
+                Console.WriteLine(e);
+                return new ResultModel<User>(null, StatusCodes.Status500InternalServerError);
             }
-
-            _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
@@ -129,9 +156,12 @@ namespace TrainingFinder.Data
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            if (storedHash.Length != 64)
+                throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128)
+                throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {

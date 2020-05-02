@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using TrainingFinder.Entities;
+using TrainingFinder.Models;
 
 namespace TrainingFinder.Data
 {
     public interface IUserRepository
     {
-        User Authenticate(string username, string password);
+        ResultModel<User> Authenticate(string username, string password);
         IEnumerable<User> GetAll();
-        User GetById(int id);
-        User Create(User user, string password);
-        void Update(User user, string password = null);
+        ResultModel<User>  GetById(int id);
+        ResultModel<User> Create(User user, string password);
+        ResultModel<User> Update(User user, string password = null);
         void Delete(int id);
     }
 }
