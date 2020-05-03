@@ -61,13 +61,24 @@ namespace TrainingFinder.Data
             return new ResultModel<User>(user, StatusCodes.Status200OK);
         }
 
-        public void Delete(int id)
+        public ResultModel<User> Delete(int id)
         {
-            var user = _dbContext.Users.Find(id);
-            if (user != null)
+            try
             {
-                _dbContext.Users.Remove(user);
+                var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
+
+                if (user == null)
+                    return new ResultModel<User>(null, StatusCodes.Status404NotFound);
+
+                _dbContext.Remove(user);
                 _dbContext.SaveChanges();
+
+                return new ResultModel<User>(null, StatusCodes.Status204NoContent);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<User>(null, StatusCodes.Status500InternalServerError);
             }
         }
 

@@ -23,7 +23,7 @@
                 <td>@appUser.LastName</td>
                 <td>@appUser.Username</td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@appUser.Id" method="post">
+                    <form asp-action="Delete" asp-route-id="@appUser.Id" method="get">
                         <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@appUser.Id">Edit</a>
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>

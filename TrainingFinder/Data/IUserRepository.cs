@@ -12,6 +12,6 @@ namespace TrainingFinder.Data
         ResultModel<User> Create(User user, string password);
         ResultModel<User> Update(User user);
         ResultModel<User> Update(User user, string password = null);
-        void Delete(int id);
+        ResultModel<User> Delete(int id);
     }
 }

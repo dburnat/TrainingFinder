@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
@@ -52,6 +53,21 @@ namespace TrainingFinder.Controllers
                 return BadRequest(new {message = ex.Message});
             }
 
+            return View("Index", _userRepository.GetAll());
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _userRepository.Delete(id);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+            
             return View("Index", _userRepository.GetAll());
         }
     }
