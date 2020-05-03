@@ -16,7 +16,9 @@ namespace TrainingFinder.Models
         [Required]
         [Display(Name = "Date and time")]
         public DateTime DateTime { get; set; }
+        public int GymId { get; set; }
 
         public ICollection<TrainingAppUser> TrainingAppUsers { get; set; }
+
     }
 }

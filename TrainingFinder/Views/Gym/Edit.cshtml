@@ -1,0 +1,57 @@
+﻿@model Gym
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "List";
+}
+
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-8 offset-md-2  col-lg-4 offset-lg-4 p-3 border-radius" style="background: #e1e1e1">
+        <form asp-controller="Admin" asp-action="Save" method="post" enctype="application/x-www-form-urlencoded">
+
+            <div class="form-group" style="display: none">
+                <label for="GymId">
+                    Gym Id:
+                </label>
+                <input id="GymId" class="form-control" name="Id" type="text" value="@Model.GymId" />
+            </div>
+
+            <div class="form-group">
+                <label for="Name">
+                    Name:
+                </label>
+                <input id="Name" class="form-control" name="Name" type="text" value="@Model.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="City">
+                    City:
+                </label>
+                <input id="City" name="City" class="form-control" type="text" value="@Model.City" />
+            </div>
+            <div class="form-group">
+                <label for="Street">
+                    Street:
+                </label>
+                <input id="Street" name="Street" class="form-control" type="text" value="@Model.Street" />
+            </div>
+            <div class="form-group">
+                <label for="Number">
+                    Number:
+                </label>
+                <input id="Number" name="Number" class="form-control" type="text" value="@Model.Number" />
+            </div>
+            <div class="form-group">
+                <label for="PostCode">
+                    PostCode:
+                </label>
+                <input id="PostCode" name="PostCode" class="form-control" type="text" value="@Model.PostCode" />
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-light" value="submit">submit</button>
+            </div>
+        </form>
+    </div>
+</div>

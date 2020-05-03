@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Training>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "List";
+}
+
+<div class="row">
+    @foreach (var t in Model)
+    {
+        <div class="col-sm-12 col-lg-6 col-xl-4 pt-1 border">
+            <div class=" training-tile border-radius p-3">
+                <h4>
+                   Id: @t.TrainingId
+                </h4>
+                   Opis: @t.Description
+                <h5>
+                   Data: @t.DateTime.Date.ToString("d")
+                   Godzina: @t.DateTime.Hour : @t.DateTime.Minute
+                </h5>
+            </div>
+        </div>
+    }
+</div>

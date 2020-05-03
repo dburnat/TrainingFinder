@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TrainingFinder.Models
 {
-    public class Gym
+    public class GymModel
     {
-        [Required]
-        public int GymId { get; set; }
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
@@ -25,7 +23,5 @@ namespace TrainingFinder.Models
 
         [Display(Name = "PostCode")]
         public string PostCode { get; set; }
-
-        public ICollection<Training> Trainings { get; set; }
     }
 }
