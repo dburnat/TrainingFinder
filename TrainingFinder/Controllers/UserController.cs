@@ -10,11 +10,10 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers
 {
-    //TODO Edit and delete method
     [Authorize]
     public class UserController : Controller
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
         public UserController(IUserRepository userRepository, IMapper mapper)
@@ -67,7 +66,7 @@ namespace TrainingFinder.Controllers
             {
                 return BadRequest(new {message = ex.Message});
             }
-            
+
             return View("Index", _userRepository.GetAll());
         }
     }
