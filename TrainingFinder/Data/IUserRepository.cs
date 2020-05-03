@@ -10,6 +10,7 @@ namespace TrainingFinder.Data
         IEnumerable<User> GetAll();
         ResultModel<User>  GetById(int id);
         ResultModel<User> Create(User user, string password);
+        ResultModel<User> Update(User user);
         ResultModel<User> Update(User user, string password = null);
         void Delete(int id);
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using TrainingFinder.Entities;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models;
@@ -83,6 +84,31 @@ namespace TrainingFinder.Data
 
                 if (user == null)
                     return new ResultModel<User>(null, StatusCodes.Status404NotFound);
+
+                return new ResultModel<User>(user, StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new ResultModel<User>(null, StatusCodes.Status500InternalServerError);
+            }
+        }
+
+
+        public ResultModel<User> Update(User user)
+        {
+            try
+            {
+                var getResponse = _dbContext.Users.FirstOrDefault(x => x.Id == user.Id);
+
+                if (getResponse == null)
+                    return new ResultModel<User>(null, StatusCodes.Status404NotFound);
+
+                _dbContext.Entry(getResponse).State = EntityState.Detached;
+
+                var updateResponse = _dbContext.Update(user);
+
+                _dbContext.SaveChanges();
 
                 return new ResultModel<User>(user, StatusCodes.Status200OK);
             }
