@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
@@ -12,13 +13,15 @@ namespace TrainingFinder.Controllers.API
     public class TrainingApiController : ControllerBase
     {
         private readonly ITrainingRepository _trainingRepository;
+        private IMapper _mapper;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="trainingRepository"></param>
-        public TrainingApiController(ITrainingRepository trainingRepository)
+        public TrainingApiController(ITrainingRepository trainingRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _trainingRepository = trainingRepository;
         }
 
@@ -47,11 +50,12 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Creates training
         /// </summary>
-        /// <param name="training"></param>
+        /// <param name="trainingModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateTraining(Training training)
+        public IActionResult CreateTraining([FromBody] TrainingModel trainingModel)
         {
+            var training = _mapper.Map<Training>(trainingModel);
             try
             {
                 if (ModelState.IsValid)
@@ -71,11 +75,12 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Updates training
         /// </summary>
-        /// <param name="training"></param>
+        /// <param name="trainingModel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateTraining(Training training)
+        public IActionResult UpdateTraining([FromBody] TrainingModel trainingModel)
         {
+            var training = _mapper.Map<Training>(trainingModel);
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(training.TrainingId);

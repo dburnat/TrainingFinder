@@ -30,6 +30,24 @@ namespace TrainingFinder.Controllers.API
         }
 
         /// <summary>
+        /// Return list of gyms
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetGyms()
+        {
+            try
+            {
+                var gyms = _gymRepository.Gyms.ToList();
+                return StatusCode(200);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
         /// Creates gym
         /// </summary>
         /// <param name="gymModel"></param>
@@ -78,11 +96,13 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Updates given gym
         /// </summary>
-        /// <param name="gym"></param>
+        /// <param name="gymModel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateGym(Gym gym)
+        public IActionResult UpdateGym([FromBody] GymModel gymModel)
         {
+            //mapping model to entity
+            var gym = _mapper.Map<Gym>(gymModel);
             try
             {
                 var updateResponse = _gymRepository.Update(gym);
