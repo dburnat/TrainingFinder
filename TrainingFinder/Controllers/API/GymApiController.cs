@@ -46,8 +46,28 @@ namespace TrainingFinder.Controllers.API
         }
 
         /// <summary>
+        /// Return gym by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetGymById(int id)
+        {
+            try
+            {
+                var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
+                return StatusCode(200);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }      
+
+        /// <summary>
         /// Creates gym
         /// </summary>
+        /// <param name="gymModel"></param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult CreateGym([FromBody] GymModel gymModel)
