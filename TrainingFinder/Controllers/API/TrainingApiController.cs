@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,20 +25,39 @@ namespace TrainingFinder.Controllers.API
             _mapper = mapper;
             _trainingRepository = trainingRepository;
         }
+        /// <summary>
+        /// Gets all trainings
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var trainings = _trainingRepository.Trainings;
+                var model = _mapper.Map<IList<Training>>(trainings);
+
+                return StatusCode(200, model);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
 
         /// <summary>
         /// Gets one training by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetTraining(int id)
         {
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(id);
                 if (getTrainingResponse.isStatusCodeSuccess() || getTrainingResponse != null)
-                    return StatusCode(getTrainingResponse.StatusCode);
+                    return StatusCode(getTrainingResponse.StatusCode, getTrainingResponse.Data);
                 else
                     return StatusCode(getTrainingResponse.StatusCode);
             }
@@ -61,7 +81,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResult = _trainingRepository.Create(training);
-                    return StatusCode(createResult.StatusCode);
+                    return StatusCode(createResult.StatusCode, createResult.Data);
                 }
                 else
                     return BadRequest();
@@ -78,9 +98,10 @@ namespace TrainingFinder.Controllers.API
         /// <param name="trainingModel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateTraining([FromBody] TrainingModel trainingModel)
+        public IActionResult UpdateTraining(int id, [FromBody] TrainingModel trainingModel)
         {
             var training = _mapper.Map<Training>(trainingModel);
+            training.TrainingId = id;
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(training.TrainingId);
@@ -91,7 +112,7 @@ namespace TrainingFinder.Controllers.API
                 var updateResponse = _trainingRepository.Update(training);
 
                 if (updateResponse.isStatusCodeSuccess() || updateResponse.Data != null)
-                    return StatusCode(updateResponse.StatusCode);
+                    return StatusCode(updateResponse.StatusCode, updateResponse.Data);
                 else
                     return StatusCode(updateResponse.StatusCode);
             }

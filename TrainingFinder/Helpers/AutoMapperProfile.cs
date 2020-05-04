@@ -16,6 +16,8 @@ namespace TrainingFinder.Helpers
             CreateMap<User, AppUser>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
+            CreateMap<GymModel, Gym>();
+            CreateMap<TrainingModel, Training>();
         }
     }
 }

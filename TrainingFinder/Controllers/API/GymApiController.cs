@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -37,7 +38,8 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.ToList();
-                return StatusCode(200);
+                var model = _mapper.Map<IList<Gym>>(gyms);
+                return StatusCode(200, model);
             }
             catch (Exception)
             {
@@ -50,7 +52,7 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetGymById(int id)
         {
             try
@@ -63,13 +65,13 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
-        
+
         /// <summary>
         /// Returns gyms in current city
         /// </summary>
         /// <param name="city"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{city}")]
         public IActionResult GetGymsByCity(string city)
         {
             try
@@ -99,7 +101,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResponse = _gymRepository.Create(gym);
-                    return StatusCode(createResponse.StatusCode);
+                    return StatusCode(createResponse.StatusCode, gym);
                 }
                 else
                     return BadRequest();

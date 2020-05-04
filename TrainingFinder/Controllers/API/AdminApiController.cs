@@ -39,7 +39,9 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.ToList();
-                return StatusCode(200);
+                var model = _mapper.Map<IList<Gym>>(gyms);
+
+                return StatusCode(200, model);
             }
             catch (Exception)
             {
@@ -63,7 +65,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResponse = _gymRepository.Create(gym);
-                    return StatusCode(createResponse.StatusCode);
+                    return StatusCode(createResponse.StatusCode, gym);
                 }
                 else
                     return BadRequest();
@@ -99,14 +101,16 @@ namespace TrainingFinder.Controllers.API
         /// <param name="gymModel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateGym([FromBody] GymModel gymModel)
+        public IActionResult UpdateGym(int id, [FromBody] GymModel gymModel)
         {
             //mapping model to entity
             var gym = _mapper.Map<Gym>(gymModel);
+            gym.GymId = id;
+
             try
             {
                 var updateResponse = _gymRepository.Update(gym);
-                return StatusCode(updateResponse.StatusCode);
+                return StatusCode(updateResponse.StatusCode, gym);
             }
             catch (Exception e)
             {
