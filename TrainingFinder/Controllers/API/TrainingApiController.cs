@@ -38,7 +38,7 @@ namespace TrainingFinder.Controllers.API
                 else
                     return StatusCode(getTrainingResponse.StatusCode);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
@@ -62,7 +62,7 @@ namespace TrainingFinder.Controllers.API
                 else
                     return BadRequest();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
@@ -90,7 +90,29 @@ namespace TrainingFinder.Controllers.API
                 else
                     return StatusCode(updateResponse.StatusCode);
             }
-            catch (Exception)
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+        
+        /// <summary>
+        /// Deletes training
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public IActionResult DeleteTraining(int id)
+        {
+            try
+            {
+                var deleteResponse = _trainingRepository.Delete(id);
+
+                return StatusCode(deleteResponse.StatusCode);
+
+
+            }
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
