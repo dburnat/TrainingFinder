@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
@@ -12,14 +14,35 @@ namespace TrainingFinder.Controllers.API
     public class TrainingApiController : ControllerBase
     {
         private readonly ITrainingRepository _trainingRepository;
+        private IMapper _mapper;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="trainingRepository"></param>
-        public TrainingApiController(ITrainingRepository trainingRepository)
+        public TrainingApiController(ITrainingRepository trainingRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _trainingRepository = trainingRepository;
+        }
+        /// <summary>
+        /// Gets all trainings
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                var trainings = _trainingRepository.Trainings;
+                var model = _mapper.Map<IList<Training>>(trainings);
+
+                return StatusCode(200, model);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
         }
 
         /// <summary>
@@ -27,18 +50,18 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetTraining(int id)
         {
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(id);
                 if (getTrainingResponse.isStatusCodeSuccess() || getTrainingResponse != null)
-                    return StatusCode(getTrainingResponse.StatusCode);
+                    return StatusCode(getTrainingResponse.StatusCode, getTrainingResponse.Data);
                 else
                     return StatusCode(getTrainingResponse.StatusCode);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
@@ -47,22 +70,23 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Creates training
         /// </summary>
-        /// <param name="training"></param>
+        /// <param name="trainingModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateTraining(Training training)
+        public IActionResult CreateTraining([FromBody] TrainingModel trainingModel)
         {
+            var training = _mapper.Map<Training>(trainingModel);
             try
             {
                 if (ModelState.IsValid)
                 {
                     var createResult = _trainingRepository.Create(training);
-                    return StatusCode(createResult.StatusCode);
+                    return StatusCode(createResult.StatusCode, createResult.Data);
                 }
                 else
                     return BadRequest();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
@@ -71,11 +95,13 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Updates training
         /// </summary>
-        /// <param name="training"></param>
+        /// <param name="trainingModel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateTraining(Training training)
+        public IActionResult UpdateTraining(int id, [FromBody] TrainingModel trainingModel)
         {
+            var training = _mapper.Map<Training>(trainingModel);
+            training.TrainingId = id;
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(training.TrainingId);
@@ -86,11 +112,33 @@ namespace TrainingFinder.Controllers.API
                 var updateResponse = _trainingRepository.Update(training);
 
                 if (updateResponse.isStatusCodeSuccess() || updateResponse.Data != null)
-                    return StatusCode(updateResponse.StatusCode);
+                    return StatusCode(updateResponse.StatusCode, updateResponse.Data);
                 else
                     return StatusCode(updateResponse.StatusCode);
             }
-            catch (Exception)
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+        
+        /// <summary>
+        /// Deletes training
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public IActionResult DeleteTraining(int id)
+        {
+            try
+            {
+                var deleteResponse = _trainingRepository.Delete(id);
+
+                return StatusCode(deleteResponse.StatusCode);
+
+
+            }
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }

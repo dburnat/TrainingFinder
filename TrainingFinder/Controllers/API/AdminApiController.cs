@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
@@ -10,9 +12,9 @@ using TrainingFinder.Models;
 namespace TrainingFinder.Controllers.API
 {
     [Authorize]
-    [Route("api/gym")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class GymApiController : ControllerBase
+    public class AdminApiController : ControllerBase
     {
         private readonly IGymRepository _gymRepository;
         private IMapper _mapper;
@@ -21,8 +23,7 @@ namespace TrainingFinder.Controllers.API
         /// Default constructor
         /// </summary>
         /// <param name="gymRepository"></param>
-        /// <param name="mapper"></param>
-        public GymApiController(IGymRepository gymRepository, IMapper mapper)
+        public AdminApiController(IGymRepository gymRepository, IMapper mapper)
         {
             _mapper = mapper;
             _gymRepository = gymRepository;
@@ -39,47 +40,10 @@ namespace TrainingFinder.Controllers.API
             {
                 var gyms = _gymRepository.Gyms.ToList();
                 var model = _mapper.Map<IList<Gym>>(gyms);
+
                 return StatusCode(200, model);
             }
             catch (Exception)
-            {
-                return StatusCode(500, "An unexpected internal server error has occured.");
-            }
-        }
-
-        /// <summary>
-        /// Return gym by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public IActionResult GetGymById(int id)
-        {
-            try
-            {
-                var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-                return StatusCode(200);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "An unexpected internal server error has occured.");
-            }
-        }
-
-        /// <summary>
-        /// Returns gyms in current city
-        /// </summary>
-        /// <param name="city"></param>
-        /// <returns></returns>
-        [HttpGet("{city}")]
-        public IActionResult GetGymsByCity(string city)
-        {
-            try
-            {
-                var gyms = _gymRepository.Gyms.Where(x => x.City.ToLower() == city.ToLower()).ToList();
-                return StatusCode(200);
-            }
-            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
@@ -107,6 +71,48 @@ namespace TrainingFinder.Controllers.API
                     return BadRequest();
             }
             catch (Exception)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
+        /// Deletes gym from repository by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public IActionResult DeleteGym(int id)
+        {
+            try
+            {
+                var deleteResponse = _gymRepository.Delete(id);
+                return StatusCode(deleteResponse.StatusCode);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
+        /// Updates given gym
+        /// </summary>
+        /// <param name="gymModel"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public IActionResult UpdateGym(int id, [FromBody] GymModel gymModel)
+        {
+            //mapping model to entity
+            var gym = _mapper.Map<Gym>(gymModel);
+            gym.GymId = id;
+
+            try
+            {
+                var updateResponse = _gymRepository.Update(gym);
+                return StatusCode(updateResponse.StatusCode, gym);
+            }
+            catch (Exception e)
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
