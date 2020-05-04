@@ -62,7 +62,26 @@ namespace TrainingFinder.Controllers.API
             {
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
-        }      
+        }
+        
+        /// <summary>
+        /// Returns gyms in current city
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetGymsByCity(string city)
+        {
+            try
+            {
+                var gyms = _gymRepository.Gyms.Where(x => x.City.ToLower() == city.ToLower()).ToList();
+                return StatusCode(200);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
 
         /// <summary>
         /// Creates gym
