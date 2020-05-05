@@ -30,11 +30,11 @@ export class GymCreateComponent implements OnInit {
     ) {
         this.http
             .post(`${environment.apiUrl}/api/gym`, {
-                gymName: gymName,
+                name: gymName,
+                city: city,
                 street: street,
                 number: number,
                 zipCode: zipCode,
-                city: city,
             })
             .subscribe(
                 (result) => {
