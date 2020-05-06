@@ -53,14 +53,16 @@ namespace TrainingFinder.Data
                         Name = "Fitness Land",
                         City = "Krakow",
                         Street = "al. Adama Mickiewicza",
-                        Number = "34/2"
+                        Number = "34/2",
+                        IsAddedByUser = false
                     },
                     new Gym
                     {
                         Name = "Body Fitness",
                         City = "Rabka Zdroj",
                         Street = "Pawia",
-                        Number = "5"
+                        Number = "5",
+                        IsAddedByUser = false
 
                     },
                     new Gym
@@ -68,7 +70,8 @@ namespace TrainingFinder.Data
                         Name = "Fitness Platinum",
                         City = "Sosnowiec",
                         Street = "Łokietka",
-                        Number = "15/2"
+                        Number = "15/2",
+                        IsAddedByUser = false
 
                     },
                     new Gym
@@ -76,7 +79,8 @@ namespace TrainingFinder.Data
                         Name = "Pure Gyn",
                         City = "Warszawa",
                         Street = "Raciborska",
-                        Number = "74"
+                        Number = "74",
+                        IsAddedByUser = false
 
                     });
             }
