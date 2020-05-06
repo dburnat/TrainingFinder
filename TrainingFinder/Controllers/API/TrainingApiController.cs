@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,29 @@ namespace TrainingFinder.Controllers.API
                     return StatusCode(getTrainingResponse.StatusCode, getTrainingResponse.Data);
                 else
                     return StatusCode(getTrainingResponse.StatusCode);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
+        /// Return trainings in given range of time
+        /// </summary>
+        /// <param name="timeRangeFrom"></param>
+        /// <param name="timeRangeTo"></param>
+        /// <returns></returns>
+        [Route("[action]/{timeRangeFrom}/{timeRangeTo}")]
+        [HttpGet]
+        public IActionResult GetTrainingByTime(DateTime timeRangeFrom, DateTime timeRangeTo)
+        {
+            try
+            {
+                var trainings = _trainingRepository.Trainings.Where(x => x.DateTime >= timeRangeFrom && x.DateTime <= timeRangeTo);
+                var model = _mapper.Map<IList<Training>>(trainings);
+
+                return StatusCode(200, model);
             }
             catch (Exception e)
             {
