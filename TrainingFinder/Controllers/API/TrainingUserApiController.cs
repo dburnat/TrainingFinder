@@ -10,7 +10,6 @@ using TrainingFinder.Services.TrainingUserService;
 
 namespace TrainingFinder.Controllers.API
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TrainingUserApiController : ControllerBase
