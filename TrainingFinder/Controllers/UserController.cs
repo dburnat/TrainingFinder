@@ -24,6 +24,11 @@ namespace TrainingFinder.Controllers
 
         public ViewResult Index() => View(_userRepository.GetAll());
 
+        /// <summary>
+        /// Redirects to edit training view
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns></returns>
         public IActionResult Edit(int id)
         {
             var user = _userRepository.GetById(id);
@@ -34,6 +39,11 @@ namespace TrainingFinder.Controllers
             return View(user.Data);
         }
 
+        /// <summary>
+        /// Saves user to database
+        /// </summary>
+        /// <param name="user">User class</param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Save(User user)
         {
@@ -55,6 +65,11 @@ namespace TrainingFinder.Controllers
             return View("Index", _userRepository.GetAll());
         }
 
+        /// <summary>
+        /// Deletes user from database
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Delete(int id)
         {

@@ -36,7 +36,7 @@ namespace TrainingFinder.Controllers
         /// Redirects to create view
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         public IActionResult Create() => View("Edit", new Gym());
 
         /// <summary>

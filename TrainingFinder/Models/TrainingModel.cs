@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TrainingFinder.Models
 {
-    public class Training
+    public class TrainingModel
     {
-        [Required]
-        public int TrainingId { get; set; }
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
@@ -17,8 +15,5 @@ namespace TrainingFinder.Models
         [Display(Name = "Date and time")]
         public DateTime DateTime { get; set; }
         public int GymId { get; set; }
-
-        public virtual ICollection<TrainingUser> TrainingUsers { get; set; }
-
     }
 }

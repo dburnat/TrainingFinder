@@ -89,8 +89,7 @@ namespace TrainingFinder.Controllers.API
         public IActionResult GetAll()
         {
             var users = _userRepository.GetAll();
-            var model = _mapper.Map<IList<AppUser>>(users);
-            return Ok(model);
+            return Ok(users);
         }
 
         [HttpGet("{id}")]

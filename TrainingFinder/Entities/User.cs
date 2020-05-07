@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrainingFinder.Models;
 
 namespace TrainingFinder.Entities
 {
@@ -14,5 +15,9 @@ namespace TrainingFinder.Entities
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public DateTime Birthday { get; set; }
+        public string Email { get; set; }
+        public ICollection<TrainingUser> TrainingUsers { get; set; }
+
     }
 }

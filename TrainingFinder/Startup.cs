@@ -20,6 +20,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models.Users;
+using TrainingFinder.Services.TrainingUserService;
 
 namespace TrainingFinder
 {
@@ -41,6 +42,7 @@ namespace TrainingFinder
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITrainingRepository, TrainingRepository>();
             services.AddTransient<IGymRepository, GymRepository>();
+            services.AddScoped<ITrainingUserService, TrainingUserService>();
             services.AddDefaultIdentity<AdminUser>(options =>
                 {
                     options.Password.RequiredLength = 6;

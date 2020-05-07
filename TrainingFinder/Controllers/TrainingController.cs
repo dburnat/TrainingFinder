@@ -28,6 +28,7 @@ namespace TrainingFinder.Controllers
         /// <summary>
         /// Redirects to create training view
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("create")]
         public IActionResult Create(int id)

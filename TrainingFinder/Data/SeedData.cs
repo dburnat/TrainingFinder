@@ -60,7 +60,9 @@ namespace TrainingFinder.Data
                         City = "Krakow",
                         Street = "al. Adama Mickiewicza",
                         Number = "34/2",
-                        Trainings = training1
+                        Trainings = training1,
+                        Number = "34/2",
+                        IsAddedByUser = false                        
                     },
                     new Gym
                     {
@@ -68,7 +70,9 @@ namespace TrainingFinder.Data
                         City = "Rabka Zdroj",
                         Street = "Pawia",
                         Number = "5",
-                        Trainings = training2
+                        Trainings = training2,
+                        Number = "5",
+                        IsAddedByUser = false
 
                     },
                     new Gym
@@ -77,7 +81,10 @@ namespace TrainingFinder.Data
                         City = "Sosnowiec",
                         Street = "Łokietka",
                         Number = "15/2",
-                        Trainings = training3
+                        Trainings = training3,
+                        Number = "15/2",
+                        IsAddedByUser = false
+
                     },
                     new Gym
                     {
@@ -85,7 +92,9 @@ namespace TrainingFinder.Data
                         City = "Warszawa",
                         Street = "Raciborska",
                         Number = "74",
-                        Trainings = training4
+                        Trainings = training4,
+                        Number = "74",
+                        IsAddedByUser = false
 
                     });
             }

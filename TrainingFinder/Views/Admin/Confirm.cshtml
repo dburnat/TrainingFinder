@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Gym>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "List";
+}
+
+<div class="row">
+    @foreach (var g in Model)
+    {
+        <div class="col-sm-12 col-lg-6 col-xl-4 pt-1 border">
+            <div class=" training-tile border-radius p-3">
+                <h4>
+                    @g.Name
+                </h4>
+                @g.City
+                @g.Street @g.Number
+                @g.PostCode @g.City
+                <h5>
+                    @g.Trainings
+                </h5>
+                
+                <a asp-controller="admin" asp-action="edit" asp-route-id="@g.GymId">
+                    <button class="btn btn-dark w-100"> Confirm </button>
+                </a>
+            </div>
+        </div>
+    }
+</div>

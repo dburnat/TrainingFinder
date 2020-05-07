@@ -125,6 +125,13 @@ namespace TrainingFinder.Controllers
             return View(gym);
         }
 
+        [HttpGet]
+        public IActionResult Confirm()
+        {
+            
+                return View(_gymRepository.Gyms.Where(x => x.IsAddedByUser == true));
+        }
+
         [HttpPost]
         public IActionResult Save(Gym gym)
         {
@@ -137,6 +144,7 @@ namespace TrainingFinder.Controllers
             {
                 try
                 {
+                    gym.IsAddedByUser = false;
                     var result = _gymRepository.SaveGym(gym);
                 }
                 catch (Exception e)
