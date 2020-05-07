@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models.Users;
 
@@ -94,7 +95,8 @@ namespace TrainingFinder
                 };
             });
 
-           // services.AddScoped<IUserRepository, UserRepository>();
+             services.AddControllers().AddNewtonsoftJson(options =>
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
