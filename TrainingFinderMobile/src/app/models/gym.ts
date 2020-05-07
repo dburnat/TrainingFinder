@@ -5,4 +5,5 @@ export interface Gym{
     street: string;
     number: string;
     postCode: string;
+    trainings: []
 }
