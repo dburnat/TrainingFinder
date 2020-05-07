@@ -12,6 +12,12 @@ namespace TrainingFinder.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,6 +31,9 @@ namespace TrainingFinder.Data
                 .HasOne(c => c.AppUser)
                 .WithMany(d => d.TrainingAppUsers)
                 .HasForeignKey(c => c.AppUserId);
+            builder.Entity<Gym>()
+                .HasMany(c => c.Trainings)
+                .WithOne(d => d.Gym);
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }

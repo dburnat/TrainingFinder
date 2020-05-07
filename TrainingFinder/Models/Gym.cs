@@ -26,6 +26,6 @@ namespace TrainingFinder.Models
         [Display(Name = "PostCode")]
         public string PostCode { get; set; }
 
-        public ICollection<Training> Trainings { get; set; }
+        public virtual ICollection<Training> Trainings { get; set; }
     }
 }
