@@ -15,16 +15,16 @@ namespace TrainingFinder.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<TrainingAppUser>()
-                .HasKey(c => new { c.AppUserId, c.TrainingId });
-            builder.Entity<TrainingAppUser>()
+            builder.Entity<TrainingUser>()
+                .HasKey(c => new { c.UserId, c.TrainingId });
+            builder.Entity<TrainingUser>()
                 .HasOne(c => c.Training)
-                .WithMany(d => d.TrainingAppUsers)
+                .WithMany(d => d.TrainingUsers)
                 .HasForeignKey(c => c.TrainingId);
-            builder.Entity<TrainingAppUser>()
-                .HasOne(c => c.AppUser)
-                .WithMany(d => d.TrainingAppUsers)
-                .HasForeignKey(c => c.AppUserId);
+            builder.Entity<TrainingUser>()
+                .HasOne(c => c.User)
+                .WithMany(d => d.TrainingUsers)
+                .HasForeignKey(c => c.UserId);
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
@@ -32,6 +32,6 @@ namespace TrainingFinder.Data
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<TrainingAppUser> TrainingAppUsers { get; set; }
+        public DbSet<TrainingUser> TrainingUsers { get; set; }
     }
 }

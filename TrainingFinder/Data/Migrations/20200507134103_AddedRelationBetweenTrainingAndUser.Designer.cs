@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainingFinder.Data;
 
 namespace TrainingFinder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200507134103_AddedRelationBetweenTrainingAndUser")]
+    partial class AddedRelationBetweenTrainingAndUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,7 +278,12 @@ namespace TrainingFinder.Data.Migrations
                     b.Property<int>("TrainingId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId", "TrainingId");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("TrainingId");
 
@@ -410,6 +417,10 @@ namespace TrainingFinder.Data.Migrations
 
             modelBuilder.Entity("TrainingFinder.Models.TrainingUser", b =>
                 {
+                    b.HasOne("TrainingFinder.Models.AppUser", null)
+                        .WithMany("TrainingUsers")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("TrainingFinder.Models.Training", "Training")
                         .WithMany("TrainingUsers")
                         .HasForeignKey("TrainingId")

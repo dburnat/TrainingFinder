@@ -20,7 +20,6 @@ namespace TrainingFinder.Models
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
 
-        public ICollection<TrainingAppUser> TrainingAppUsers { get; set; }
 
     }
 }

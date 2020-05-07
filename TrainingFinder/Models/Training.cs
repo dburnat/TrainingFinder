@@ -18,7 +18,7 @@ namespace TrainingFinder.Models
         public DateTime DateTime { get; set; }
         public int GymId { get; set; }
 
-        public ICollection<TrainingAppUser> TrainingAppUsers { get; set; }
+        public ICollection<TrainingUser> TrainingUsers { get; set; }
 
     }
 }

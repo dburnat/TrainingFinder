@@ -54,7 +54,7 @@ namespace TrainingFinder.Data
                         City = "Krakow",
                         Street = "al. Adama Mickiewicza",
                         Number = "34/2",
-                        IsAddedByUser = false
+                        IsAddedByUser = false                        
                     },
                     new Gym
                     {
