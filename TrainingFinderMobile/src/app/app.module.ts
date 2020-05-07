@@ -14,7 +14,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RegisterComponent } from "./components/register/register";
 import { HomeComponent } from "./components/home/home";
-import { GymComponent } from "./components/gym/gym";
+import { GymsComponent } from "./components/gyms/gyms";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
 let routes = [
@@ -38,7 +38,7 @@ let routes = [
         RegisterComponent,
         HomeComponent,
         LoginComponent,
-        GymComponent,
+        GymsComponent,
         GymCreateComponent,
     ],
     providers: [

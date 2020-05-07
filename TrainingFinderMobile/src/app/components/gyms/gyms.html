@@ -19,10 +19,10 @@
         <Label col="0" row="0" colSpan="2" text="List of gyms" class="title"></Label>
         <ListView [items]="gyms" col="0" row="1" colSpan="3">
             <ng-template let-item="item">
-                <Label [text]="item.name"></Label>
+                <Label [text]="item.name + item.street" (tap)="goToGym(item.id)"></Label>
             </ng-template>
         </ListView>
-        <Button  col="3" row="3" text="Add gym" (tap)="gotoGymCreate()" class="-primary -rounded-sm"></Button>
+        <Button  col="3" row="3" text="Add gym" (tap)="goToGymCreate()" class="-primary -rounded-sm"></Button>
     </GridLayout>
 
 
