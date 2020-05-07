@@ -154,7 +154,7 @@ namespace TrainingFinder.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var gymToDelete = _gymRepository.Gyms.SingleOrDefault(x => x.GymId == id);
