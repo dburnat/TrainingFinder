@@ -1,3 +1,4 @@
+import { GymComponent } from './components/gym/gym';
 import { ErrorInterceptor } from "./helpers/error.interceptor";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { GymCreateComponent } from "./components/gymcreate/gymcreate";
@@ -40,6 +41,7 @@ let routes = [
         LoginComponent,
         GymsComponent,
         GymCreateComponent,
+        GymComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

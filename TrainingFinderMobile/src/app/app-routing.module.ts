@@ -1,3 +1,4 @@
+import { GymComponent } from './components/gym/gym';
 import { GymCreateComponent } from "./components/gymcreate/gymcreate";
 import { GymsComponent } from "./components/gyms/gyms";
 import { AuthGuard } from "./helpers/authguard";
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: "register", component: RegisterComponent },
     { path: "gyms", component: GymsComponent, canActivate: [AuthGuard] },
     { path: "gymCreate", component: GymCreateComponent, canActivate: [AuthGuard] },
+    { path: "gym/:id", component: GymComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

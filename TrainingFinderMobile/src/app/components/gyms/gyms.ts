@@ -21,7 +21,6 @@ export class GymsComponent implements OnInit {
     ngOnInit(): void {
         this.getGymsFromApi().subscribe((data: any) => {
             this.gyms = data;
-            console.log(this.gyms);
         });
     }
     onDrawerButtonTap(): void {
@@ -37,6 +36,7 @@ export class GymsComponent implements OnInit {
         this.router.navigate(["gymCreate"]);
     }
     goToGym(gymId: string): void{
-
+        console.log("Gyms view: " + gymId);
+        this.router.navigate(["gym", gymId]);
     }
 }
