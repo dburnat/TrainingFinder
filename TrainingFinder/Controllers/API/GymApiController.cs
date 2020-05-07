@@ -52,13 +52,14 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public IActionResult GetGymById(int id)
+        [Route("[action]/{id}")]       
+        [HttpGet]
+        public IActionResult GymById(int id)
         {
             try
             {
                 var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-                return StatusCode(200);
+                return StatusCode(200, gym);
             }
             catch (Exception)
             {
@@ -71,13 +72,14 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="city"></param>
         /// <returns></returns>
-        [HttpGet("{city}")]
-        public IActionResult GetGymsByCity(string city)
+        [Route("[action]/{city}")]
+        [HttpGet]
+        public IActionResult GymsByCity(string city)
         {
             try
             {
                 var gyms = _gymRepository.Gyms.Where(x => x.City.ToLower() == city.ToLower()).ToList();
-                return StatusCode(200);
+                return StatusCode(200, gyms);
             }
             catch (Exception e)
             {
