@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,6 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
 {
-    [Authorize]
     [Route("api/gym")]
     [ApiController]
     public class GymApiController : ControllerBase
@@ -17,7 +17,7 @@ namespace TrainingFinder.Controllers.API
         private IMapper _mapper;
 
         /// <summary>
-        /// 
+        /// Default constructor
         /// </summary>
         /// <param name="gymRepository"></param>
         /// <param name="mapper"></param>
@@ -37,7 +37,8 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.ToList();
-                return StatusCode(200);
+                var model = _mapper.Map<IList<Gym>>(gyms);
+                return StatusCode(200, model);
             }
             catch (Exception)
             {
@@ -46,8 +47,49 @@ namespace TrainingFinder.Controllers.API
         }
 
         /// <summary>
+        /// Return gym by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("[action]/{id}")]       
+        [HttpGet]
+        public IActionResult GymById(int id)
+        {
+            try
+            {
+                var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
+                return StatusCode(200, gym);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
+        /// Returns gyms in current city
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        [Route("[action]/{city}")]
+        [HttpGet]
+        public IActionResult GymsByCity(string city)
+        {
+            try
+            {
+                var gyms = _gymRepository.Gyms.Where(x => x.City.ToLower() == city.ToLower()).ToList();
+                return StatusCode(200, gyms);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
+
+        /// <summary>
         /// Creates gym
         /// </summary>
+        /// <param name="gymModel"></param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult CreateGym([FromBody] GymModel gymModel)
@@ -60,7 +102,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResponse = _gymRepository.Create(gym);
-                    return StatusCode(createResponse.StatusCode);
+                    return StatusCode(createResponse.StatusCode, gym);
                 }
                 else
                     return BadRequest();

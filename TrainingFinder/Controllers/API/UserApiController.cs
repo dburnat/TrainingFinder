@@ -16,7 +16,7 @@ using TrainingFinder.Models.Users;
 
 namespace TrainingFinder.Controllers.API
 {
-    [Authorize]
+    
     [ApiController]
     [Route("api/user")]
     public class UserApiController : ControllerBase
