@@ -28,7 +28,7 @@ namespace TrainingFinder.Data
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
-        public DbSet<Entities.User> Users { get; set; }
+        public new DbSet<Entities.User> Users { get; set; }
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
