@@ -19,8 +19,5 @@ namespace TrainingFinder.Models
         [Required]
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
-
-        public virtual ICollection<TrainingAppUser> TrainingAppUsers { get; set; }
-
-    }
+        }
 }

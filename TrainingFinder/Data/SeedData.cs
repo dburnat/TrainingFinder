@@ -61,7 +61,6 @@ namespace TrainingFinder.Data
                         Street = "al. Adama Mickiewicza",
                         Number = "34/2",
                         Trainings = training1,
-                        Number = "34/2",
                         IsAddedByUser = false                        
                     },
                     new Gym
@@ -71,7 +70,6 @@ namespace TrainingFinder.Data
                         Street = "Pawia",
                         Number = "5",
                         Trainings = training2,
-                        Number = "5",
                         IsAddedByUser = false
 
                     },
@@ -82,7 +80,6 @@ namespace TrainingFinder.Data
                         Street = "Łokietka",
                         Number = "15/2",
                         Trainings = training3,
-                        Number = "15/2",
                         IsAddedByUser = false
 
                     },
@@ -93,7 +90,6 @@ namespace TrainingFinder.Data
                         Street = "Raciborska",
                         Number = "74",
                         Trainings = training4,
-                        Number = "74",
                         IsAddedByUser = false
 
                     });
