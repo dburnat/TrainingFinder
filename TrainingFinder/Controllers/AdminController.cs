@@ -109,7 +109,7 @@ namespace TrainingFinder.Controllers
 
 
         [HttpGet]
-        public IActionResult List() => View(_gymRepository.Gyms);
+        public IActionResult List() => View(_gymRepository.Gyms.Where(c => c.IsAddedByUser == false));
 
         [HttpGet]
         public IActionResult Create() => View("Edit", new Gym());
