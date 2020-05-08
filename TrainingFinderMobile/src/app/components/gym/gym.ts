@@ -66,5 +66,6 @@ export class GymComponent implements OnInit {
 
     addTraining(){
         console.log("Create training button");
+        this.router.navigate(["trainingCreate"]);
     }
 }
