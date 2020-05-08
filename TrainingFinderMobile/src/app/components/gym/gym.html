@@ -14,7 +14,7 @@
     </ActionItem>
     <Label text="Gym view"></Label>
 </ActionBar>
-<GridLayout columns="2*,*" rows="2*,3*,*"  paddingLeft = "20" paddingRight="20" *ngIf="isDataAvailable">
+<GridLayout columns="2*,*" rows="2*,3*"  paddingLeft = "20" paddingRight="20" *ngIf="isDataAvailable">
     <Card:CardView class="cardStyle" col="0" row="0" elevation="10">
         <GridLayout class="cardContent" rows="*,*,*,*" >
             <Label row="0" [text]="gym.name" class="h2" textWrap="true" ></Label>
@@ -24,7 +24,7 @@
             </StackLayout>
             <StackLayout row="2"  orientation="horizontal">
                 <Label  [text]="gym.postCode" class="h4"></Label>
-                <Label  [text]="gym.city" class="h4" paddingLeft="5"></Label>
+                <Label  [text]="gym.city" class="h4"></Label>
             </StackLayout>
             <StackLayout  row="3"  orientation="horizontal">
                 <Label  text="Liczba treningów" class="h4"></Label>
@@ -32,11 +32,18 @@
             </StackLayout>
         </GridLayout>
     </Card:CardView>
-    <ListView [items]="gym.trainings" col="0" row="1" colSpan="2" backgroundColor="purple">
-        <ng-template let-item="item">
-            <Label [text]="item.description"></Label>
-        </ng-template>
-    </ListView>
+    <Card:CardView class="cardStyle" elevation="10" col="0" row="1" colSpan="2">
+        <ListView [items]="gym.trainings" >
+            <ng-template let-item="item">
+                <GridLayout rows="auto" columns="*">
+                    <Label row="0" [text]="item.description"></Label>
+                    <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
+                    <Button row="0" horizontalAlignment="right" text="JOIN" (tap)="joinTraining(item.trainingId)" class="btn btn-primary btn-active"></Button>
+                </GridLayout>
+            </ng-template>
+        </ListView>
+    </Card:CardView>
+    <Button  col="2" row="0" text="Add training" (tap)="addTraining()" class="-primary -rounded-sm" verticalAlignment="bottom"></Button>
 </GridLayout>
 <!-- <StackLayout verticalAlignment="center" paddingLeft="50" paddingRight="50">
     <Label [text]="gym.name" class="h2"></Label>

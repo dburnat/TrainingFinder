@@ -6,7 +6,9 @@ import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { ObservableArray } from "tns-core-modules/data/observable-array";
-
+import { CardView } from 'nativescript-cardview';
+import { registerElement } from 'nativescript-angular/element-registry';
+registerElement('CardView', () => CardView);
 @Component({
     selector: "gym",
     templateUrl: "gyms.html",

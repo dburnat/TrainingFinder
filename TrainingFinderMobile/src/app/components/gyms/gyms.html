@@ -17,13 +17,17 @@
     </ActionBar>
     <GridLayout columns="*,*,*" rows="*,*,*"  paddingLeft = "20" paddingRight="20">
         <Label col="0" row="0" colSpan="2" text="List of gyms" class="title"></Label>
-        <ListView [items]="gyms" col="0" row="1" colSpan="3">
-            <ng-template let-item="item">
-                <Label [text]="item.name + item.street + item.gymId" (tap)="goToGym(item.gymId)"></Label>
-            </ng-template>
-        </ListView>
+        <Card:CardView class="cardStyle" col="0" row="1" colSpan="3" elevation="10">
+            <ListView [items]="gyms">
+                <ng-template let-item="item">
+                    <GridLayout rows="auto" cols="auto">
+                        <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
+                        <Label row="0" horizontalAlignment="center" [text]="item.street" (tap)="goToGym(item.gymId)"></Label>
+                        <Label row="0" horizontalAlignment="right" [text]="item.gymId" (tap)="goToGym(item.gymId)"></Label>
+                    </GridLayout>
+                </ng-template>
+            </ListView>
+        </Card:CardView>
         <Button  col="3" row="3" text="Add gym" (tap)="goToGymCreate()" class="-primary -rounded-sm"></Button>
     </GridLayout>
-
-
 </StackLayout>

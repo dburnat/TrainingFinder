@@ -54,6 +54,14 @@ export class GymComponent implements OnInit, OnDestroy {
         return this.http.get<Gym>(`${environment.apiUrl}/api/gym/GymById/${id}`);
     }
 
+    joinTraining(id:string){
+        console.log("Join training with id: " + id);
+    }
+
+    addTraining(){
+        console.log("Create training button");
+    }
+
     ngOnDestroy(): void {
         this.sub.unsubscribe();
     }
