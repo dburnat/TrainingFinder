@@ -8,6 +8,7 @@ import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
 import { registerElement } from 'nativescript-angular/element-registry';
 import { CardView } from 'nativescript-cardview';
+import { confirm } from "tns-core-modules/ui/dialogs";
 
 registerElement('CardView', () => CardView);
 
@@ -50,10 +51,20 @@ export class GymComponent implements OnInit {
     }
 
     joinTraining(id:string){
-        console.log("Join training with id: " + id);
+
+        let options = {
+            title: "Join training",
+            message: "Are you sure you want to join training with id: " + id + "?",
+            okButtonText: "Yes",
+            cancelButtonText: "No",
+        };
+
+        confirm(options).then((result: boolean) => {
+            console.log(result);
+        });
     }
 
-    createTraining(){
+    addTraining(){
         console.log("Create training button");
     }
 }
