@@ -1,6 +1,7 @@
+import { AppDataService } from './../../services/appdata.service';
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { Gym } from "../../models/gym";
+import { Gym } from "../../models/gym.model";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -15,7 +16,7 @@ registerElement('CardView', () => CardView);
     styleUrls: ["gyms.css"],
 })
 export class GymsComponent implements OnInit {
-    constructor(private router: Router, private http: HttpClient) {}
+    constructor(private router: Router, private http: HttpClient, private appDataService : AppDataService) {}
 
     public gyms: ObservableArray<Gym>;
     token: string;
@@ -37,8 +38,9 @@ export class GymsComponent implements OnInit {
     goToGymCreate() {
         this.router.navigate(["gymCreate"]);
     }
-    goToGym(gymId: string): void{
+    goToGym(gymId: number): void{
         console.log("Gyms view: " + gymId);
-        this.router.navigate(["gym", gymId]);
+        this.appDataService.saveGym(this.gyms[gymId - 1]);
+        this.router.navigate(["gym"]);
     }
 }

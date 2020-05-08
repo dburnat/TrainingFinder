@@ -1,14 +1,14 @@
+import { AppDataService } from './../../services/appdata.service';
 import { environment } from "./../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { Gym } from "~/app/models/gym";
+import { Gym } from "~/app/models/gym.model";
 import { registerElement } from 'nativescript-angular/element-registry';
 import { CardView } from 'nativescript-cardview';
-import { concatMap } from "rxjs/operators";
-import { of } from "rxjs";
+
 registerElement('CardView', () => CardView);
 
 @Component({
@@ -16,7 +16,7 @@ registerElement('CardView', () => CardView);
     templateUrl: "gym.html",
     styleUrls: ["gym.css"],
 })
-export class GymComponent implements OnInit, OnDestroy {
+export class GymComponent implements OnInit {
     gymId: string;
     gym: Gym;
     private sub: any;
@@ -25,16 +25,11 @@ export class GymComponent implements OnInit, OnDestroy {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private route: ActivatedRoute
+        private appDataService: AppDataService
     ) {}
 
     ngOnInit(): void {
-        this.sub = this.route.params.subscribe(
-            (params: Params) => (this.gymId = params.id)
-        );
-        this.getGymFromApi(this.gymId).subscribe((data: any) =>{
-            this.gym = data;
-        });
+        this.gym = this.appDataService.retrieveGym();
         this.isDataAvailable = true;
     }
     onDrawerButtonTap(): void {
@@ -58,11 +53,7 @@ export class GymComponent implements OnInit, OnDestroy {
         console.log("Join training with id: " + id);
     }
 
-    addTraining(){
+    createTraining(){
         console.log("Create training button");
-    }
-
-    ngOnDestroy(): void {
-        this.sub.unsubscribe();
     }
 }
