@@ -19,9 +19,21 @@
                     <p>@g.City</p>
                     <p>@g.Street @g.Number</p>
                     <p>@g.PostCode @g.City</p>
-                    <h5>
-                        @g.Trainings
-                    </h5>
+                    @if (@g.Trainings != null)
+                    {
+                        @foreach (var training in @g.Trainings)
+                        {
+                            <h5>
+                                @training.Description
+                            </h5>
+                        }
+                    }
+                    else
+                    {
+                        <h5>
+                            No trainings in this gym.
+                        </h5>
+                    }
                 }
                 else
                 {
@@ -30,9 +42,21 @@
                     </h4>
                     <p>@g.City</p>
                     <p>@g.Street @g.Number</p>
-                    <h5>
-                        @g.Trainings
-                    </h5>
+                    @if (@g.Trainings != null)
+                    {
+                        @foreach (var training in @g.Trainings)
+                        {
+                            <h5>
+                                @training.Description
+                            </h5>
+                        }
+                    }
+                    else
+                    {
+                        <h5>
+                            No trainings in this gym.
+                        </h5>
+                    }
                 }
 
                 <a asp-controller="Training"

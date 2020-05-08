@@ -46,6 +46,7 @@ namespace TrainingFinder.Data
                 entityToUpdate.Number = entity.Number;
                 entityToUpdate.PostCode = entity.PostCode;
                 entityToUpdate.Trainings = entity.Trainings;
+                entityToUpdate.IsAddedByUser = entity.IsAddedByUser;
 
                 if (entityToUpdate == null)
                     return false;

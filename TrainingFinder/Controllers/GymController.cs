@@ -29,14 +29,14 @@ namespace TrainingFinder.Controllers
         /// Main view with gyms
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("/")]
         public IActionResult List() => View(_gymRepository.Gyms);
 
         /// <summary>
         /// Redirects to create view
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         public IActionResult Create() => View("Edit", new Gym());
 
         /// <summary>

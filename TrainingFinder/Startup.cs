@@ -17,8 +17,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models.Users;
+using TrainingFinder.Services.TrainingUserService;
 
 namespace TrainingFinder
 {
@@ -40,6 +42,7 @@ namespace TrainingFinder
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITrainingRepository, TrainingRepository>();
             services.AddTransient<IGymRepository, GymRepository>();
+            services.AddScoped<ITrainingUserService, TrainingUserService>();
             services.AddDefaultIdentity<AdminUser>(options =>
                 {
                     options.Password.RequiredLength = 6;
@@ -94,7 +97,8 @@ namespace TrainingFinder
                 };
             });
 
-           // services.AddScoped<IUserRepository, UserRepository>();
+             services.AddControllers().AddNewtonsoftJson(options =>
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

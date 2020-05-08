@@ -9,7 +9,6 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
 {
-    [Authorize]
     [Route("api/gym")]
     [ApiController]
     public class GymApiController : ControllerBase

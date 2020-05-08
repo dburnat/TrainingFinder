@@ -28,14 +28,12 @@ namespace TrainingFinder.Controllers
         /// <summary>
         /// Redirects to create training view
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create(int id)
         {
-            ViewBag.Training = new Training()
-            {
-                GymId = id
-            };
+            ViewBag.gymId = id;
             return View("Edit", new Training());
         }
 
@@ -46,14 +44,15 @@ namespace TrainingFinder.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ViewResult List(int id) => View(_trainingRepository.Trainings.Where(x => x.GymId == id));
+        public ViewResult List(int id) => View(_trainingRepository.Trainings.Where(x => x.Gym.GymId == id));
 
         /// <summary>
         /// Saves or edits training
         /// </summary>
         /// <param name="training"></param>
         /// <returns></returns>
-        [HttpPost]
+        //TODO update parent ICollection of trainings
+        [HttpPost("save")]
         public IActionResult Save(Training training)
         {
             if (!ModelState.IsValid || training == null)

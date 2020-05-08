@@ -23,5 +23,8 @@ namespace TrainingFinder.Models
 
         [Display(Name = "PostCode")]
         public string PostCode { get; set; }
+
+        [Display(Name = "IsAddedByUser")]
+        public bool IsAddedByUser { get; set; } = true;
     }
 }
