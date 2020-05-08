@@ -1,1 +1,12 @@
 /* Add mobile styles for the component here.  */
+.cardStyle {
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
+}
+
+.cardContent {
+  padding: 20;
+  font-weight: bold;
+  font-size: 30;
+}

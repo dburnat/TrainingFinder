@@ -12,5 +12,28 @@
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
         ios.position="left">
     </ActionItem>
-    <Label text="Add training"></Label>
 </ActionBar>
+<GridLayout columns="*,*" rows="*,3*,*"  paddingLeft = "20" paddingRight="20">
+    <Card:CardView class="cardStyle" col="0" row="1" colSpan="2" elevation="10">
+        <GridLayout rows="*,*,*" cols="auto">
+            <ListPicker row="0"  [items]="trainings" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
+            <DatePicker row="1" year="2020" month="5" day="8"
+                [minDate]="minDate" [maxDate]="maxDate"
+                (dateChange)="onDateChanged($event)"
+                (dayChange)="onDayChanged($event)"
+                (monthChange)="onMonthChanged($event)"
+                (yearChange)="onYearChanged($event)"
+                (loaded)="onDatePickerLoaded($event)"
+                verticalAlignment="center">
+            </DatePicker>
+            <TimePicker row="2" hour="9"
+            minute="25"
+            maxHour="23"
+            maxMinute="59"
+            minuteInterval="5"
+            (timeChange)="onTimeChanged($event)">
+</TimePicker>
+        </GridLayout>
+    </Card:CardView>
+    <Button  col="3" row="2" text="Add training"  class="-primary -rounded-sm"></Button>
+</GridLayout>
