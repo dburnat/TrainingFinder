@@ -38,7 +38,7 @@
                 <GridLayout rows="auto" columns="*">
                     <Label row="0" [text]="item.description"></Label>
                     <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                    <Button row="0" horizontalAlignment="right" text="JOIN" (tap)="joinTraining(item.trainingId)" class="btn btn-primary btn-active"></Button>
+                    <Button row="0" horizontalAlignment="right" text="JOIN" (tap)="joinTrainingClick(item.trainingId)" class="btn btn-primary btn-active"></Button>
                 </GridLayout>
             </ng-template>
         </ListView>

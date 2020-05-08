@@ -1,4 +1,5 @@
-import { AppDataService } from './../../services/appdata.service';
+import { AuthenticationService } from "./../../services/authentication.service";
+import { AppDataService } from "./../../services/appdata.service";
 import { environment } from "./../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
@@ -6,11 +7,12 @@ import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
-import { registerElement } from 'nativescript-angular/element-registry';
-import { CardView } from 'nativescript-cardview';
+import { registerElement } from "nativescript-angular/element-registry";
+import { CardView } from "nativescript-cardview";
 import { confirm } from "tns-core-modules/ui/dialogs";
+import * as Toast from "nativescript-toast";
 
-registerElement('CardView', () => CardView);
+registerElement("CardView", () => CardView);
 
 @Component({
     selector: "gym",
@@ -21,12 +23,13 @@ export class GymComponent implements OnInit {
     gymId: string;
     gym: Gym;
     private sub: any;
-    isDataAvailable:boolean = false;
+    isDataAvailable: boolean = false;
 
     constructor(
         private http: HttpClient,
         private router: Router,
-        private appDataService: AppDataService
+        private appDataService: AppDataService,
+        private authenticationService: AuthenticationService
     ) {}
 
     ngOnInit(): void {
@@ -38,33 +41,59 @@ export class GymComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    getGym(id:string){
+    getGym(id: string) {
         return new Promise(() => {
-            this.getGymFromApi(id).subscribe((data: any) =>{
+            this.getGymFromApi(id).subscribe((data: any) => {
                 this.gym = data;
             });
-        })
-    }
-
-    getGymFromApi(id:string){
-        return this.http.get<Gym>(`${environment.apiUrl}/api/gym/GymById/${id}`);
-    }
-
-    joinTraining(id:string){
-
-        let options = {
-            title: "Join training",
-            message: "Are you sure you want to join training with id: " + id + "?",
-            okButtonText: "Yes",
-            cancelButtonText: "No",
-        };
-
-        confirm(options).then((result: boolean) => {
-            console.log(result);
         });
     }
 
-    addTraining(){
+    getGymFromApi(id: string) {
+        return this.http.get<Gym>(
+            `${environment.apiUrl}/api/gym/GymById/${id}`
+        );
+    }
+
+    joinTrainingClick(id: number) {
+        let options = {
+            title: "Join training",
+            message:
+                "Are you sure you want to join training with id: " + id + "?",
+            okButtonText: "Yes",
+            cancelButtonText: "No",
+        };
+        this.authenticationService.currentUserValue.id;
+        confirm(options).then((result: boolean) => {
+            console.log(result);
+            console.log(
+                "user id: " + this.authenticationService.currentUserValue.id
+            );
+            console.log("training id: " + id);
+            this.joinTrainingRequest(this.authenticationService.currentUserValue.id, id);
+        });
+    }
+
+    private joinTrainingRequest(userId: number, trainingId: number) {
+        if(userId === null || trainingId === null) return;
+
+        return this.http.post(`${environment.apiUrl}/api/TrainingUserApi`,
+        {
+            trainingId: trainingId,
+            userId: userId
+        })
+        .subscribe(
+            (result) => {
+                Toast.makeText("Joined training with id: " + trainingId, "long").show();
+            },
+            (error) => {
+                Toast.makeText(error.message, "long").show();
+                console.log(error);
+            }
+        );
+    }
+
+    addTraining() {
         console.log("Create training button");
         this.router.navigate(["trainingCreate"]);
     }
