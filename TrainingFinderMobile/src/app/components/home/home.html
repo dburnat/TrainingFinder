@@ -15,9 +15,15 @@
     <Label text="Home"></Label>
 </ActionBar>
 
-<GridLayout class="page__content">
-    <Label class="page__content-icon fas" text="&#xf015;"></Label>
-    <Label class="page__content-placeholder" text="Zalogowany"> </Label>
-    <Label [text]='authenticationService.currentUserValue | json'></Label>
+<Label class="page__content-placeholder" text="Zalogowany"> </Label>
+<Label class="page__content-icon fas" text="&#xf015;"></Label>
+<GridLayout columns="auto, auto" rows="*,*" class="page__content">
 
+    
+
+    <StackLayout row="1" col="0">
+        <Label class="page__content-placeholder" text="Zalogowany"> </Label>
+        <Label class="page__content-icon fas" text="&#xf015;"></Label>
+        <Label [text]='authenticationService.currentUserValue | json' textWrap="true"></Label>
+    </StackLayout>
 </GridLayout>

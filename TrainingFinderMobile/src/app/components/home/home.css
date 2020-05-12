@@ -1,31 +1,45 @@
 button {
-    font-size: 15;
-    horizontal-align: center;
+  font-size: 15;
+  horizontal-align: center;
 }
 
 RadSideDrawer .drawerContentText {
-    font-size: 13;
-    padding: 10;
+  font-size: 13;
+  padding: 10;
 }
 
 RadSideDrawer .drawerContentButton {
-    margin: 10;
-    horizontal-align: left;
+  margin: 10;
+  horizontal-align: left;
 }
 
 .sideStackLayout {
-    background-color: gray;
+  background-color: gray;
 }
 
 .sideTitleStackLayout {
-    text-align: center;
-    vertical-align: center;
+  text-align: center;
+  vertical-align: center;
 }
 
 .sideLabel {
-    padding: 10;
+  padding: 10;
 }
 
 .sideLightGrayLabel {
-    background-color: lightgray;
+  background-color: lightgray;
+}
+.title {
+  font-size: 32;
+}
+.cardStyle {
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
+}
+
+.cardContent {
+  padding: 20;
+  font-weight: bold;
+  font-size: 30;
 }
