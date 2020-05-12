@@ -34,8 +34,6 @@ export class AuthenticationService {
                 map((user) => {
                     appSettings.setString("currentUser", JSON.stringify(user));
                     this.currentUserSubject.next(user);
-                    console.log(JSON.stringify(user.token));
-                    console.log("auth service login");
                     return user;
                 })
             );
@@ -44,6 +42,5 @@ export class AuthenticationService {
     logout() {
         appSettings.remove("currentUser");
         this.currentUserSubject.next(null);
-        console.log("user logged out");
     }
 }

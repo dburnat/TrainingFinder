@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://192.168.0.104:4000'
+    apiUrl: 'PUT_YOUR_API_URL_HERE',
+    googleApiKey: "PUT_YOUR_GOOGLE_API_KEY_HERE"
 };

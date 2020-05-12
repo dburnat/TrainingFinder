@@ -29,9 +29,6 @@ RadSideDrawer .drawerContentButton {
 .sideLightGrayLabel {
   background-color: lightgray;
 }
-.title {
-  font-size: 32;
-}
 .cardStyle {
   background-color: rgb(237, 237, 237);
   color: rgb(43, 43, 43);

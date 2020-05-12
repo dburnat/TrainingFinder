@@ -15,15 +15,9 @@
     <Label text="Home"></Label>
 </ActionBar>
 
-<Label class="page__content-placeholder" text="Zalogowany"> </Label>
-<Label class="page__content-icon fas" text="&#xf015;"></Label>
-<GridLayout columns="auto, auto" rows="*,*" class="page__content">
+<GridLayout columns="*,*" rows="*,*">
+    <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" iosOverflowSafeArea="true"></MapView>
 
-    
+    <Label col="0" row="1" [text]='authenticationService.currentUserValue | json' textWrap="true"></Label>
 
-    <StackLayout row="1" col="0">
-        <Label class="page__content-placeholder" text="Zalogowany"> </Label>
-        <Label class="page__content-icon fas" text="&#xf015;"></Label>
-        <Label [text]='authenticationService.currentUserValue | json' textWrap="true"></Label>
-    </StackLayout>
 </GridLayout>

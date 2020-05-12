@@ -8,9 +8,9 @@ import { Gym } from "~/app/models/gym.model";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { CardView } from 'nativescript-cardview';
 import { registerElement } from 'nativescript-angular/element-registry';
+import { MapView } from 'nativescript-google-maps-sdk';
 registerElement('CardView', () => CardView);
-
-
+registerElement("MapView", () => MapView);
 @Component({
     selector: "Home",
     templateUrl: "home.html",
@@ -35,4 +35,15 @@ export class HomeComponent implements OnInit {
     getGymsFromApi() {
         return this.http.get<Gym[]>(`${environment.apiUrl}/api/gym`);
     }
+
+    onMapReady = (event) => {
+        let mapView = event.object as MapView;
+
+        const CRACOW_CENTER_LATITUDE = 50.061585;
+        const CRACOW_CENTER_LONGITUDE = 19.936552;
+
+        mapView.latitude = CRACOW_CENTER_LATITUDE;
+        mapView.longitude = CRACOW_CENTER_LONGITUDE;
+        mapView.zoom = 10;
+	}
 }

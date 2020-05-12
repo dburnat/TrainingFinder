@@ -1,3 +1,4 @@
+import { environment } from '~/environments/environment';
 import { GymComponent } from './components/gym/gym';
 import { ErrorInterceptor } from "./helpers/error.interceptor";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
@@ -5,11 +6,13 @@ import { GymCreateComponent } from "./components/gymcreate/gymcreate";
 import { LoginComponent } from "./components/login/login";
 import { AuthGuard } from "./helpers/authguard";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NgModule, NO_ERRORS_SCHEMA, PlatformRef } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
+import * as platform from "tns-core-modules/platform";
+declare var GMSServices: any;
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -55,3 +58,7 @@ let routes = [
 Pass your application module to the bootstrapModule function located in main.ts to start your app
 */
 export class AppModule {}
+
+if (platform.isIOS) {
+    GMSServices.provideAPIKey(`${environment.googleApiKey}`);
+}
