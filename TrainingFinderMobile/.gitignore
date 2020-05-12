@@ -31,3 +31,7 @@ typings/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+
+src/environments/environment.ts
+App_Resources/Android/src/main/AndroidManifest.xml
