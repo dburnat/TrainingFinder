@@ -1,19 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Gym } from '../models/gym.model';
+import { userLocation } from "./../models/userlocation.model";
+import { Injectable } from "@angular/core";
+import { Gym } from "../models/gym.model";
 @Injectable({
-    providedIn: 'root',
-  })
+    providedIn: "root",
+})
 export class AppDataService {
-
     myGym: Gym;
-    constructor() {
-
-    }
-    saveGym(gym : Gym){
+    myLocation: userLocation;
+    constructor() {}
+    saveGym(gym: Gym) {
         this.myGym = gym;
     }
-    retrieveGym(){
+    retrieveGym() {
         return this.myGym;
     }
 
+    saveLocation(userLocation: userLocation) {
+        this.myLocation = userLocation;
+    }
+
+    retrieveLocation() {
+        return this.myLocation;
+    }
 }
