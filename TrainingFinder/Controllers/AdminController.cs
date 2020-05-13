@@ -121,10 +121,13 @@ namespace TrainingFinder.Controllers
         public IActionResult Edit(int id)
         {
             var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-
+            
             if (gym == null)
                 return View("List");
 
+            var address = gym.Street + " " + gym.Number + ", " + gym.City;
+            ViewBag.Latitude = _gymLocationService.GetLatitude(address);
+            ViewBag.Longitude = _gymLocationService.GetLongitude(address);
             return View(gym);
         }
 
@@ -148,13 +151,6 @@ namespace TrainingFinder.Controllers
                 try
                 {
                     gym.IsAddedByUser = false;
-                    
-                    var address = gym.Street + " " + gym.Number + ", " + gym.City;
-                    Console.WriteLine(address);
-                    var lat =_gymLocationService.GetLatitude(address);
-                    var lon = _gymLocationService.GetLongitude(address);
-                    Console.WriteLine(lat);
-                    Console.WriteLine(lon);
                     var result = _gymRepository.SaveGym(gym);
                 }
                 catch (Exception e)
@@ -194,5 +190,7 @@ namespace TrainingFinder.Controllers
 
             return View("List", _gymRepository.Gyms);
         }
+        
+        
     }
 }
