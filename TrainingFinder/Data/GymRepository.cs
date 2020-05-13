@@ -47,6 +47,8 @@ namespace TrainingFinder.Data
                 entityToUpdate.PostCode = entity.PostCode;
                 entityToUpdate.Trainings = entity.Trainings;
                 entityToUpdate.IsAddedByUser = entity.IsAddedByUser;
+                entityToUpdate.Latitude = entity.Latitude;
+                entityToUpdate.Longitude = entity.Longitude;
 
                 if (entityToUpdate == null)
                     return false;
