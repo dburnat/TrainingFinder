@@ -8,6 +8,7 @@ using TrainingFinder.Models.Users;
 using TrainingFinder.Models.ViewModels;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
+using TrainingFinder.Services.GymLocationService;
 
 
 namespace TrainingFinder.Controllers
@@ -18,13 +19,15 @@ namespace TrainingFinder.Controllers
         private readonly SignInManager<AdminUser> _signInManager;
         private readonly UserManager<AdminUser> _userManager;
         private readonly IGymRepository _gymRepository;
+        private readonly IGymLocationService _gymLocationService;
 
         public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager,
-            IGymRepository gymRepository)
+            IGymRepository gymRepository, IGymLocationService gymLocationService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _gymRepository = gymRepository;
+            _gymLocationService = gymLocationService;
         }
 
 
@@ -145,6 +148,13 @@ namespace TrainingFinder.Controllers
                 try
                 {
                     gym.IsAddedByUser = false;
+                    
+                    var address = gym.Street + " " + gym.Number + ", " + gym.City;
+                    Console.WriteLine(address);
+                    var lat =_gymLocationService.GetLatitude(address);
+                    var lon = _gymLocationService.GetLongitude(address);
+                    Console.WriteLine(lat);
+                    Console.WriteLine(lon);
                     var result = _gymRepository.SaveGym(gym);
                 }
                 catch (Exception e)
