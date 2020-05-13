@@ -5,7 +5,7 @@
 }
 
 
-
+<div asp-validation-summary="All" class="text-danger"></div>
 <div class="row">
     <div class="col-sm-12 col-md-8 offset-md-2  col-lg-4 offset-lg-4 p-3 border-radius" style="background: #e1e1e1">
         <form asp-controller="Admin" asp-action="Save" method="post" enctype="application/x-www-form-urlencoded">
@@ -80,7 +80,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">@ViewBag.Longitude</span>
                       </div>
-                       <input id="Latitude" name="Latitude" class="form-control" type="text" value="@Model.Longitude" />
+                       <input id="Longitude" name="Longitude" class="form-control" type="text" value="@Model.Longitude" />
                     </div>
                 }
                 else{
@@ -88,7 +88,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-danger" id="basic-addon3">ERROR</span>
                   </div>
-                   <input id="Latitude" name="Latitude" class="form-control" type="text" value="@Model.Longitude" />
+                   <input id="Longitude" name="Longitude" class="form-control" type="text" value="@Model.Longitude" />
                 </div>
                 }
             </div>
