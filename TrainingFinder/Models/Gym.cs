@@ -28,6 +28,10 @@ namespace TrainingFinder.Models
 
         [Display(Name = "IsAddedByUser")]
         public bool IsAddedByUser { get; set; } = false;
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
         
         public virtual ICollection<Training> Trainings { get; set; }
     }
