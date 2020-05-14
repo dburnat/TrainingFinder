@@ -1,3 +1,15 @@
+.cardStyle {
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
+}
+
+.cardContent {
+  padding: 20;
+  font-weight: bold;
+  font-size: 30;
+}
+
 button {
   font-size: 15;
   horizontal-align: center;
@@ -29,14 +41,4 @@ RadSideDrawer .drawerContentButton {
 .sideLightGrayLabel {
   background-color: lightgray;
 }
-.cardStyle {
-  background-color: rgb(237, 237, 237);
-  color: rgb(43, 43, 43);
-  margin: 10, 10, 10, 0;
-}
 
-.cardContent {
-  padding: 20;
-  font-weight: bold;
-  font-size: 30;
-}

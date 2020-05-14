@@ -13,12 +13,14 @@ import { ObservableArray } from "tns-core-modules/data/observable-array/observab
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
+import { Page } from "tns-core-modules/ui/page/page";
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 
 @Component({
     selector: "Home",
     templateUrl: "home.html",
+    styleUrls: ["home.css"]
 })
 export class HomeComponent implements OnInit {
     constructor(
@@ -26,7 +28,8 @@ export class HomeComponent implements OnInit {
         private http: HttpClient,
         private appDataService: AppDataService,
         private router: Router,
-        private gMapsService: googleMapsService
+        private gMapsService: googleMapsService,
+        private page: Page
     ) {
         // Use the component constructor to inject providers.
     }
@@ -35,9 +38,9 @@ export class HomeComponent implements OnInit {
     public gyms: ObservableArray<Gym>;
     public userLocation: userLocation;
     private mapView: MapView;
-    private com: any;
 
     async ngOnInit(): Promise<void> {
+        //this.page.actionBarHidden = true;
         await this.delay(1000);
         this.userLocation = this.appDataService.retrieveLocation();
         this.gyms = this.gMapsService.getGymsFromService();
@@ -52,10 +55,6 @@ export class HomeComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    getGymsFromApi() {
-        return this.http.get<Gym[]>(`${environment.apiUrl}/api/gym`);
-    }
-
     async onMapReady(args): Promise<void> {
         await this.delay(1000);
         this.mapView = args.object;
@@ -65,7 +64,6 @@ export class HomeComponent implements OnInit {
         this.mapView.zoom = 11;
         this.mapView.myLocationEnabled = true;
         this.mapView.settings.zoomGesturesEnabled = true;
-
         this.gMapsService.createMarkers(this.mapView, this.gyms);
     }
 
