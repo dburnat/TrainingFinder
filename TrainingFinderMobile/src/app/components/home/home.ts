@@ -1,3 +1,5 @@
+import { googleMapsService } from "./../../services/googleMaps.service";
+import { Router } from "@angular/router";
 import { AppDataService } from "./../../services/appdata.service";
 import { userLocation } from "./../../models/userlocation.model";
 import { HttpClient } from "@angular/common/http";
@@ -15,6 +17,7 @@ import { isAndroid, isIOS } from "tns-core-modules/ui/page/page";
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 import * as geolocation from "nativescript-geolocation";
+var mapsModule = require("nativescript-google-maps-sdk");
 @Component({
     selector: "Home",
     templateUrl: "home.html",
@@ -23,16 +26,25 @@ export class HomeComponent implements OnInit {
     constructor(
         public authenticationService: AuthenticationService,
         private http: HttpClient,
-        private appDataService: AppDataService
+        private appDataService: AppDataService,
+        private router: Router,
+        private gMapsService: googleMapsService
     ) {
         // Use the component constructor to inject providers.
     }
     public user = this.authenticationService.currentUserValue;
+
     public gyms: ObservableArray<Gym>;
     public userLocation: userLocation;
-
-    ngOnInit(): void {
+    private mapView: MapView;
+    async ngOnInit(): Promise<void> {
         this.userLocation = this.appDataService.retrieveLocation();
+        await this.delay(1000);
+        this.gyms = this.gMapsService.getGymsFromService();
+    }
+
+    delay(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     onDrawerButtonTap(): void {
@@ -44,16 +56,25 @@ export class HomeComponent implements OnInit {
         return this.http.get<Gym[]>(`${environment.apiUrl}/api/gym`);
     }
 
-    onMapReady = (event) => {
-        let mapView = event.object as MapView;
+    async onMapReady(args): Promise<void> {
+        await this.delay(1000);
+        this.mapView = args.object;
 
         const POLAND_CENTER_LATITUDE = 52;
         const POLAND_CENTER_LONGITUDE = 19;
 
-        mapView.latitude = POLAND_CENTER_LATITUDE;
-        mapView.longitude = POLAND_CENTER_LONGITUDE;
-        mapView.zoom = 5;
-        mapView.myLocationEnabled = true;
-        mapView.settings.zoomGesturesEnabled = true;
-    };
+        this.mapView.latitude = POLAND_CENTER_LATITUDE;
+        this.mapView.longitude = POLAND_CENTER_LONGITUDE;
+        this.mapView.zoom = 5;
+        this.mapView.myLocationEnabled = true;
+        this.mapView.settings.zoomGesturesEnabled = true;
+
+        this.gMapsService.createMarkers(this.mapView, this.gyms);
+    }
+
+    onMarkerSelect(args) {
+        let gymId = args.marker.userData.gymId;
+        this.appDataService.saveGym(this.gyms[gymId - 1]);
+        this.router.navigate(["gym"]);
+    }
 }

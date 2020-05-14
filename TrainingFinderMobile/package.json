@@ -26,7 +26,6 @@
     "nativescript-cardview": "^3.2.0",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-google-maps-sdk": "^2.9.1",
-    "nativescript-remote-builds": "^1.1.0",
     "nativescript-toast": "^2.0.0",
     "nativescript-ui-sidedrawer": "^8.0.1",
     "reflect-metadata": "~0.1.12",

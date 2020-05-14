@@ -16,7 +16,7 @@
 </ActionBar>
 
 <GridLayout columns="*,*" rows="*,*">
-    <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" iosOverflowSafeArea="true" myLo></MapView>
+    <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)"  (markerSelect)="onMarkerSelect($event)" iosOverflowSafeArea="true" myLo></MapView>
 
     <Label col="0" row="1" [text]='authenticationService.currentUserValue | json' textWrap="true"></Label>
     <Label col="1" row="1" [text]='this.userLocation | json' textWrap="true"></Label>
