@@ -15,7 +15,7 @@
     <Label text="Gym view"></Label>
 </ActionBar>
 <GridLayout columns="2*,*" rows="2*,auto,2*"  paddingLeft = "20" paddingRight="20" *ngIf="isDataAvailable">
-    <Card:CardView class="cardStyle" col="0" colSpan="2" row="1" elevation="10">
+    <Card:CardView class="cardStyle" col="0" colSpan="2" row="1" elevation="1">
         <GridLayout class="cardContent" rows="auto,auto,auto,auto" >
             <Label row="0" [text]="gym.name" class="h2" textWrap="true" ></Label>
             <StackLayout row="1"  orientation="horizontal">
