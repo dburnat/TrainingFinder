@@ -31,13 +31,11 @@ namespace TrainingFinder.Data
             builder.Entity<TrainingUser>()
                 .HasOne(c => c.User)
                 .WithMany(d => d.TrainingUsers)
-                .HasForeignKey(c => c.UserId);
-            builder.Entity<Training>()
-                .Property<int>("GymForeignKey");
+                .HasForeignKey(c => c.UserId);            
             builder.Entity<Training>()
                 .HasOne(c => c.Gym)
                 .WithMany(d => d.Trainings)
-                .HasForeignKey("GymForeignKey");
+                .HasForeignKey(d => d.GymId);
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
