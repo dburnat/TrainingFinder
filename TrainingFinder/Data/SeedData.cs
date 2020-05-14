@@ -68,7 +68,7 @@ namespace TrainingFinder.Data
                 new Training
                 {
                     Description = "Plecy",
-                    DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 5, 27, 12, 00, 00),
                     GymId = 2
                 }
             };
@@ -77,7 +77,7 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Biceps",
-                    DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 6, 27, 12, 00, 00),
                     GymId = 2
                 }
             };
@@ -86,7 +86,16 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Klatka",
-                    DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 5, 27, 12, 00, 00),
+                    GymId = 2
+                }
+            };
+            var training5 = new List<Training>()
+            {
+                new Training()
+                {
+                    Description = "Push",
+                    DateTime = new DateTime(2020, 6, 27, 12, 00, 00),
                     GymId = 2
                 }
             };
@@ -101,7 +110,9 @@ namespace TrainingFinder.Data
                         Street = "al. Bratysławska",
                         Number = "4",
                         Trainings = training1,
-                        IsAddedByUser = false
+                        IsAddedByUser = false,
+                        Latitude = 50.084412,
+                        Longitude = 19.936658
                     },
                     new Gym
                     {
@@ -110,7 +121,9 @@ namespace TrainingFinder.Data
                         Street = "Sołtysa Dytmara",
                         Number = "3",
                         Trainings = training2,
-                        IsAddedByUser = false
+                        IsAddedByUser = false,
+                        Latitude = 50.081104,
+                        Longitude = 19.895918
                     },
                     new Gym
                     {
@@ -119,7 +132,9 @@ namespace TrainingFinder.Data
                         Street = "Mogilska",
                         Number = "97",
                         Trainings = training3,
-                        IsAddedByUser = false
+                        IsAddedByUser = false,
+                        Latitude = 50.066616,
+                        Longitude = 19.977886
                     },
                     new Gym
                     {
@@ -128,7 +143,20 @@ namespace TrainingFinder.Data
                         Street = "Osiedle Kolorowe",
                         Number = "33",
                         Trainings = training4,
-                        IsAddedByUser = false
+                        IsAddedByUser = false,
+                        Latitude = 50.076037,
+                        Longitude = 20.024320
+                    },
+                    new Gym
+                    {
+                        Name = "My Fitness Place",
+                        City = "Krakow",
+                        Street = "Osiedle Na Lotnisku",
+                        Number = "3",
+                        Trainings = training5,
+                        IsAddedByUser = false,
+                        Latitude = 50.088539,
+                        Longitude = 20.023891
                     });
             }
 
