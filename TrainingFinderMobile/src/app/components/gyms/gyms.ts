@@ -27,7 +27,6 @@ export class GymsComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         await this.delay(500);
         this.gyms = this.gMapsService.getGymsFromService();
-        console.log(this.gyms);
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
