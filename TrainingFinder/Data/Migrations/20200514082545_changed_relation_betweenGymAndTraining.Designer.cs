@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainingFinder.Data;
 
 namespace TrainingFinder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200514082545_changed_relation_betweenGymAndTraining")]
+    partial class changed_relation_betweenGymAndTraining
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,15 +260,15 @@ namespace TrainingFinder.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GymForeignKey")
+                    b.Property<int>("GymId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GymId")
+                    b.Property<int>("TrainingForeignKey")
                         .HasColumnType("int");
 
                     b.HasKey("TrainingId");
 
-                    b.HasIndex("GymForeignKey");
+                    b.HasIndex("TrainingForeignKey");
 
                     b.ToTable("Trainings");
                 });
@@ -406,7 +408,7 @@ namespace TrainingFinder.Data.Migrations
                 {
                     b.HasOne("TrainingFinder.Models.Gym", "Gym")
                         .WithMany("Trainings")
-                        .HasForeignKey("GymForeignKey")
+                        .HasForeignKey("TrainingForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

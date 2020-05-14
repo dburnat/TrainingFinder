@@ -24,36 +24,50 @@ namespace TrainingFinder.Data
                 {
                     Description = "Triceps",
                     DateTime = new DateTime(2020, 3, 27, 17, 45, 0),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Full Body Workout",
-                    DateTime = new DateTime(2020, 5, 8, 16, 20,00)
+                    DateTime = new DateTime(2020, 5, 8, 16, 20,00),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Cardio",
-                    DateTime = new DateTime(2020, 5, 12, 12, 40,00)
+                    DateTime = new DateTime(2020, 5, 12, 12, 40,00),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Klatka",
-                    DateTime = new DateTime(2020, 5, 13, 14, 30,00)
+                    DateTime = new DateTime(2020, 5, 13, 14, 30,00),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Nogi",
-                    DateTime = new DateTime(2020, 5, 11, 19, 20,00)
+                    DateTime = new DateTime(2020, 5, 11, 19, 20,00),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Plecy",
-                    DateTime = new DateTime(2020, 5, 12, 20, 00,00)
+                    DateTime = new DateTime(2020, 5, 12, 20, 00,00),
+                    GymId = 1
+
                 },
                 new Training()
                 {
                     Description = "Full Body Workout",
-                    DateTime = new DateTime(2020, 5, 8, 16, 20,00)
+                    DateTime = new DateTime(2020, 5, 8, 16, 20,00),
+                    GymId = 1
+
                 },
                 
             };
@@ -63,6 +77,8 @@ namespace TrainingFinder.Data
                 {
                     Description = "Plecy",
                     DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    GymId = 2
+
                 }
             };
             var training3 = new List<Training>()
@@ -71,6 +87,8 @@ namespace TrainingFinder.Data
                 {
                     Description = "Biceps",
                     DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    GymId = 2
+
                 }
             };
             var training4 = new List<Training>()
@@ -79,6 +97,7 @@ namespace TrainingFinder.Data
                 {
                     Description = "Klatka",
                     DateTime = new DateTime(2020, 3, 27, 12, 00, 00),
+                    GymId = 2
                 }
             };
             
