@@ -12,12 +12,10 @@ import { Gym } from "~/app/models/gym.model";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
-import { MapView, Marker, Position } from "nativescript-google-maps-sdk";
-import { isAndroid, isIOS } from "tns-core-modules/ui/page/page";
+import { MapView } from "nativescript-google-maps-sdk";
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
-import * as geolocation from "nativescript-geolocation";
-var mapsModule = require("nativescript-google-maps-sdk");
+
 @Component({
     selector: "Home",
     templateUrl: "home.html",
@@ -37,9 +35,11 @@ export class HomeComponent implements OnInit {
     public gyms: ObservableArray<Gym>;
     public userLocation: userLocation;
     private mapView: MapView;
+    private com: any;
+
     async ngOnInit(): Promise<void> {
-        this.userLocation = this.appDataService.retrieveLocation();
         await this.delay(1000);
+        this.userLocation = this.appDataService.retrieveLocation();
         this.gyms = this.gMapsService.getGymsFromService();
     }
 
@@ -60,19 +60,16 @@ export class HomeComponent implements OnInit {
         await this.delay(1000);
         this.mapView = args.object;
 
-        const POLAND_CENTER_LATITUDE = 52;
-        const POLAND_CENTER_LONGITUDE = 19;
-
-        this.mapView.latitude = POLAND_CENTER_LATITUDE;
-        this.mapView.longitude = POLAND_CENTER_LONGITUDE;
-        this.mapView.zoom = 5;
+        this.mapView.latitude = this.userLocation.latitude;
+        this.mapView.longitude = this.userLocation.longitude;
+        this.mapView.zoom = 11;
         this.mapView.myLocationEnabled = true;
         this.mapView.settings.zoomGesturesEnabled = true;
 
         this.gMapsService.createMarkers(this.mapView, this.gyms);
     }
 
-    onMarkerSelect(args) {
+    onMarkerInfoWindowTapped(args) {
         let gymId = args.marker.userData.gymId;
         this.appDataService.saveGym(this.gyms[gymId - 1]);
         this.router.navigate(["gym"]);

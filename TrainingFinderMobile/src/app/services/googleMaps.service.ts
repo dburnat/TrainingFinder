@@ -29,7 +29,9 @@ export class googleMapsService {
         gyms.forEach(gym =>{
             let marker = new Marker();
             marker.position = mapsModule.Position.positionFromLatLng(gym.latitude,gym.longitude);
+            var snippet = `${gym.street} ${gym.number}`;
             marker.title = gym.name;
+            marker.snippet = snippet;
             marker.userData = {gymId: gym.gymId}
             mapView.addMarker(marker);
         })
