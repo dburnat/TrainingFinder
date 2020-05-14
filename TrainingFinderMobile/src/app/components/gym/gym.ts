@@ -1,3 +1,4 @@
+import { googleMapsService } from './../../services/googleMaps.service';
 import { AuthenticationService } from "./../../services/authentication.service";
 import { AppDataService } from "./../../services/appdata.service";
 import { environment } from "./../../../environments/environment";
@@ -11,7 +12,8 @@ import { registerElement } from "nativescript-angular/element-registry";
 import { CardView } from "nativescript-cardview";
 import { confirm } from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toast";
-
+import { MapView } from "nativescript-google-maps-sdk";
+registerElement("MapView", () => MapView);
 registerElement("CardView", () => CardView);
 
 @Component({
@@ -24,12 +26,14 @@ export class GymComponent implements OnInit {
     gym: Gym;
     private sub: any;
     isDataAvailable: boolean = false;
+    private mapView: MapView;
 
     constructor(
         private http: HttpClient,
         private router: Router,
         private appDataService: AppDataService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private gMapsService: googleMapsService
     ) {}
 
     ngOnInit(): void {
@@ -96,5 +100,19 @@ export class GymComponent implements OnInit {
     addTraining() {
         console.log("Create training button");
         this.router.navigate(["trainingCreate"]);
+    }
+    delay(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async onMapReady(args): Promise<void> {
+        await this.delay(500);
+        this.mapView = args.object;
+
+        this.mapView.latitude = this.gym.latitude;
+        this.mapView.longitude = this.gym.longitude;
+        this.mapView.zoom = 15;
+        this.mapView.settings.zoomGesturesEnabled = true;
+        this.gMapsService.createMarker(this.mapView, this.gym);
     }
 }
