@@ -30,19 +30,27 @@ namespace TrainingFinder.Data
         {
             if (entity.TrainingId == 0)
             {
-                var res = _ctx.Trainings.Add(entity);
+                var gym = _ctx.Gyms.Find(entity.GymId);
+
+                gym.Trainings.Add(entity);
+
                 _ctx.SaveChanges();
                 return true;
             }
             else if (entity.TrainingId != 0)
             {
-                var entityToUpdate = _ctx.Trainings.FirstOrDefault(t => t.TrainingId == entity.TrainingId);
+                var entityToUpdate = _ctx.Trainings
+                    .Where(t => t.TrainingId == entity.TrainingId)
+                    .Include(t => t.Gym)
+                    .SingleOrDefault();
 
                 if (entityToUpdate == null)
                     return false;
 
                 entityToUpdate.Description = entity.Description;
                 entityToUpdate.DateTime = entity.DateTime;
+                entityToUpdate.Gym = entity.Gym;
+                entityToUpdate.TrainingUsers = entity.TrainingUsers;
 
                 _ctx.SaveChanges();
 
@@ -57,7 +65,9 @@ namespace TrainingFinder.Data
             {
                 if (entity.TrainingId == 0)
                 {
-                    _ctx.Trainings.Add(entity);
+                    var gym = _ctx.Gyms.Find(entity.GymId);
+
+                    gym.Trainings.Add(entity);
                     _ctx.SaveChanges();
                     return new ResultModel<Training>(entity, 201);
                 }
@@ -119,14 +129,18 @@ namespace TrainingFinder.Data
         {
             try
             {
-                var getResponse = _ctx.Trainings.FirstOrDefault(x => x.TrainingId == entity.TrainingId);
+                var getResponse = _ctx.Trainings
+                    .Where(t => t.TrainingId == entity.TrainingId)
+                    .Include(t => t.Gym)
+                    .SingleOrDefault();
 
                 if (getResponse == null)
                     return new ResultModel<Training>(null, 404);
 
                 _ctx.Entry(getResponse).State = EntityState.Detached;
 
-                var updateResponse = _ctx.Update(entity);
+                _ctx.Entry(getResponse).CurrentValues.SetValues(entity);
+
                 _ctx.SaveChanges();
 
                 return new ResultModel<Training>(entity, 200);

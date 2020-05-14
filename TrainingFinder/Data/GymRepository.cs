@@ -148,14 +148,52 @@ namespace TrainingFinder.Data
         {
             try
             {
-                var getResponse = _ctx.Gyms.FirstOrDefault(x => x.GymId == gym.GymId);
+                var getResponse = _ctx.Gyms.
+                    Where(g => g.GymId == gym.GymId)
+                    .Include(g => g.Trainings)
+                    .SingleOrDefault();
 
                 if (getResponse == null)
                     return new ResultModel<Gym>(null, 404);
 
                 _ctx.Entry(getResponse).State = EntityState.Detached;
 
-                var updateResponse = _ctx.Update(gym);
+                //update gym
+                _ctx.Entry(getResponse).CurrentValues.SetValues(gym);
+
+                //Delete children
+                foreach (var existingTraining in getResponse.Trainings.ToList())
+                {
+                    if (!gym.Trainings.Any(t => t.TrainingId == existingTraining.TrainingId))
+                    {
+                        _ctx.Trainings.Remove(existingTraining);
+                    }
+                }
+
+                //Add and update children
+                foreach (var trainingModel in gym.Trainings)
+                {
+                    var existingTraining = getResponse.Trainings
+                        .Where(t => t.TrainingId == trainingModel.TrainingId)
+                        .SingleOrDefault();
+
+                    if (existingTraining != null)
+                    {
+                        _ctx.Entry(existingTraining).CurrentValues.SetValues(trainingModel);
+                    }
+                    else
+                    {
+                        var newTraining = new Training
+                        {
+                            Description = trainingModel.Description,
+                            DateTime = trainingModel.DateTime,
+                            TrainingUsers = trainingModel.TrainingUsers,
+                            Gym = trainingModel.Gym,
+                            TrainingId = trainingModel.TrainingId
+                        };
+                    }
+                }             
+                
                 _ctx.SaveChanges();
 
                 return new ResultModel<Gym>(gym, 200);
