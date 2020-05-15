@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using AutoMapper;
-using Lw.SeniorLoans.Compliance.BusinessLogic;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using TrainingFinder.Data;
 using TrainingFinder.Dtos.Training;
 using TrainingFinder.Dtos.TrainingUser;
@@ -20,19 +16,24 @@ namespace TrainingFinder.Services.TrainingUserService
         private readonly ApplicationDbContext _ctx;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public TrainingUserService(ApplicationDbContext ctx, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        private readonly IUserRepository _userRepository;
+
+        public TrainingUserService(ApplicationDbContext ctx, IMapper mapper, IHttpContextAccessor httpContextAccessor,
+            IUserRepository userRepository)
         {
+            _ctx = ctx;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
-            _ctx = ctx;
+            _userRepository = userRepository;
         }
+
         public ResultModel<GetTrainingDto> AddTrainingUser(AddTrainingUserDto newTrainingUser)
         {
             /*ServiceResponse<GetTrainingDto> response = new ServiceResponse<GetTrainingDto>();*/
 
             try
             {
-                Training training = _ctx.Trainings.FirstOrDefault(t => t.TrainingId == newTrainingUser.TrainingId);                    
+                Training training = _ctx.Trainings.FirstOrDefault(t => t.TrainingId == newTrainingUser.TrainingId);
                 if (training == null)
                 {
                     return new ResultModel<GetTrainingDto>(null, 404);
@@ -58,9 +59,38 @@ namespace TrainingFinder.Services.TrainingUserService
             catch (Exception)
             {
                 return new ResultModel<GetTrainingDto>(null, 404);
-            }           
-            
+            }
+        }
 
+        public ResultModel<IQueryable<GetUserTrainingsDto>> GetUserTrainings(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetById(id);
+                if (user.Data == null)
+                {
+                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                }
+
+                if (!user.isStatusCodeSuccess())
+                {
+                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status400BadRequest);
+                }
+
+                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id);
+                var model = trainings.ProjectTo<GetUserTrainingsDto>(new MapperConfiguration(cfg =>
+                    cfg.CreateMap<TrainingUser, GetUserTrainingsDto>()));
+                if (!trainings.Any())
+                {
+                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                }
+
+                return new ResultModel<IQueryable<GetUserTrainingsDto>>(model, StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace TrainingFinder.Services.TrainingUserService
     public interface ITrainingUserService
     {
         ResultModel<GetTrainingDto> AddTrainingUser(AddTrainingUserDto newTrainingUser);
+        ResultModel<IQueryable<GetUserTrainingsDto>> GetUserTrainings(int id);
     }
 }
