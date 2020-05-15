@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainingFinder.Dtos.Training;
+using TrainingFinder.Dtos.TrainingUser;
 using TrainingFinder.Dtos.User;
 using TrainingFinder.Entities;
 using TrainingFinder.Models;
@@ -20,6 +21,7 @@ namespace TrainingFinder.Helpers
             CreateMap<GymModel, Gym>();
             CreateMap<TrainingModel, Training>();
             CreateMap<User, GetUserDto>();
+            CreateMap<Training, GetTrainingDtoWithoutUsers>();
             CreateMap<Training, GetTrainingDto>()
                 .ForMember(dto => dto.Users, u => u.MapFrom(tu =>tu.TrainingUsers.Select(x => x.User)));
         }

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
+using TrainingFinder.Dtos.Training;
+using TrainingFinder.Dtos.TrainingUser;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
@@ -26,6 +29,7 @@ namespace TrainingFinder.Controllers.API
             _mapper = mapper;
             _trainingRepository = trainingRepository;
         }
+
         /// <summary>
         /// Gets all trainings
         /// </summary>
@@ -36,8 +40,7 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var trainings = _trainingRepository.Trainings;
-                var model = _mapper.Map<IList<Training>>(trainings);
-
+                var model = _mapper.Map<IList<GetTrainingDtoWithoutUsers>>(trainings);
                 return StatusCode(200, model);
             }
             catch (Exception e)
@@ -57,8 +60,11 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var getTrainingResponse = _trainingRepository.GetById(id);
-                if (getTrainingResponse.isStatusCodeSuccess() || getTrainingResponse != null)
-                    return StatusCode(getTrainingResponse.StatusCode, getTrainingResponse.Data);
+                if (getTrainingResponse.isStatusCodeSuccess())
+                {
+                    var model = _mapper.Map<GetTrainingDtoWithoutUsers>(getTrainingResponse.Data);
+                    return StatusCode(getTrainingResponse.StatusCode, model);
+                }
                 else
                     return StatusCode(getTrainingResponse.StatusCode);
             }
@@ -80,7 +86,8 @@ namespace TrainingFinder.Controllers.API
         {
             try
             {
-                var trainings = _trainingRepository.Trainings.Where(x => x.DateTime >= timeRangeFrom && x.DateTime <= timeRangeTo);
+                var trainings =
+                    _trainingRepository.Trainings.Where(x => x.DateTime >= timeRangeFrom && x.DateTime <= timeRangeTo);
                 var model = _mapper.Map<IList<Training>>(trainings);
 
                 return StatusCode(200, model);
@@ -145,7 +152,7 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
-        
+
         /// <summary>
         /// Deletes training
         /// </summary>
@@ -159,8 +166,6 @@ namespace TrainingFinder.Controllers.API
                 var deleteResponse = _trainingRepository.Delete(id);
 
                 return StatusCode(deleteResponse.StatusCode);
-
-
             }
             catch (Exception e)
             {
