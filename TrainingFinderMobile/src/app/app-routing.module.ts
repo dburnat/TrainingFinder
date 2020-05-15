@@ -10,6 +10,7 @@ import { Routes } from "@angular/router";
 
 import { RegisterComponent } from "./components/register/register";
 import { HomeComponent } from "./components/home/home";
+import { UsersTrainingsComponent } from './components/userstrainings/userstrainings.component';
 
 const routes: Routes = [
     { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -18,7 +19,8 @@ const routes: Routes = [
     { path: "gyms", component: GymsComponent, canActivate: [AuthGuard] },
     { path: "gymCreate", component: GymCreateComponent, canActivate: [AuthGuard] },
     { path: "gym", component: GymComponent, canActivate: [AuthGuard] },
-    { path: "trainingCreate", component: TrainingcreateComponent, canActivate: [AuthGuard]}
+    { path: "trainingCreate", component: TrainingcreateComponent, canActivate: [AuthGuard]},
+    { path: "usersTrainings", component: UsersTrainingsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

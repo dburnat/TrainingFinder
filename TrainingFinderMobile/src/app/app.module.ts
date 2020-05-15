@@ -21,6 +21,7 @@ import { HomeComponent } from "./components/home/home";
 import { GymsComponent } from "./components/gyms/gyms";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TrainingcreateComponent } from './components/trainingcreate/trainingcreate.component';
+import { UsersTrainingsComponent } from './components/userstrainings/userstrainings.component';
 
 let routes = [
     { path: "", component: RegisterComponent },
@@ -46,7 +47,8 @@ let routes = [
         GymsComponent,
         GymCreateComponent,
         GymComponent,
-        TrainingcreateComponent
+        TrainingcreateComponent,
+        UsersTrainingsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
