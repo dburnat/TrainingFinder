@@ -111,12 +111,14 @@ namespace TrainingFinder.Data
             try
             {
                 IEnumerable<Gym> gyms;
-                if (string.IsNullOrWhiteSpace(city))
-                    gyms = _ctx.Gyms.ToList();
-                else
-                    gyms = _ctx.Gyms.Where(x => x.City == city).ToList();
 
-                return new ResultModel<IEnumerable<Gym>>(gyms, 200);
+                if (string.IsNullOrWhiteSpace(city))
+                    return new ResultModel<IEnumerable<Gym>>(null, 404);
+                else
+                {
+                    gyms = _ctx.Gyms.Where(x => x.City == city).ToList();
+                    return new ResultModel<IEnumerable<Gym>>(gyms, 200);
+                }
             }
             catch (Exception e)
             {

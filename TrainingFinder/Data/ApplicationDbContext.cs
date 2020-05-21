@@ -48,5 +48,6 @@ namespace TrainingFinder.Data
         public DbSet<Training> Trainings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<TrainingUser> TrainingUsers { get; set; }
+        public DbSet<BodyDimension> BodyDimensions { get; set; }
     }
 }
