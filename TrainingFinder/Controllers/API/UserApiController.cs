@@ -32,6 +32,11 @@ namespace TrainingFinder.Controllers.API
             _appSettings = appSettings.Value;
         }
 
+        /// <summary>
+        /// Authenticate user by username and password 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Basic user info and authentication token</returns>
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
@@ -67,6 +72,11 @@ namespace TrainingFinder.Controllers.API
             });
         }
 
+        /// <summary>
+        /// Register user 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
@@ -85,6 +95,10 @@ namespace TrainingFinder.Controllers.API
             }
         }
 
+        /// <summary>
+        /// Return list of users
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -92,6 +106,11 @@ namespace TrainingFinder.Controllers.API
             return Ok(users);
         }
 
+        /// <summary>
+        /// Get user profile
+        /// </summary>
+        /// <param name="id">Integer value of user's id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -100,6 +119,12 @@ namespace TrainingFinder.Controllers.API
             return Ok(model);
         }
 
+        /// <summary>
+        /// Update user profile by id
+        /// </summary>
+        /// <param name="id">Integer value of user's id</param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateModel model)
         {
@@ -118,6 +143,11 @@ namespace TrainingFinder.Controllers.API
             }
         }
 
+        /// <summary>
+        /// Delete User by id
+        /// </summary>
+        /// <param name="id">Integer value of user's id</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

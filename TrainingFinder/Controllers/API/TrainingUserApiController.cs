@@ -24,6 +24,11 @@ namespace TrainingFinder.Controllers.API
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Assign user to training
+        /// </summary>
+        /// <param name="newTrainingUser"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Create(AddTrainingUserDto newTrainingUser)
         {
@@ -31,6 +36,11 @@ namespace TrainingFinder.Controllers.API
             return StatusCode(response.StatusCode, response.Data);
         }
 
+        /// <summary>
+        /// Get user trainings by user's id
+        /// </summary>
+        /// <param name="id">Integer value of user's id</param>
+        /// <returns>List of trainings assigned to user</returns>
         [HttpGet("{id}")]
         public IActionResult GetUserTrainings(int id)
         {
