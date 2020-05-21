@@ -19,6 +19,12 @@ export class TrainingService {
         this.userId = this.authenticationService.currentUserValue.id;
     }
 
+    // OnInit(): void {
+    //     this.gymService.getGyms().subscribe((data: any) => {
+    //         this.myGyms = data;
+    //     });
+    // }
+
     getTrainingsForCurrentUser(): Observable<Training[]> {
         return this.http
             .get(`${environment.apiUrl}/api/traininguser/${this.userId}`)
@@ -27,5 +33,15 @@ export class TrainingService {
                     data.map((item) => this.adapter.adapt(item))
                 )
             );
+    }
+
+    joinTrainingRequest(
+        userId: number,
+        trainingId: number
+    ): Observable<Object> {
+        return this.http.post(`${environment.apiUrl}/api/traininguser`, {
+            trainingId: trainingId,
+            userId: userId,
+        });
     }
 }

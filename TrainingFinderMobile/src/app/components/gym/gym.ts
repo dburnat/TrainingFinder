@@ -1,4 +1,5 @@
-import { googleMapsService } from './../../services/googleMaps.service';
+import { TrainingService } from "./../../services/training.service";
+import { googleMapsService } from "./../../services/googleMaps.service";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { AppDataService } from "./../../services/appdata.service";
 import { environment } from "./../../../environments/environment";
@@ -24,7 +25,7 @@ registerElement("CardView", () => CardView);
 export class GymComponent implements OnInit {
     gymId: string;
     gym: Gym;
-    private sub: any;
+    userId: number;
     isDataAvailable: boolean = false;
     private mapView: MapView;
 
@@ -33,30 +34,18 @@ export class GymComponent implements OnInit {
         private router: Router,
         private appDataService: AppDataService,
         private authenticationService: AuthenticationService,
-        private gMapsService: googleMapsService
+        private gMapsService: googleMapsService,
+        private trainingService: TrainingService
     ) {}
 
     ngOnInit(): void {
         this.gym = this.appDataService.retrieveGym();
+        this.userId = this.authenticationService.currentUserValue.id;
         this.isDataAvailable = true;
     }
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
-    }
-
-    getGym(id: string) {
-        return new Promise(() => {
-            this.getGymFromApi(id).subscribe((data: any) => {
-                this.gym = data;
-            });
-        });
-    }
-
-    getGymFromApi(id: string) {
-        return this.http.get<Gym>(
-            `${environment.apiUrl}/api/gym/GymById/${id}`
-        );
     }
 
     joinTrainingClick(id: number) {
@@ -70,25 +59,21 @@ export class GymComponent implements OnInit {
         this.authenticationService.currentUserValue.id;
         confirm(options).then((result: boolean) => {
             console.log(result);
-            console.log(
-                "user id: " + this.authenticationService.currentUserValue.id
-            );
+            console.log("user id: " + this.userId);
             console.log("training id: " + id);
-            this.joinTrainingRequest(this.authenticationService.currentUserValue.id, id);
+            this.joinTrainingRequest(this.userId, id);
         });
     }
 
     private joinTrainingRequest(userId: number, trainingId: number) {
-        if(userId === null || trainingId === null) return;
+        if (userId === null || trainingId === null) return;
 
-        return this.http.post(`${environment.apiUrl}/api/TrainingUserApi`,
-        {
-            trainingId: trainingId,
-            userId: userId
-        })
-        .subscribe(
+        this.trainingService.joinTrainingRequest(userId, trainingId).subscribe(
             (result) => {
-                Toast.makeText("Joined training with id: " + trainingId, "long").show();
+                Toast.makeText(
+                    "Joined training with id: " + trainingId,
+                    "long"
+                ).show();
             },
             (error) => {
                 Toast.makeText(error.message, "long").show();
