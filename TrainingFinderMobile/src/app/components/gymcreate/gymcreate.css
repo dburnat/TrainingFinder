@@ -1,3 +1,9 @@
 .title{
 font-size: 32;
 }
+StackLayout.background{
+    background-color: #f6f6f6;
+  }
+MDButton.primary{
+    background-color: #ffffff;
+}

@@ -8,14 +8,14 @@ import { AuthenticationService } from "./../../services/authentication.service";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { environment } from "~/environments/environment";
 import { Gym } from "~/app/models/gym.model";
-import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
 import { Page } from "tns-core-modules/ui/page/page";
 import { Observable } from "rxjs";
+import { TrainingService } from '~/app/services/training.service';
+import { Training } from '~/app/models/training.model';
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 
@@ -27,12 +27,11 @@ registerElement("MapView", () => MapView);
 export class HomeComponent implements OnInit {
     constructor(
         public authenticationService: AuthenticationService,
-        private http: HttpClient,
         private appDataService: AppDataService,
         private router: Router,
         private gMapsService: googleMapsService,
         private gymService: GymService,
-        private page: Page
+        private trainingService: TrainingService,
     ) {
         // Use the component constructor to inject providers.
     }
@@ -41,12 +40,19 @@ export class HomeComponent implements OnInit {
     public gyms: Observable<Gym[]>;
     public userLocation: userLocation;
     private mapView: MapView;
+    public trainingCounter: any;
 
     async ngOnInit(): Promise<void> {
         //this.page.actionBarHidden = true;
         await this.delay(1000);
         this.userLocation = this.appDataService.retrieveLocation();
         this.gyms = this.gymService.getGymsFromService();
+        this.trainingService
+            .getTrainingsForCurrentUser()
+            .subscribe((data: any) => {
+                this.trainingCounter = data.length;
+            });
+            await this.delay(1000);
     }
 
     delay(ms: number) {
@@ -74,5 +80,10 @@ export class HomeComponent implements OnInit {
         let gymId = args.marker.userData.gymId;
         this.appDataService.saveGym(this.gyms[gymId - 1]);
         this.router.navigate(["gym"]);
+    }
+
+    async trainingClick(){
+        await this.delay(300);
+        this.router.navigate(["usersTrainings"]);
     }
 }

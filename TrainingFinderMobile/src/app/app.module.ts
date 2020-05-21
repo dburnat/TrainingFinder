@@ -23,6 +23,10 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TrainingcreateComponent } from './components/trainingcreate/trainingcreate.component';
 import { UsersTrainingsComponent } from './components/userstrainings/userstrainings.component';
 
+import { NativeScriptMaterialButtonModule } from "nativescript-material-button/angular";
+import { NativeScriptMaterialCardViewModule } from "nativescript-material-cardview/angular";
+import { NativeScriptMaterialTextFieldModule } from "nativescript-material-textfield/angular";
+
 let routes = [
     { path: "", component: RegisterComponent },
     { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
@@ -38,6 +42,9 @@ let routes = [
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes),
         NativeScriptUISideDrawerModule,
+        NativeScriptMaterialButtonModule,
+        NativeScriptMaterialCardViewModule,
+        NativeScriptMaterialTextFieldModule
     ],
     declarations: [
         AppComponent,

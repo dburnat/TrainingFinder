@@ -15,8 +15,12 @@
         </ActionItem>
         <Label text="Gyms"></Label>
     </ActionBar>
-    <GridLayout columns="*,*,*" rows="*,*,*"  paddingLeft = "20" paddingRight="20">
-        <Label col="0" row="0" colSpan="2" text="List of gyms" class="title"></Label>
+    <GridLayout columns="*,*,*" rows="*,*,auto"  paddingLeft = "20" paddingRight="20">
+        <!-- <StackLayout col="0" row="0" colSpan="3" orientation="horizontal">
+            <Label text="Name" horizontalAlignment="stretch" class="h3" backgroundColor="red"></Label>
+            <Label text="Street"  horizontalAlignment="stretch" class="h3"  backgroundColor="green"></Label>
+            <Label text="ID"  horizontalAlignment="stretch" class="h3" backgroundColor="blue"></Label>
+        </StackLayout> -->
         <Card:CardView class="cardStyle" col="0" row="1" colSpan="3" elevation="1">
             <ListView [items]="gyms">
                 <ng-template let-item="item">
@@ -28,6 +32,6 @@
                 </ng-template>
             </ListView>
         </Card:CardView>
-        <Button  col="3" row="3" text="Add gym" (tap)="goToGymCreate()" class="-primary -rounded-sm"></Button>
+        <MDButton rippleColor="blue" col="3" row="3" text="Add gym" (tap)="goToGymCreate()" ></MDButton>
     </GridLayout>
 </StackLayout>

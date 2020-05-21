@@ -1,12 +1,20 @@
 .cardStyle {
-    background-color: rgb(237, 237, 237);
-    color: rgb(43, 43, 43);
-    margin: 10,10,10,0;
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
 }
 
 .cardContent {
-    padding: 20;
-    font-weight: bold;
-    font-size: 12;
-
+  padding: 20;
+  font-weight: bold;
+  font-size: 12;
+}
+GridLayout.background{
+  background-color: #f6f6f6;
+}
+MDCardView {
+    margin: 10, 10, 10, 0;
+}
+MDButton.primary{
+    background-color: #ffffff;
 }

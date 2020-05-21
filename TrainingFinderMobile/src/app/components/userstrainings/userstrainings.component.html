@@ -14,7 +14,7 @@
     </ActionItem>
     <Label text="Your trainings"></Label>
 </ActionBar>
-<GridLayout columns="2*,*" rows="*,auto,2*"  paddingLeft = "20" paddingRight="20">
+<GridLayout columns="2*,*" rows="*,auto,3*"  paddingLeft = "20" paddingRight="20">
     <Card:CardView class="cardStyle" col="0" colSpan="2" row="1" elevation="1">
         <GridLayout class="cardContent" rows="auto,auto,auto,auto" >
             <Label row="0" text="Your trainings" class="h2" textWrap="true" ></Label>
@@ -26,11 +26,12 @@
                 <GridLayout rows="auto" columns="*">
                     <Label row="0" [text]="item.description"></Label>
                     <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                    <Button row="0" horizontalAlignment="right" text="View info" class="btn btn-primary btn-active"></Button>
+                    <MDButton row="0" variant="flat" rippleColor="blue" horizontalAlignment="right" text="View info" ></MDButton>
                 </GridLayout>
             </ng-template>
         </ListView>
         <!-- <Label row [text]="this.trainings | json" textWrap="true"></Label> -->
     </Card:CardView>
-    <Button  col="2" row="0" text="Add training" (tap)="addTraining()" class="-primary -rounded-sm" verticalAlignment="bottom"></Button>
+    <MDButton rippleColor="blue" col="2" row="0" text="Add training" (tap)="addTraining()" verticalAlignment="bottom"></MDButton>
+
 </GridLayout>

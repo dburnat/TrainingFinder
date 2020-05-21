@@ -15,18 +15,20 @@
     <Label text="Home"></Label>
 </ActionBar>
 
-<GridLayout columns="*,*" rows="*,*">
+<GridLayout columns="*,*" rows="3*,auto">
     <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" (markerInfoWindowTapped)="onMarkerInfoWindowTapped($event)" iosOverflowSafeArea="true"></MapView>
-    <GridLayout columns="*,*" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
-        <Card:CardView class="cardStyle" elevation="1" col="0">
+    <GridLayout columns="*,auto" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
+        <MDCardView rippleColor="blue" elevation="1" col="0">
             <StackLayout  class="cardContent"  orientation="vertical" margin="5">
-                <Label class="h4"  [text]='this.userLocation | json' textWrap="true"></Label>
+                <Label class="h6"  [text]='this.userLocation | json' textWrap="true"></Label>
             </StackLayout>
-        </Card:CardView>
-        <Card:CardView class="cardStyle" elevation="1" col="1">
+        </MDCardView>
+        <MDCardView rippleColor="blue" elevation="1" col="1" (tap)="trainingClick()">
             <StackLayout  class="cardContent" orientation="vertical">
-                <Label class="h4"[text]='authenticationService.currentUserValue | json' textWrap="true"></Label>
+                <Label class="h4" text="You have " textWrap="true"></Label>
+                <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
+                <Label class="h4" text="trainings" textWrap="true"></Label>
             </StackLayout>
-        </Card:CardView>
+        </MDCardView>
     </GridLayout>
 </GridLayout>

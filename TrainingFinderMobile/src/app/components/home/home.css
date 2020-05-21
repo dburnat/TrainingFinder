@@ -1,7 +1,12 @@
-.cardStyle {
+/* .cardStyle {
   background-color: rgb(237, 237, 237);
   color: rgb(43, 43, 43);
   margin: 10, 10, 10, 0;
+} */
+
+MDCardView {
+  margin: 10, 10, 10, 0;
+  text-align: right;
 }
 
 .cardContent {
@@ -42,3 +47,6 @@ RadSideDrawer .drawerContentButton {
   background-color: lightgray;
 }
 
+GridLayout{
+  background-color: #f6f6f6;
+}
