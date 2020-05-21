@@ -5,7 +5,6 @@
 
 trigger:
 - master
-- auth
 - trainingFinder-szymon
 - user-functionality
 
