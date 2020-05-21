@@ -171,5 +171,27 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
+
+        /// <summary>
+        /// Returns list of trainings by body part
+        /// </summary>
+        /// <param name="bodyPart"></param>
+        /// <returns></returns>
+        [Route("bodyPart/{bodyPart}")]
+        [HttpGet]
+        public IActionResult GetByBodyPart(string bodyPart)
+        {
+            try
+            {
+                var trainings = _trainingRepository.Trainings.Where(x => x.Description.ToLower().Contains(bodyPart.ToLower()));
+                var model = _mapper.Map<IList<GetTrainingDto>>(trainings);
+
+                return StatusCode(200, model);
+            }
+            catch (Exception E)
+            {
+                return StatusCode(500, "An unexpected internal server error has occured.");
+            }
+        }
     }
 }

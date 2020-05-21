@@ -115,5 +115,6 @@ namespace TrainingFinder.Controllers.API
                 return StatusCode(500, "An unexpected internal server error has occured.");
             }
         }
+        
     }
 }
