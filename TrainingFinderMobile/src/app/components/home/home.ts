@@ -1,3 +1,4 @@
+import { GymService } from './../../services/gym.service';
 import { googleMapsService } from "./../../services/googleMaps.service";
 import { Router } from "@angular/router";
 import { AppDataService } from "./../../services/appdata.service";
@@ -14,6 +15,7 @@ import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
 import { Page } from "tns-core-modules/ui/page/page";
+import { Observable } from "rxjs";
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 
@@ -29,13 +31,14 @@ export class HomeComponent implements OnInit {
         private appDataService: AppDataService,
         private router: Router,
         private gMapsService: googleMapsService,
+        private gymService: GymService,
         private page: Page
     ) {
         // Use the component constructor to inject providers.
     }
     public user = this.authenticationService.currentUserValue;
 
-    public gyms: ObservableArray<Gym>;
+    public gyms: Observable<Gym[]>;
     public userLocation: userLocation;
     private mapView: MapView;
 
@@ -43,7 +46,7 @@ export class HomeComponent implements OnInit {
         //this.page.actionBarHidden = true;
         await this.delay(1000);
         this.userLocation = this.appDataService.retrieveLocation();
-        this.gyms = this.gMapsService.getGymsFromService();
+        this.gyms = this.gymService.getGymsFromService();
     }
 
     delay(ms: number) {

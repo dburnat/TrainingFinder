@@ -1,13 +1,13 @@
-import { googleMapsService } from "./../../services/googleMaps.service";
+import { GymService } from './../../services/gym.service';
 import { AppDataService } from "./../../services/appdata.service";
 import { Gym } from "../../models/gym.model";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { ObservableArray } from "tns-core-modules/data/observable-array";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
+import { Observable } from 'rxjs';
 registerElement("CardView", () => CardView);
 @Component({
     selector: "gym",
@@ -18,15 +18,15 @@ export class GymsComponent implements OnInit {
     constructor(
         private router: Router,
         private appDataService: AppDataService,
-        private gMapsService: googleMapsService
+        private gymService: GymService
     ) {}
 
-    public gyms: ObservableArray<Gym>;
+    public gyms: Observable<Gym[]>;
     token: string;
 
     async ngOnInit(): Promise<void> {
         await this.delay(500);
-        this.gyms = this.gMapsService.getGymsFromService();
+        this.gyms = this.gymService.getGymsFromService();
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
