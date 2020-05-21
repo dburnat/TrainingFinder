@@ -116,6 +116,7 @@ namespace TrainingFinder.Controllers.API
         {
             var user = _userRepository.GetById(id);
             var model = _mapper.Map<AppUser>(user);
+
             return Ok(model);
         }
 

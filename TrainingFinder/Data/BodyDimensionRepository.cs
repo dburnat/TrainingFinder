@@ -64,13 +64,13 @@ namespace TrainingFinder.Data
                 return false;
         }
 
-        public ResultModel<BodyDimension> Create(BodyDimension bodyDimension)
+        public ResultModel<BodyDimension> Create(BodyDimension bodyDimension, int userId)
         {
             try
             {
                 if (bodyDimension.Id == 0)
                 {
-                    var user = _ctx.Users.SingleOrDefault(x => x.Id == bodyDimension.User.Id);
+                    var user = _ctx.Users.SingleOrDefault(x => x.Id == userId);
 
                     user.BodyDimensions.Add(bodyDimension);
                     _ctx.SaveChanges();
@@ -144,10 +144,11 @@ namespace TrainingFinder.Data
             }
         }
 
-        public ResultModel<IEnumerable<BodyDimension>> GetAllByUser(User user)
+        public ResultModel<IEnumerable<BodyDimension>> GetAllByUser(int id)
         {
             try
             {
+                var user = _ctx.Users.SingleOrDefault(x => x.Id == id);
                 IEnumerable<BodyDimension> bodyDimensions;
                 if (user != null)
                 {

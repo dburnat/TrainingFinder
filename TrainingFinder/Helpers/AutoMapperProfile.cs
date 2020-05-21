@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrainingFinder.Dtos.BodyDimension;
 using TrainingFinder.Dtos.Gym;
 using TrainingFinder.Dtos.Training;
 using TrainingFinder.Dtos.TrainingUser;
@@ -26,6 +27,8 @@ namespace TrainingFinder.Helpers
             CreateMap<Training, GetTrainingDtoWithoutUsers>();
             CreateMap<Training, GetTrainingDto>()
                 .ForMember(dto => dto.Users, u => u.MapFrom(tu => tu.TrainingUsers.Select(x => x.User)));
+            CreateMap<AddBodyDimensionsDto, BodyDimension>();
+            CreateMap<BodyDimension, GetBodyDimensionsDtoWithoutUsers>();
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using TrainingFinder.Data;
+using TrainingFinder.Dtos.BodyDimension;
 using TrainingFinder.Dtos.User;
 using TrainingFinder.Entities;
 using TrainingFinder.Models;
@@ -36,8 +37,9 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var bodyDimensions = _bodyDimensionRepository.BodyDimensions.ToList();
+                var model = _mapper.Map<IList<GetBodyDimensionsDtoWithoutUsers>>(bodyDimensions);
 
-                return StatusCode(200, bodyDimensions);
+                return StatusCode(200, model);
             }
             catch (Exception)
             {
@@ -52,15 +54,16 @@ namespace TrainingFinder.Controllers.API
         /// <returns></returns>
         [Route("id/{id}")]
         [HttpGet]
-        public IActionResult GetUsersBodyDimensions([FromBody]GetUserDto userModel)
+        public IActionResult GetUsersBodyDimensions(int id)
         {
             try
             {
-                var user = _mapper.Map<User>(userModel);
 
-                var bodyDimensions = _bodyDimensionRepository.BodyDimensions.Where(x => x.User.Id == user.Id);
+                var bodyDimensions = _bodyDimensionRepository.BodyDimensions.Where(x => x.User.Id == id);
 
-                return StatusCode(200, bodyDimensions);
+                var model = _mapper.Map<IList<GetBodyDimensionsDtoWithoutUsers>>(bodyDimensions);
+
+                return StatusCode(200, model);
 
             }
             catch (Exception)
@@ -72,24 +75,27 @@ namespace TrainingFinder.Controllers.API
         /// <summary>
         /// Creates new body dimensions
         /// </summary>
-        /// <param name="bodyDimension"></param>
+        /// <param name="AddbodyDimensionDto"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(BodyDimension bodyDimension)
+        public IActionResult Create([FromBody] AddBodyDimensionsDto AddbodyDimensionDto, int userId)
         {
             try
             {
-                if (!ModelState.IsValid)
+                var model = _mapper.Map<BodyDimension>(AddbodyDimensionDto);
+
+                if (ModelState.IsValid)
                 {
-                    var response = _bodyDimensionRepository.Create(bodyDimension);
-                    return StatusCode(response.StatusCode, bodyDimension);
+                    var response = _bodyDimensionRepository.Create(model, userId);
+                    return StatusCode(response.StatusCode, _mapper.Map<GetBodyDimensionsDtoWithoutUsers>(model));
                 }
                 else
                     return BadRequest();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "An unexpected internal server error has occured.");
+                return StatusCode(500, "An unexpected internal server error has occured." + e);
             }
         }
 

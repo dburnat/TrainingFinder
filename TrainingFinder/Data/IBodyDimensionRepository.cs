@@ -12,10 +12,10 @@ namespace TrainingFinder.Data
         IQueryable<BodyDimension> BodyDimensions { get; }
         bool DeleteDimensions(int id);
         bool SaveDimensions(BodyDimension entity);
-        ResultModel<BodyDimension> Create(BodyDimension entity);
+        ResultModel<BodyDimension> Create(BodyDimension entity, int userId);
         ResultModel<BodyDimension> Delete(int id);
         ResultModel<BodyDimension> Update(BodyDimension entity);
-        ResultModel<IEnumerable<BodyDimension>> GetAllByUser(User user);
+        ResultModel<IEnumerable<BodyDimension>> GetAllByUser(int id);
 
     }
 }
