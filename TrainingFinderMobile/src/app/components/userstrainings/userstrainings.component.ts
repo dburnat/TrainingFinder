@@ -1,6 +1,5 @@
 import { AuthenticationService } from "./../../services/authentication.service";
 import { TrainingService } from "./../../services/training.service";
-import { ObservableArray } from "tns-core-modules/data/observable-array";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
@@ -27,7 +26,6 @@ export class UsersTrainingsComponent implements OnInit {
             .subscribe((data: any) => {
                 this.trainings = data;
             });
-        console.log(this.trainings);
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));

@@ -17,7 +17,7 @@ export class TrainingAdapter implements Adapter<Training> {
         return new Training(
             item.trainingId,
             item.description,
-            new Date(),
+            item.dateTime,
             item.gymId
         );
     }

@@ -25,7 +25,7 @@ export class googleMapsService {
         mapView.addMarker(marker);
     }
 
-    createMarkers(mapView: MapView, gyms: Observable<Gym[]>): void {
+    createMarkers(mapView: MapView, gyms: any): void {
         gyms.forEach((gym) => {
             let marker = new Marker();
             marker.position = mapsModule.Position.positionFromLatLng(
