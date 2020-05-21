@@ -51,7 +51,7 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("[action]/{id}")]       
+        [Route("id/{id}")]       
         [HttpGet]
         public IActionResult GymById(int id)
         {
@@ -71,7 +71,7 @@ namespace TrainingFinder.Controllers.API
         /// </summary>
         /// <param name="city"></param>
         /// <returns></returns>
-        [Route("[action]/{city}")]
+        [Route("city/{city}")]
         [HttpGet]
         public IActionResult GymsByCity(string city)
         {

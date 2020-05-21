@@ -12,7 +12,7 @@ using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
 {
-    [Authorize]
+    
     [Route("api/training")]
     [ApiController]
     public class TrainingApiController : ControllerBase
@@ -80,7 +80,7 @@ namespace TrainingFinder.Controllers.API
         /// <param name="timeRangeFrom"></param>
         /// <param name="timeRangeTo"></param>
         /// <returns></returns>
-        [Route("[action]/{timeRangeFrom}/{timeRangeTo}")]
+        [Route("time/{timeRangeFrom}/{timeRangeTo}")]
         [HttpGet]
         public IActionResult GetTrainingByTime(DateTime timeRangeFrom, DateTime timeRangeTo)
         {
