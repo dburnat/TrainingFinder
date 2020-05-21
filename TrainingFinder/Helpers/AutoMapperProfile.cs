@@ -24,7 +24,6 @@ namespace TrainingFinder.Helpers
             CreateMap<Training, TrainingDtoWithoutUsers>();
             CreateMap<Training, GetTrainingDto>()
                 .ForMember(dto => dto.Users, u => u.MapFrom(tu => tu.TrainingUsers.Select(x => x.User)));
-            CreateMap<TrainingUser, UserTrainingsDto>();
         }
     }
 }

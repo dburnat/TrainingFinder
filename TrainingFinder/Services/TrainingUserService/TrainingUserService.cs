@@ -62,34 +62,34 @@ namespace TrainingFinder.Services.TrainingUserService
             }
         }
 
-        public ResultModel<List<UserTrainingsDto>> GetUserTrainings(int id)
+        public ResultModel<List<TrainingDtoWithoutUsers>> GetUserTrainings(int id)
         {
             try
             {
                 var user = _userRepository.GetById(id);
                 if (user.Data == null)
                 {
-                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
                 }
 
                 if (!user.isStatusCodeSuccess())
                 {
-                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status400BadRequest);
+                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status400BadRequest);
                 }
 
-                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).ToList();
-                var model = _mapper.Map<List<UserTrainingsDto>>(trainings);
+                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).Select(c => c.Training).ToList();
+                var model = _mapper.Map<List<TrainingDtoWithoutUsers>>(trainings);
 
                 if (!trainings.Any())
                 {
-                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
                 }
 
-                return new ResultModel<List<UserTrainingsDto>>(model, StatusCodes.Status200OK);
+                return new ResultModel<List<TrainingDtoWithoutUsers>>(model, StatusCodes.Status200OK);
             }
             catch (Exception e)
             {
-                return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status500InternalServerError);
+                return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status500InternalServerError);
             }
         }
     }
