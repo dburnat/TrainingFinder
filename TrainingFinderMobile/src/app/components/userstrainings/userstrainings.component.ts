@@ -1,8 +1,11 @@
+import { AuthenticationService } from "./../../services/authentication.service";
+import { TrainingService } from "./../../services/training.service";
 import { ObservableArray } from "tns-core-modules/data/observable-array";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Training } from "~/app/models/training.model";
+import { Observable } from "rxjs";
 
 @Component({
     selector: "ns-userstrainings",
@@ -10,12 +13,21 @@ import { Training } from "~/app/models/training.model";
     styleUrls: ["./userstrainings.component.css"],
 })
 export class UsersTrainingsComponent implements OnInit {
-    trainings: ObservableArray<Training>;
+    public trainings: Observable<Training[]>;
 
-    constructor() {}
+    constructor(
+        private trainingService: TrainingService,
+        private authenticationService: AuthenticationService
+    ) {}
 
     async ngOnInit(): Promise<void> {
         await this.delay(500);
+        this.trainingService
+            .getTrainingsForCurrentUser()
+            .subscribe((data: any) => {
+                this.trainings = data;
+            });
+        console.log(this.trainings);
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,5 +36,9 @@ export class UsersTrainingsComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+
+    addTraining() {
+        console.log("addtraining");
     }
 }
