@@ -43,6 +43,7 @@ namespace TrainingFinder
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITrainingRepository, TrainingRepository>();
             services.AddTransient<IGymRepository, GymRepository>();
+            services.AddTransient<IBodyDimensionRepository, BodyDimensionRepository>();
             services.AddScoped<ITrainingUserService, TrainingUserService>();
             services.AddScoped<IGymLocationService, GymLocationService>();
             services.AddDefaultIdentity<AdminUser>(options =>
