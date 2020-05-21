@@ -8,6 +8,7 @@ using TrainingFinder.Models.Users;
 using TrainingFinder.Models.ViewModels;
 using TrainingFinder.Data;
 using TrainingFinder.Models;
+using TrainingFinder.Services.GymLocationService;
 
 
 namespace TrainingFinder.Controllers
@@ -18,13 +19,15 @@ namespace TrainingFinder.Controllers
         private readonly SignInManager<AdminUser> _signInManager;
         private readonly UserManager<AdminUser> _userManager;
         private readonly IGymRepository _gymRepository;
+        private readonly IGymLocationService _gymLocationService;
 
         public AdminController(SignInManager<AdminUser> signInManager, UserManager<AdminUser> userManager,
-            IGymRepository gymRepository)
+            IGymRepository gymRepository, IGymLocationService gymLocationService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _gymRepository = gymRepository;
+            _gymLocationService = gymLocationService;
         }
 
 
@@ -118,10 +121,13 @@ namespace TrainingFinder.Controllers
         public IActionResult Edit(int id)
         {
             var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-
+            
             if (gym == null)
                 return View("List");
 
+            var address = gym.Street + " " + gym.Number + ", " + gym.City;
+            ViewBag.Latitude = _gymLocationService.GetLatitude(address);
+            ViewBag.Longitude = _gymLocationService.GetLongitude(address);
             return View(gym);
         }
 
@@ -184,5 +190,7 @@ namespace TrainingFinder.Controllers
 
             return View("List", _gymRepository.Gyms);
         }
+        
+        
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainingFinder.Data;
 
 namespace TrainingFinder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200514083512_changedRelationGymToTraining")]
+    partial class changedRelationGymToTraining
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,12 +226,6 @@ namespace TrainingFinder.Data.Migrations
                     b.Property<bool>("IsAddedByUser")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -264,12 +260,12 @@ namespace TrainingFinder.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GymId")
+                    b.Property<int>("GymForeignKey")
                         .HasColumnType("int");
 
                     b.HasKey("TrainingId");
 
-                    b.HasIndex("GymId");
+                    b.HasIndex("GymForeignKey");
 
                     b.ToTable("Trainings");
                 });
@@ -409,7 +405,7 @@ namespace TrainingFinder.Data.Migrations
                 {
                     b.HasOne("TrainingFinder.Models.Gym", "Gym")
                         .WithMany("Trainings")
-                        .HasForeignKey("GymId")
+                        .HasForeignKey("GymForeignKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

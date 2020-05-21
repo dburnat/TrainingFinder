@@ -63,7 +63,7 @@ namespace TrainingFinder.Controllers
             else
             {
                 try
-                {
+                {                    
                     var result = _trainingRepository.SaveTraining(training);
                 }
                 catch (Exception e)
