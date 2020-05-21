@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using TrainingFinder.Data;
 using TrainingFinder.Dtos.Training;
@@ -62,34 +62,34 @@ namespace TrainingFinder.Services.TrainingUserService
             }
         }
 
-        public ResultModel<IQueryable<GetUserTrainingsDto>> GetUserTrainings(int id)
+        public ResultModel<List<UserTrainingsDto>> GetUserTrainings(int id)
         {
             try
             {
                 var user = _userRepository.GetById(id);
                 if (user.Data == null)
                 {
-                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status404NotFound);
                 }
 
                 if (!user.isStatusCodeSuccess())
                 {
-                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status400BadRequest);
+                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status400BadRequest);
                 }
 
-                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id);
-                var model = trainings.ProjectTo<GetUserTrainingsDto>(new MapperConfiguration(cfg =>
-                    cfg.CreateMap<TrainingUser, GetUserTrainingsDto>()));
+                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).ToList();
+                var model = _mapper.Map<List<UserTrainingsDto>>(trainings);
+
                 if (!trainings.Any())
                 {
-                    return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status404NotFound);
                 }
 
-                return new ResultModel<IQueryable<GetUserTrainingsDto>>(model, StatusCodes.Status200OK);
+                return new ResultModel<List<UserTrainingsDto>>(model, StatusCodes.Status200OK);
             }
             catch (Exception e)
             {
-                return new ResultModel<IQueryable<GetUserTrainingsDto>>(null, StatusCodes.Status500InternalServerError);
+                return new ResultModel<List<UserTrainingsDto>>(null, StatusCodes.Status500InternalServerError);
             }
         }
     }
