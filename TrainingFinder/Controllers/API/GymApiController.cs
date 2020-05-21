@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
+using TrainingFinder.Dtos.Gym;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
@@ -37,7 +38,7 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.ToList();
-                var model = _mapper.Map<IList<Gym>>(gyms);
+                var model = _mapper.Map<IList<GetGymDto>>(gyms);
                 return StatusCode(200, model);
             }
             catch (Exception)
@@ -58,7 +59,8 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-                return StatusCode(200, gym);
+                var model = _mapper.Map<GetGymDto>(gym);
+                return StatusCode(200, model);
             }
             catch (Exception)
             {
@@ -78,7 +80,8 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.Where(x => x.City.ToLower() == city.ToLower()).ToList();
-                return StatusCode(200, gyms);
+                var model = _mapper.Map<IList<GetGymDto>>(gyms);
+                return StatusCode(200, model);
             }
             catch (Exception e)
             {

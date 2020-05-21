@@ -62,34 +62,34 @@ namespace TrainingFinder.Services.TrainingUserService
             }
         }
 
-        public ResultModel<List<TrainingDtoWithoutUsers>> GetUserTrainings(int id)
+        public ResultModel<List<GetTrainingDtoWithoutUsers>> GetUserTrainings(int id)
         {
             try
             {
                 var user = _userRepository.GetById(id);
                 if (user.Data == null)
                 {
-                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<GetTrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
                 }
 
                 if (!user.isStatusCodeSuccess())
                 {
-                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status400BadRequest);
+                    return new ResultModel<List<GetTrainingDtoWithoutUsers>>(null, StatusCodes.Status400BadRequest);
                 }
 
                 var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).Select(c => c.Training).ToList();
-                var model = _mapper.Map<List<TrainingDtoWithoutUsers>>(trainings);
+                var model = _mapper.Map<List<GetTrainingDtoWithoutUsers>>(trainings);
 
                 if (!trainings.Any())
                 {
-                    return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
+                    return new ResultModel<List<GetTrainingDtoWithoutUsers>>(null, StatusCodes.Status404NotFound);
                 }
 
-                return new ResultModel<List<TrainingDtoWithoutUsers>>(model, StatusCodes.Status200OK);
+                return new ResultModel<List<GetTrainingDtoWithoutUsers>>(model, StatusCodes.Status200OK);
             }
             catch (Exception e)
             {
-                return new ResultModel<List<TrainingDtoWithoutUsers>>(null, StatusCodes.Status500InternalServerError);
+                return new ResultModel<List<GetTrainingDtoWithoutUsers>>(null, StatusCodes.Status500InternalServerError);
             }
         }
     }

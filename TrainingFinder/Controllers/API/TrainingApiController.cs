@@ -39,7 +39,7 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var trainings = _trainingRepository.Trainings;
-                var model = _mapper.Map<IList<TrainingDtoWithoutUsers>>(trainings);
+                var model = _mapper.Map<IList<GetTrainingDtoWithoutUsers>>(trainings);
                 return StatusCode(200, model);
             }
             catch (Exception e)
@@ -61,7 +61,7 @@ namespace TrainingFinder.Controllers.API
                 var getTrainingResponse = _trainingRepository.GetById(id);
                 if (getTrainingResponse.isStatusCodeSuccess())
                 {
-                    var model = _mapper.Map<TrainingDtoWithoutUsers>(getTrainingResponse.Data);
+                    var model = _mapper.Map<GetTrainingDtoWithoutUsers>(getTrainingResponse.Data);
                     return StatusCode(getTrainingResponse.StatusCode, model);
                 }
                 else

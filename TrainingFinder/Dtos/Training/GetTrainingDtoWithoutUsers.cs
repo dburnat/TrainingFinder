@@ -3,7 +3,7 @@ using AutoMapper.Configuration.Conventions;
 
 namespace TrainingFinder.Dtos.Training
 {
-    public class TrainingDtoWithoutUsers
+    public class GetTrainingDtoWithoutUsers
     {
         [MapTo("TrainingId")]
         public int TrainingId { get; set; }
