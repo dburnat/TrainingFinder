@@ -18,6 +18,7 @@ namespace TrainingFinder.Entities
         public DateTime Birthday { get; set; }
         public string Email { get; set; }
         public virtual ICollection<TrainingUser> TrainingUsers { get; set; }
+        public virtual ICollection<BodyDimension> BodyDimensions { get; set; }
 
     }
 }

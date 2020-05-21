@@ -17,6 +17,6 @@ namespace TrainingFinder.Models
         public string Thigh { get; set; }
         public string Calf { get; set; }
         public DateTime Date { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

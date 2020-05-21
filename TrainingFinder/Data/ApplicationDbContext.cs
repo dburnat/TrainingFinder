@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 using TrainingFinder.Models.Users;
 
@@ -36,6 +37,9 @@ namespace TrainingFinder.Data
                 .HasOne(c => c.Gym)
                 .WithMany(d => d.Trainings)
                 .HasForeignKey(d => d.GymId);
+            builder.Entity<User>()
+                .HasMany(u => u.BodyDimensions)
+                .WithOne(b => b.User);
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
