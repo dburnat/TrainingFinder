@@ -15,19 +15,26 @@
     <Label text="Home"></Label>
 </ActionBar>
 
-<GridLayout columns="*,*" rows="3*,auto">
+<GridLayout columns="*,*" rows="2*,*">
     <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" (markerInfoWindowTapped)="onMarkerInfoWindowTapped($event)" iosOverflowSafeArea="true"></MapView>
-    <GridLayout columns="*,auto" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
+    <GridLayout columns="*,*" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
         <MDCardView rippleColor="blue" elevation="1" col="0">
             <StackLayout  class="cardContent"  orientation="vertical" margin="5">
-                <Label class="h6"  [text]='this.userLocation | json' textWrap="true"></Label>
+                <Label class="h3"  text="Hello Dawid" textWrap="true"></Label>
+                <Label class="h5"  text="Your current weight" textWrap="true"></Label>
+                <Label class="h4"  text="78 kg" textWrap="true"></Label>
             </StackLayout>
         </MDCardView>
         <MDCardView rippleColor="blue" elevation="1" col="1" (tap)="trainingClick()">
             <StackLayout  class="cardContent" orientation="vertical">
-                <Label class="h4" text="You have " textWrap="true"></Label>
+                <Label class="h3" text="You have " textWrap="true"></Label>
                 <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
-                <Label class="h4" text="trainings" textWrap="true"></Label>
+                <Label class="h3" text="trainings" textWrap="true"></Label>
+                <Label class="h5"  text="Your next training" textWrap="true"></Label>
+                <StackLayout orientation="horizontal">
+                    <Label class="h5" text="FBW" textWrap="true" ></Label>
+                    <Label class="h5" paddingLeft="10" text="17:45 27-03-2020" textWrap="true"></Label>
+                </StackLayout>
             </StackLayout>
         </MDCardView>
     </GridLayout>

@@ -11,8 +11,8 @@
             <TextField #password class="input input-border" secure="true" autocorrect="false" autocapitalizationType="none"></TextField>
         </StackLayout>
         <StackLayout class="input-field">
-            <Button text="Login" (tap)="login(userName.text, password.text)" class="-primary -rounded-sm"></Button>
-            <Button text="Register" (tap)="goToRegister()" class="-outline -rounded-sm"></Button>
+            <MDButton text="Login" rippleColor="blue" (tap)="login(userName.text, password.text)" ></MDButton>
+            <MDButton text="Register" rippleColor="violet" (tap)="goToRegister()" ></MDButton>
         </StackLayout>
     </StackLayout>
 </StackLayout>

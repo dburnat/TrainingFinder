@@ -17,4 +17,5 @@ MDCardView {
 }
 MDButton.primary{
     background-color: #ffffff;
+    border-radius: 3;
 }

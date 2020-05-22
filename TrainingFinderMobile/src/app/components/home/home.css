@@ -10,7 +10,7 @@ MDCardView {
 }
 
 .cardContent {
-  padding: 20;
+  padding: 15;
   font-weight: bold;
   font-size: 30;
 }
