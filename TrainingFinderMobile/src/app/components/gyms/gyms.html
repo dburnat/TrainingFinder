@@ -22,15 +22,17 @@
             <Label text="ID"  horizontalAlignment="stretch" class="h3" backgroundColor="blue"></Label>
         </StackLayout> -->
         <Card:CardView class="cardStyle" col="0" row="1" colSpan="3" elevation="1">
-            <ListView [items]="gyms">
-                <ng-template let-item="item">
-                    <GridLayout rows="auto" cols="auto">
-                        <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
-                        <Label row="0" horizontalAlignment="center" [text]="item.street" (tap)="goToGym(item.gymId)"></Label>
-                        <Label row="0" horizontalAlignment="right" [text]="item.gymId" (tap)="goToGym(item.gymId)"></Label>
-                    </GridLayout>
-                </ng-template>
-            </ListView>
+            <PullToRefresh (refresh)="refreshList($event)">
+                <ListView [items]="gyms">
+                    <ng-template let-item="item">
+                        <GridLayout rows="auto" cols="auto">
+                            <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
+                            <Label row="0" horizontalAlignment="center" [text]="item.street" (tap)="goToGym(item.gymId)"></Label>
+                            <Label row="0" horizontalAlignment="right" [text]="item.gymId" (tap)="goToGym(item.gymId)"></Label>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+        </PullToRefresh>
         </Card:CardView>
         <MDButton rippleColor="blue" col="3" row="3" text="Add gym" (tap)="goToGymCreate()" ></MDButton>
     </GridLayout>

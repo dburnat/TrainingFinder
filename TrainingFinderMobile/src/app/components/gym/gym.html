@@ -32,19 +32,21 @@
             </StackLayout>
         </GridLayout>
     </MDCardView>
-    <MDCardView  col="0" row="0" elevation="10">
+    <MDCardView  col="0" row="0" elevation="1">
         <MapView row="0" col="2" (mapReady)="onMapReady($event)" iosOverflowSafeArea="true"></MapView>
     </MDCardView>
-    <MDCardView  elevation="10" col="0" row="2" colSpan="2">
-        <ListView [items]="gym.trainings" >
-            <ng-template let-item="item">
-                <GridLayout rows="auto" columns="*">
-                    <Label row="0" [text]="item.description"></Label>
-                    <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                    <MDButton variant="flat" row="0" horizontalAlignment="right" text="JOIN" (tap)="joinTrainingClick(item.trainingId)" ></MDButton>
-                </GridLayout>
-            </ng-template>
-        </ListView>
+    <MDCardView  elevation="1" col="0" row="2" colSpan="2">
+        <PullToRefresh (refresh)="refreshList($event)">
+            <ListView [items]="gym.trainings" >
+                <ng-template let-item="item">
+                    <GridLayout rows="auto" columns="*">
+                        <Label row="0" [text]="item.description"></Label>
+                        <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
+                        <MDButton variant="flat" row="0" horizontalAlignment="right" text="JOIN" (tap)="joinTrainingClick(item.trainingId)" ></MDButton>
+                    </GridLayout>
+                </ng-template>
+            </ListView>
+    </PullToRefresh>
     </MDCardView>
     <MDButton rippleColor="blue" class="primary" col="2" row="0" text="Add training" (tap)="addTraining()" verticalAlignment="bottom"></MDButton>
 </GridLayout>

@@ -21,15 +21,17 @@
         </GridLayout>
     </Card:CardView>
     <Card:CardView class="cardStyle" elevation="10" col="0" row="2" colSpan="2">
-        <ListView [items]="trainings" >
-            <ng-template let-item="item">
-                <GridLayout rows="auto" columns="*">
-                    <Label row="0" [text]="item.description"></Label>
-                    <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                    <MDButton row="0" variant="flat" rippleColor="blue" horizontalAlignment="right" text="View info" ></MDButton>
-                </GridLayout>
-            </ng-template>
-        </ListView>
+        <PullToRefresh (refresh)="refreshList($event)">
+            <ListView [items]="trainings" >
+                <ng-template let-item="item">
+                    <GridLayout rows="auto" columns="*">
+                        <Label row="0" [text]="item.description"></Label>
+                        <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
+                        <MDButton row="0" variant="flat" rippleColor="blue" horizontalAlignment="right" text="View info" ></MDButton>
+                    </GridLayout>
+                </ng-template>
+            </ListView>
+    </PullToRefresh>
         <!-- <Label row [text]="this.trainings | json" textWrap="true"></Label> -->
     </Card:CardView>
     <MDButton rippleColor="blue" col="2" row="0" text="Add training" (tap)="addTraining()" verticalAlignment="bottom"></MDButton>

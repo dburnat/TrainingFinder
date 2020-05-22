@@ -1,8 +1,8 @@
+import { GymService } from "./../../services/gym.service";
 import { TrainingService } from "./../../services/training.service";
 import { googleMapsService } from "./../../services/googleMaps.service";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { AppDataService } from "./../../services/appdata.service";
-import { environment } from "./../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
@@ -14,8 +14,10 @@ import { CardView } from "nativescript-cardview";
 import { confirm } from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toast";
 import { MapView } from "nativescript-google-maps-sdk";
+import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 registerElement("MapView", () => MapView);
 registerElement("CardView", () => CardView);
+registerElement("PullToRefresh", () => PullToRefresh);
 
 @Component({
     selector: "gym",
@@ -23,7 +25,7 @@ registerElement("CardView", () => CardView);
     styleUrls: ["gym.css"],
 })
 export class GymComponent implements OnInit {
-    gymId: string;
+    gymId: number;
     gym: Gym;
     userId: number;
     isDataAvailable: boolean = false;
@@ -35,10 +37,12 @@ export class GymComponent implements OnInit {
         private appDataService: AppDataService,
         private authenticationService: AuthenticationService,
         private gMapsService: googleMapsService,
-        private trainingService: TrainingService
+        private trainingService: TrainingService,
+        private gymService: GymService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        await this.delay(500);
         this.gym = this.appDataService.retrieveGym();
         this.userId = this.authenticationService.currentUserValue.id;
         this.isDataAvailable = true;
@@ -46,6 +50,15 @@ export class GymComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+    refreshList(args) {
+        var pullRefresh = args.object;
+        setTimeout(function () {
+            pullRefresh.refreshing = false;
+        }, 1000);
+        this.gymService.getGymByIdFromApi(this.gym.gymId).subscribe((data: any) => {
+            this.gym = data;
+        });
     }
 
     joinTrainingClick(id: number) {

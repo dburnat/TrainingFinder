@@ -7,8 +7,10 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
+import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { Observable } from 'rxjs';
 registerElement("CardView", () => CardView);
+registerElement("PullToRefresh", () => PullToRefresh);
 @Component({
     selector: "gym",
     templateUrl: "gyms.html",
@@ -26,7 +28,9 @@ export class GymsComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         await this.delay(500);
-        this.gyms = this.gymService.getGymsFromService();
+        this.gymService.getGymsFromApi().subscribe((data: any) => {
+            this.gyms = data;
+        });
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -35,6 +39,15 @@ export class GymsComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+    refreshList(args) {
+        var pullRefresh = args.object;
+        setTimeout(function () {
+            pullRefresh.refreshing = false;
+        }, 1000);
+        this.gymService.getGymsFromApi().subscribe((data: any) => {
+            this.gyms = data;
+        });
     }
 
     goToGymCreate() {

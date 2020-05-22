@@ -5,7 +5,9 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Training } from "~/app/models/training.model";
 import { Observable } from "rxjs";
-
+import { registerElement } from "nativescript-angular/element-registry";
+import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
+registerElement("PullToRefresh", () => PullToRefresh);
 @Component({
     selector: "ns-userstrainings",
     templateUrl: "./userstrainings.component.html",
@@ -34,6 +36,18 @@ export class UsersTrainingsComponent implements OnInit {
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
+    }
+
+    refreshList(args) {
+        var pullRefresh = args.object;
+        setTimeout(function () {
+            pullRefresh.refreshing = false;
+        }, 1000);
+        this.trainingService
+            .getTrainingsForCurrentUser()
+            .subscribe((data: any) => {
+                this.trainings = data;
+            });
     }
 
     addTraining() {
