@@ -1,41 +1,43 @@
-<ActionBar>
-    <!--
-    Use the NavigationButton as a side-drawer button in Android
-    because ActionItems are shown on the right side of the ActionBar
-    -->
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!--
-    Use the ActionItem for IOS with position set to left. Using the
-    NavigationButton as a side-drawer button in iOS is not possible,
-    because its function is to always navigate back in the application.
-    -->
-    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
-    </ActionItem>
-    <Label text="Home"></Label>
-</ActionBar>
+<Page (loaded)="onPageLoaded()">
+    <ActionBar>
+        <!--
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+            ios.position="left">
+        </ActionItem>
+        <Label text="Home"></Label>
+    </ActionBar>
 
-<GridLayout columns="*,*" rows="2*,*">
-    <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" (markerInfoWindowTapped)="onMarkerInfoWindowTapped($event)" iosOverflowSafeArea="true"></MapView>
-    <GridLayout columns="*,*" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
-        <MDCardView rippleColor="blue" elevation="1" col="0">
-            <StackLayout  class="cardContent"  orientation="vertical" margin="5">
-                <Label class="h3"  text="Hello Dawid" textWrap="true"></Label>
-                <Label class="h5"  text="Your current weight" textWrap="true"></Label>
-                <Label class="h4"  text="78 kg" textWrap="true"></Label>
-            </StackLayout>
-        </MDCardView>
-        <MDCardView rippleColor="blue" elevation="1" col="1" (tap)="trainingClick()">
-            <StackLayout  class="cardContent" orientation="vertical">
-                <Label class="h3" text="You have " textWrap="true"></Label>
-                <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
-                <Label class="h3" text="trainings" textWrap="true"></Label>
-                <Label class="h5"  text="Your next training" textWrap="true"></Label>
-                <StackLayout orientation="horizontal">
-                    <Label class="h5" text="FBW" textWrap="true" ></Label>
-                    <Label class="h5" paddingLeft="10" text="17:45 27-03-2020" textWrap="true"></Label>
+    <GridLayout columns="*,*" rows="2*,*">
+        <MapView row="0" col="0" colSpan="2" (mapReady)="onMapReady($event)" (markerInfoWindowTapped)="onMarkerInfoWindowTapped($event)" iosOverflowSafeArea="true"></MapView>
+        <GridLayout columns="*,*" paddingLeft = "20" paddingRight="20" col="0" colSpan="2" row="1">
+            <MDCardView rippleColor="blue" elevation="1" col="0">
+                <StackLayout  class="cardContent"  orientation="vertical" margin="5">
+                    <Label class="h3"  text="Hello Dawid" textWrap="true"></Label>
+                    <Label class="h5"  text="Your current weight" textWrap="true"></Label>
+                    <Label class="h4"  text="78 kg" textWrap="true"></Label>
                 </StackLayout>
-            </StackLayout>
-        </MDCardView>
+            </MDCardView>
+            <MDCardView rippleColor="blue" elevation="1" col="1" (tap)="trainingClick()">
+                <StackLayout  class="cardContent" orientation="vertical">
+                    <Label class="h3" text="You have " textWrap="true"></Label>
+                    <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
+                    <Label class="h3" text="trainings" textWrap="true"></Label>
+                    <Label class="h5"  text="Your next training" textWrap="true"></Label>
+                    <StackLayout orientation="horizontal">
+                        <Label class="h5" text="FBW" textWrap="true" ></Label>
+                        <Label class="h5" paddingLeft="10" text="17:45 27-03-2020" textWrap="true"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </MDCardView>
+        </GridLayout>
     </GridLayout>
-</GridLayout>
+</Page>

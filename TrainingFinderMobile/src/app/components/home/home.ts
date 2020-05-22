@@ -3,7 +3,6 @@ import { googleMapsService } from "./../../services/googleMaps.service";
 import { Router } from "@angular/router";
 import { AppDataService } from "./../../services/appdata.service";
 import { userLocation } from "./../../models/userlocation.model";
-import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { Component, OnInit, DoCheck } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -12,10 +11,9 @@ import { Gym } from "~/app/models/gym.model";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
-import { Page } from "tns-core-modules/ui/page/page";
 import { Observable } from "rxjs";
 import { TrainingService } from "~/app/services/training.service";
-import { Training } from "~/app/models/training.model";
+
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 
@@ -50,13 +48,16 @@ export class HomeComponent implements OnInit {
         this.gymService.getGymsFromApi().subscribe((data: any) => {
             this.gyms = data;
         });
+    }
+
+    async onPageLoaded(): Promise<void> {
+        await this.delay(500);
         this.trainingService
             .getTrainingsForCurrentUser()
             .subscribe((data: any) => {
-                    this.trainingCounter = data.length;
+                this.trainingCounter = data.length;
             });
     }
-
 
     delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
