@@ -1,12 +1,11 @@
 import { AuthenticationService } from "./authentication.service";
-import { ObservableArray } from "tns-core-modules/data/observable-array";
-import { Training, TrainingAdapter } from "../models/training.model";
+import { TrainingAdapter } from "../models/training.model";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { environment } from "./../../environments/environment";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
+import { map, catchError } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class TrainingService {
@@ -25,13 +24,16 @@ export class TrainingService {
     //     });
     // }
 
-    getTrainingsForCurrentUser(): Observable<Training[]> {
+    getTrainingsForCurrentUser(): Observable<any> {
         return this.http
             .get(`${environment.apiUrl}/api/traininguser/${this.userId}`)
             .pipe(
                 map((data: any[]) =>
                     data.map((item) => this.adapter.adapt(item))
-                )
+                ),
+                catchError((error): any => {
+                    return throwError(`Connection Error: ${error}`);
+                })
             );
     }
 
