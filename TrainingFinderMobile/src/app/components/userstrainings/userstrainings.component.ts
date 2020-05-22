@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthenticationService } from "./../../services/authentication.service";
 import { TrainingService } from "./../../services/training.service";
 import { Component, OnInit } from "@angular/core";
@@ -18,7 +19,8 @@ export class UsersTrainingsComponent implements OnInit {
 
     constructor(
         private trainingService: TrainingService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private router: Router
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -50,7 +52,7 @@ export class UsersTrainingsComponent implements OnInit {
             });
     }
 
-    addTraining() {
-        console.log("addtraining");
+    goToGyms() {
+        this.router.navigate(["gyms"]);
     }
 }
