@@ -11,10 +11,7 @@ import { Gym } from "../models/gym.model";
 @Injectable({ providedIn: "root" })
 export class GymService {
     private gyms: Observable<Gym[]>;
-    constructor(
-        private http: HttpClient,
-        private adapter: GymAdapter,
-    ) {
+    constructor(private http: HttpClient, private adapter: GymAdapter) {
         this.OnInit();
     }
 
@@ -24,16 +21,10 @@ export class GymService {
         });
     }
 
-    getGymsFromService(): Observable<Gym[]> {
-        return this.gyms;
-    }
-
     getGymByIdFromApi(id: number): Observable<Gym> {
         return this.http
             .get(`${environment.apiUrl}/api/gym/id/${id}`)
-            .pipe(
-                map((data: any) => data.map((item) => this.adapter.adapt(item)))
-            );
+            .pipe((data: any) => data.map((item) => this.adapter.adapt(item)));
     }
 
     getGymsFromApi(): Observable<Gym[]> {
