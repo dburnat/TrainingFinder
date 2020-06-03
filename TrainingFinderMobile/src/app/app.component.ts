@@ -17,6 +17,8 @@ import * as app from "tns-core-modules/application";
 export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;
+    public drawer: RadSideDrawer;
+    public userName: string;
 
     constructor(
         private router: Router,
@@ -38,6 +40,8 @@ export class AppComponent implements OnInit {
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
+        if (!this.userName)
+            this.userName = this.authenticationService.currentUserValue.username;
         return this._sideDrawerTransition;
     }
 
@@ -57,7 +61,12 @@ export class AppComponent implements OnInit {
     }
 
     logoutTap() {
-        this.authenticationService.logout();
-        this.router.navigate(["login"]);
+        this.drawer = <RadSideDrawer>app.getRootView();
+        this.drawer.closeDrawer();
+        setTimeout(() => {
+            this.userName = " ";
+            this.authenticationService.logout();
+            this.router.navigate(["login"]);
+        }, 500);
     }
 }
