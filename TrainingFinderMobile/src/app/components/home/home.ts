@@ -1,3 +1,4 @@
+import { getRootView } from 'tns-core-modules/application/application';
 import { GymService } from "./../../services/gym.service";
 import { googleMapsService } from "./../../services/googleMaps.service";
 import { Router } from "@angular/router";
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
     public userLocation: userLocation;
     private mapView: MapView;
     public trainingCounter: Number;
+    public drawer: RadSideDrawer;
 
     async ngOnInit(): Promise<void> {
         //this.page.actionBarHidden = true;
@@ -57,6 +59,13 @@ export class HomeComponent implements OnInit {
             .subscribe((data: any) => {
                 this.trainingCounter = data.length;
             });
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.drawer = <RadSideDrawer>getRootView();
+            this.drawer.gesturesEnabled = true;
+        }, 100);
     }
 
     delay(ms: number) {
