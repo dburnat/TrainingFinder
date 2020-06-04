@@ -1,3 +1,4 @@
+<Page (loaded)="onPageLoaded()">
 <StackLayout>
     <ActionBar>
         <!--
@@ -15,15 +16,35 @@
         </ActionItem>
         <Label text="Gyms"></Label>
     </ActionBar>
-    <GridLayout columns="*,*,*" rows="*,*,auto"  paddingLeft = "20" paddingRight="20">
+    <GridLayout class="background" columns="*,*,*" rows="*,*,auto"  paddingLeft = "20" paddingRight="20">
         <!-- <StackLayout col="0" row="0" colSpan="3" orientation="horizontal">
             <Label text="Name" horizontalAlignment="stretch" class="h3" backgroundColor="red"></Label>
             <Label text="Street"  horizontalAlignment="stretch" class="h3"  backgroundColor="green"></Label>
             <Label text="ID"  horizontalAlignment="stretch" class="h3" backgroundColor="blue"></Label>
         </StackLayout> -->
-        <Card:CardView class="cardStyle" col="0" row="1" colSpan="3" elevation="1">
+        <MDCardView col="0" colSpan="3" row="0" elevation="1">
+            <GridLayout class="cardContent" rows="auto,auto,auto,auto" >
+                <Label row="0" text="Gyms in our database" class="h2" textWrap="true" ></Label>
+                <StackLayout row="1"  orientation="vertical">
+                    <StackLayout orientation="horizontal">
+                        <Label text="There are currently" class="h4" ></Label>
+                        <Label [text]="this.gymCounter" class="h4" paddingLeft="5"></Label>
+                        <Label text=" gyms" class="h4"></Label>
+                    </StackLayout>
+                    <StackLayout orientation="horizontal">
+                        <Label text="and" class="h4"></Label>
+                        <Label [text]="this.trainingCounter" class="h4" paddingLeft="5"></Label>
+                        <Label text=" trainings" class="h4"></Label>
+                    </StackLayout>
+                    <StackLayout orientation="horizontal">
+                        <Label text="Join one of them!" class="h3"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </GridLayout>
+        </MDCardView>
+        <MDCardView  col="0" row="1" colSpan="3" elevation="1">
             <PullToRefresh (refresh)="refreshList($event)">
-                <ListView [items]="gyms">
+                <ListView [items]="gyms" >
                     <ng-template let-item="item">
                         <GridLayout rows="auto" cols="auto">
                             <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
@@ -33,7 +54,8 @@
                     </ng-template>
                 </ListView>
         </PullToRefresh>
-        </Card:CardView>
-        <MDButton rippleColor="blue" col="3" row="3" text="Add gym" (tap)="goToGymCreate()" ></MDButton>
+        </MDCardView>
+        <MDButton class="primary" rippleColor="blue" col="3" row="3" text="Add gym" (tap)="goToGymCreate()" ></MDButton>
     </GridLayout>
 </StackLayout>
+</Page>

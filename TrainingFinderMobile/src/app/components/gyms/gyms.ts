@@ -1,3 +1,4 @@
+import { TrainingService } from '~/app/services/training.service';
 import { GymService } from './../../services/gym.service';
 import { AppDataService } from "./../../services/appdata.service";
 import { Gym } from "../../models/gym.model";
@@ -20,17 +21,31 @@ export class GymsComponent implements OnInit {
     constructor(
         private router: Router,
         private appDataService: AppDataService,
-        private gymService: GymService
+        private gymService: GymService,
+        private TrainingService: TrainingService
     ) {}
 
     public gyms: Observable<Gym[]>;
+    public gymCounter: Number;
+    public trainingCounter: Number;
     token: string;
 
     async ngOnInit(): Promise<void> {
-        await this.delay(500);
         this.gymService.getGymsFromApi().subscribe((data: any) => {
             this.gyms = data;
         });
+
+        await this.delay(500);
+    }
+
+    async onPageLoaded(): Promise<void> {
+        this.gymService.getGymsFromApi().subscribe((data: any) => {
+            this.gymCounter = data.length;
+        });
+        this.TrainingService.getAllTrainingsFromApi().subscribe((data: any) => {
+            this.trainingCounter = data.length;
+        });
+        await this.delay(500);
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));

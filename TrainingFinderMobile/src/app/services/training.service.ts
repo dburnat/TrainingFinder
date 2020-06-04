@@ -37,6 +37,19 @@ export class TrainingService {
             );
     }
 
+    getAllTrainingsFromApi():Observable<any>{
+        return this.http
+            .get(`${environment.apiUrl}/api/training`)
+            .pipe(
+                map((data: any[]) =>
+                    data.map((item) => this.adapter.adapt(item))
+                ),
+                catchError((error): any => {
+                    return throwError(`Connection Error: ${error}`);
+                })
+            );
+    }
+
     joinTrainingRequest(
         userId: number,
         trainingId: number
