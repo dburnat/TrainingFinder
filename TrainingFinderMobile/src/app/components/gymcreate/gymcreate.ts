@@ -1,3 +1,4 @@
+import { GymService } from "./../../services/gym.service";
 import { environment } from "./../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
@@ -6,6 +7,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import * as Toast from "nativescript-toast";
 import { zip } from "rxjs";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "gym",
@@ -13,40 +15,67 @@ import { zip } from "rxjs";
     styleUrls: ["gymcreate.css"],
 })
 export class GymCreateComponent implements OnInit {
-    constructor(private http: HttpClient, private router: Router) {}
+    newGymForm: FormGroup;
 
-    ngOnInit(): void {}
+
+    constructor(private router: Router, private gymService: GymService, private formBuilder: FormBuilder) {}
+
+    async ngOnInit(): Promise<void> {
+        this.newGymForm = this.formBuilder.group({
+            gymName:["", Validators.required],
+            street:["", Validators.required],
+            number:["", Validators.required],
+            city:["", Validators.required],
+        });
+        await this.delay(500);
+    }
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
 
-    createGym(
+    async createGymClick(
         gymName: string,
         street: string,
         number: string,
-        zipCode: string,
+        city: string
+    ): Promise<void> {
+        this.createGymRequest(gymName, street, number, city);
+        await this.delay(500);
+        this.router.navigate(["home"]);
+    }
+
+    delay(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    private createGymRequest(
+        gymName: string,
+        street: string,
+        number: string,
         city: string
     ) {
-        this.http
-            .post(`${environment.apiUrl}/api/gym`, {
-                name: gymName,
-                city: city,
-                street: street,
-                number: number,
-                zipCode: zipCode,
-            })
+        if (
+            gymName === null ||
+            street === null ||
+            number === null ||
+            city === null
+        )
+            return;
+        this.gymService
+            .createNewGym(gymName, street, number, city)
             .subscribe(
-                (result) => {
+                () => {
                     Toast.makeText(
                         "Gym created. We will moderate it now.",
                         "long"
                     ).show();
-                    this.router.navigate(["login"]);
                 },
                 (error) => {
-                    Toast.makeText(error.message, "long").show();
-                    console.log(error);
+                    Toast.makeText(
+                        "Something went wrong. Try again",
+                        "long"
+                    ).show();
                 }
             );
     }

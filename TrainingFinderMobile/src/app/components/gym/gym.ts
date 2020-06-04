@@ -71,9 +71,6 @@ export class GymComponent implements OnInit {
         };
         this.authenticationService.currentUserValue.id;
         confirm(options).then((result: boolean) => {
-            console.log(result);
-            console.log("user id: " + this.userId);
-            console.log("training id: " + id);
             this.joinTrainingRequest(this.userId, id);
         });
     }
@@ -82,14 +79,14 @@ export class GymComponent implements OnInit {
         if (userId === null || trainingId === null) return;
 
         this.trainingService.joinTrainingRequest(userId, trainingId).subscribe(
-            (result) => {
+            () => {
                 Toast.makeText(
                     "Joined training with id: " + trainingId,
                     "long"
                 ).show();
             },
             (error) => {
-                Toast.makeText(error.message, "long").show();
+                Toast.makeText("Something went wrong. Try again", "long").show();
                 console.log(error);
             }
         );

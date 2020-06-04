@@ -14,38 +14,32 @@
     </ActionItem>
     <Label text="Add gym"></Label>
 </ActionBar>
-<StackLayout verticalAlignment="center" paddingLeft="50" paddingRight="50">
-    <Label text="Add new gym to our database" class="h2 text-center"></Label>
-    <StackLayout class="form">
-        <StackLayout class="input-field">
-            <Label class="label" text="Gym name"></Label>
-            <TextField #gymName class="input input-border" autocorrect="false" autocapitalizationType="none"></TextField>
-        </StackLayout>
-        <StackLayout orientation="horizontal">
-            <StackLayout class="input-field" horizontalAlignment="left" width="50%" >
-                <Label class="label" text="Street" ></Label>
-                <TextField #street class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+<GridLayout class="background" columns="*,*" rows="*,3*,auto"  paddingLeft = "20" paddingRight="20">
+    <MDCardView col="0" row="1" colSpan="2" elevation="1" >
+        <StackLayout class="form" [formGroup]="newGymForm" class="cardContent">
+            <StackLayout class="input-field">
+                <Label class="label" text="Gym name"></Label>
+                <TextField #gymName formControlName="gymName" class="input input-border" autocorrect="false" autocapitalizationType="none"></TextField>
             </StackLayout>
-            <StackLayout class="input-field" horizontalAlignment="right" width="50%">
-                <Label class="label" text="Number" ></Label>
-                <TextField #number class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+            <StackLayout orientation="horizontal">
+                <StackLayout class="input-field" horizontalAlignment="left" width="50%" >
+                    <Label class="label" text="Street" ></Label>
+                    <TextField #street formControlName="street" class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+                </StackLayout>
+                <StackLayout class="input-field" horizontalAlignment="right" width="50%">
+                    <Label class="label" text="Number" ></Label>
+                    <TextField #number formControlName="number" class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
 
 
-        <StackLayout orientation="horizontal" horizontalAlignment="left" >
-            <StackLayout class="input-field" width="50%" height="20%">
-                <Label class="label" text="Zip code(optional)"></Label>
-                <TextField #zipCode class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
-            </StackLayout>
-            <StackLayout class="input-field" width="50%">
-                <Label class="label" text="City"></Label>
-                <TextField #city class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+            <StackLayout orientation="horizontal" horizontalAlignment="center">
+                <StackLayout class="input-field" width="50%">
+                    <Label class="label" text="City"></Label>
+                    <TextField #city formControlName="city" class="input input-border"  autocorrect="false" autocapitalizationType="none"></TextField>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
-
-        <StackLayout >
-            <MDButton text="Add gym" rippleColor="blue" (tap)="createGym(gymName.text, street.text, number.text, zipCode.text, city.text)"></MDButton>
-        </StackLayout>
-    </StackLayout>
-</StackLayout>
+    </MDCardView>
+    <MDButton row="2" col="1" class="primary" text="Add gym" rippleColor="blue" [isEnabled]="newGymForm.valid" (tap)="createGymClick(gymName.text, street.text, number.text, city.text)"></MDButton>
+</GridLayout>

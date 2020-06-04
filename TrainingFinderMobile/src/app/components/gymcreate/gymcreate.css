@@ -1,9 +1,19 @@
-.title{
-font-size: 32;
+.cardStyle {
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
 }
-StackLayout.background{
-    background-color: #f6f6f6;
-  }
+
+.cardContent {
+  padding: 15;
+}
+GridLayout.background{
+  background-color: #f6f6f6;
+}
+MDCardView {
+    margin: 10, 10, 10, 0;
+}
 MDButton.primary{
     background-color: #ffffff;
+    border-radius: 3;
 }
