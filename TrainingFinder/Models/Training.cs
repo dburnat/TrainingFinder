@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using TrainingFinder.Models.JSON;
 
 namespace TrainingFinder.Models
 {
@@ -17,6 +19,7 @@ namespace TrainingFinder.Models
 
         [Required]
         [Display(Name = "Date and time")]
+        [JsonConverter(typeof(JsonDateConverter))]
         public DateTime DateTime { get; set; }
 
         [Display(Name ="GymId")]
