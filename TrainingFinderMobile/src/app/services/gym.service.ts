@@ -36,4 +36,18 @@ export class GymService {
                 )
             );
     }
+
+    createNewGym(
+        gymName: string,
+        street: string,
+        number: string,
+        city: string
+    ): Observable<any> {
+        return this.http.post(`${environment.apiUrl}/api/gym`, {
+            name: gymName,
+            city: city,
+            street: street,
+            number: number,
+        });
+    }
 }
