@@ -1,5 +1,5 @@
-import { environment } from '~/environments/environment';
-import { GymComponent } from './components/gym/gym';
+import { environment } from "~/environments/environment";
+import { GymComponent } from "./components/gym/gym";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { GymCreateComponent } from "./components/gymcreate/gymcreate";
@@ -20,12 +20,14 @@ import { RegisterComponent } from "./components/register/register";
 import { HomeComponent } from "./components/home/home";
 import { GymsComponent } from "./components/gyms/gyms";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { TrainingcreateComponent } from './components/trainingcreate/trainingcreate.component';
-import { UsersTrainingsComponent } from './components/userstrainings/userstrainings.component';
+import { TrainingcreateComponent } from "./components/trainingcreate/trainingcreate.component";
+import { UsersTrainingsComponent } from "./components/userstrainings/userstrainings.component";
 
 import { NativeScriptMaterialButtonModule } from "nativescript-material-button/angular";
 import { NativeScriptMaterialCardViewModule } from "nativescript-material-cardview/angular";
 import { NativeScriptMaterialTextFieldModule } from "nativescript-material-textfield/angular";
+import { ModalDatetimepicker } from "nativescript-modal-datetimepicker"
+import { ReactiveFormsModule } from "@angular/forms";
 
 let routes = [
     { path: "", component: RegisterComponent },
@@ -44,7 +46,8 @@ let routes = [
         NativeScriptUISideDrawerModule,
         NativeScriptMaterialButtonModule,
         NativeScriptMaterialCardViewModule,
-        NativeScriptMaterialTextFieldModule
+        NativeScriptMaterialTextFieldModule,
+        ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
@@ -55,11 +58,12 @@ let routes = [
         GymCreateComponent,
         GymComponent,
         TrainingcreateComponent,
-        UsersTrainingsComponent
+        UsersTrainingsComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        ModalDatetimepicker
     ],
     schemas: [NO_ERRORS_SCHEMA],
 })

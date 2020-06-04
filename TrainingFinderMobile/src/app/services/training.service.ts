@@ -46,4 +46,16 @@ export class TrainingService {
             userId: userId,
         });
     }
+
+    createNewTrainingRequest(
+        dateTime: string,
+        description: string,
+        gymId: number
+    ): Observable<any> {
+        return this.http.post<any>(`${environment.apiUrl}/api/training`, {
+            description: description,
+            dateTime: dateTime,
+            gymId: gymId,
+        });
+    }
 }

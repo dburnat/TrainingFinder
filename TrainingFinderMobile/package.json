@@ -30,6 +30,7 @@
     "nativescript-material-button": "^3.2.6",
     "nativescript-material-cardview": "^3.2.6",
     "nativescript-material-textfield": "^3.2.6",
+    "nativescript-modal-datetimepicker": "^1.2.2",
     "nativescript-toast": "^2.0.0",
     "nativescript-ui-sidedrawer": "^8.0.1",
     "reflect-metadata": "~0.1.12",
