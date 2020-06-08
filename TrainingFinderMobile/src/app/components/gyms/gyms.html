@@ -49,7 +49,7 @@
                         <GridLayout rows="auto" cols="auto">
                             <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
                             <Label row="0" horizontalAlignment="center" [text]="item.street" (tap)="goToGym(item.gymId)"></Label>
-                            <Label row="0" horizontalAlignment="right" [text]="item.gymId" (tap)="goToGym(item.gymId)"></Label>
+                            <Label row="0" horizontalAlignment="right" [text]="item.trainings.length" (tap)="goToGym(item.gymId)"></Label>
                         </GridLayout>
                     </ng-template>
                 </ListView>
