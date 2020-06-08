@@ -1,9 +1,9 @@
+import { Training } from "~/app/models/training.model";
 import { GymService } from "./../../services/gym.service";
 import { TrainingService } from "./../../services/training.service";
 import { googleMapsService } from "./../../services/googleMaps.service";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { AppDataService } from "./../../services/appdata.service";
-import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -30,9 +30,9 @@ export class GymComponent implements OnInit {
     userId: number;
     isDataAvailable: boolean = false;
     private mapView: MapView;
+    userTrainings: Training[] = [];
 
     constructor(
-        private http: HttpClient,
         private router: Router,
         private appDataService: AppDataService,
         private authenticationService: AuthenticationService,
@@ -45,6 +45,11 @@ export class GymComponent implements OnInit {
         await this.delay(500);
         this.gym = this.appDataService.retrieveGym();
         this.userId = this.authenticationService.currentUserValue.id;
+        this.trainingService
+            .getTrainingsForCurrentUser()
+            .subscribe((data: any) => {
+                this.userTrainings = data;
+            });
         this.isDataAvailable = true;
     }
     onDrawerButtonTap(): void {
@@ -56,9 +61,18 @@ export class GymComponent implements OnInit {
         setTimeout(function () {
             pullRefresh.refreshing = false;
         }, 1000);
-        this.gymService.getGymByIdFromApi(this.gym.gymId).subscribe((data: any) => {
-            this.gym = data;
-        });
+        this.gymService
+            .getGymByIdFromApi(this.gym.gymId)
+            .subscribe((data: any) => {
+                this.gym = data;
+            });
+    }
+
+    checkIfJoined(id: Number): Boolean {
+        for (let training of this.userTrainings) {
+            if (training.trainingId == id) return true;
+        }
+        return false;
     }
 
     joinTrainingClick(id: number) {
@@ -71,7 +85,7 @@ export class GymComponent implements OnInit {
         };
         this.authenticationService.currentUserValue.id;
         confirm(options).then((result: boolean) => {
-            this.joinTrainingRequest(this.userId, id);
+            if (result) this.joinTrainingRequest(this.userId, id);
         });
     }
 
@@ -86,7 +100,10 @@ export class GymComponent implements OnInit {
                 ).show();
             },
             (error) => {
-                Toast.makeText("Something went wrong. Try again", "long").show();
+                Toast.makeText(
+                    "Something went wrong. Try again",
+                    "long"
+                ).show();
                 console.log(error);
             }
         );
