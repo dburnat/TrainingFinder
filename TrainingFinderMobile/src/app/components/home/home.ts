@@ -1,4 +1,4 @@
-import { getRootView } from 'tns-core-modules/application/application';
+import { getRootView } from "tns-core-modules/application/application";
 import { GymService } from "./../../services/gym.service";
 import { googleMapsService } from "./../../services/googleMaps.service";
 import { Router } from "@angular/router";
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     public gyms: Observable<Gym[]>;
     public userLocation: userLocation;
     private mapView: MapView;
-    public trainingCounter: Number;
+    public trainingCounter: Number = 0;
     public drawer: RadSideDrawer;
 
     async ngOnInit(): Promise<void> {
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     }
 
     async onMapReady(args): Promise<void> {
-        await this.delay(1000);
+        await this.delay(2000);
         this.mapView = args.object;
 
         this.mapView.latitude = this.userLocation.latitude;
