@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { AppDataService } from "./../../services/appdata.service";
 import { userLocation } from "./../../models/userlocation.model";
 import { AuthenticationService } from "./../../services/authentication.service";
-import { Component, OnInit, DoCheck } from "@angular/core";
+import { Component, OnInit, DoCheck, OnDestroy, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
@@ -24,7 +24,7 @@ registerElement("MapView", () => MapView);
     templateUrl: "home.html",
     styleUrls: ["home.css"],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
     constructor(
         public authenticationService: AuthenticationService,
         private appDataService: AppDataService,
@@ -57,14 +57,16 @@ export class HomeComponent implements OnInit {
 
     async onPageLoaded(): Promise<void> {
         await this.delay(500);
-        this.trainingService
-        .getTrainingsForCurrentUser()
-        .subscribe((data: any) => {
-            this.trainings = data;
-            this.trainingCounter = this.trainings.length;
-        });
+        this.trainingService.getTrainingsForCurrentUser().subscribe(
+            (data: any) => {
+                this.trainings = data;
+                this.trainingCounter = this.trainings.length;
+            },
+            (error) => {
+                this.trainings = [];
+            }
+        );
     }
-
 
     ngAfterViewInit() {
         setTimeout(() => {

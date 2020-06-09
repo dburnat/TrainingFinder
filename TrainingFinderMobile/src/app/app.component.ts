@@ -63,10 +63,10 @@ export class AppComponent implements OnInit {
     logoutTap() {
         this.drawer = <RadSideDrawer>app.getRootView();
         this.drawer.closeDrawer();
-        setTimeout(() => {
+        setTimeout(async () => {
             this.userName = " ";
-            this.authenticationService.logout();
-            this.router.navigate(["login"]);
+            await this.authenticationService.logout();
+            this.routerExtensions.navigateByUrl("login",{clearHistory: true});
         }, 500);
     }
 }
