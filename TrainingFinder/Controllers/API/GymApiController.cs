@@ -59,6 +59,7 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
+                gym.Trainings = gym.Trainings.OrderBy(c => c.DateTime).ToList();
                 var model = _mapper.Map<GetGymDto>(gym);
                 return StatusCode(200, model);
             }
