@@ -70,9 +70,16 @@ export class GymComponent implements OnInit {
 
     checkIfJoined(id: Number): Boolean {
         for (let training of this.userTrainings) {
-            if (training.trainingId == id) return true;
+            if (training.trainingId == id) return false;
         }
-        return false;
+        return true;
+    }
+
+    checkIfJoinedText(id: Number): String {
+        for (let training of this.userTrainings) {
+            if (training.trainingId == id) return "JOINED";
+        }
+        return "JOIN";
     }
 
     joinTrainingClick(id: number) {

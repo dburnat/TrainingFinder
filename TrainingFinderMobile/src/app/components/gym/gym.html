@@ -42,7 +42,7 @@
                     <GridLayout rows="auto" columns="*">
                         <Label row="0" [text]="item.description"></Label>
                         <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                        <MDButton  row="0" horizontalAlignment="right" text="JOIN" [isEnabled]="checkIfJoined(item.trainingId)" (tap)="joinTrainingClick(item.trainingId)" ></MDButton>
+                        <MDButton  row="0" horizontalAlignment="right" [text]="checkIfJoinedText(item.trainingId)" [isEnabled]="checkIfJoined(item.trainingId)" (tap)="joinTrainingClick(item.trainingId)" ></MDButton>
                     </GridLayout>
                 </ng-template>
             </ListView>
