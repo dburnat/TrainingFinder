@@ -27,7 +27,7 @@
                     <GridLayout rows="auto" columns="*">
                         <Label row="0" [text]="item.description"></Label>
                         <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                        <MDButton row="0" variant="flat" rippleColor="blue" horizontalAlignment="right" text="View info" ></MDButton>
+                        <MDButton row="0" variant="flat" rippleColor="blue" horizontalAlignment="right" text="View info" (tap)="viewInfo(item.trainingId)" ></MDButton>
                     </GridLayout>
                 </ng-template>
             </ListView>

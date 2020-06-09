@@ -1,13 +1,14 @@
-import { Router } from '@angular/router';
+import { Training } from "./../../models/training.model";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { TrainingService } from "./../../services/training.service";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { Training } from "~/app/models/training.model";
 import { Observable } from "rxjs";
 import { registerElement } from "nativescript-angular/element-registry";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
+import { alert } from "tns-core-modules/ui/dialogs";
 registerElement("PullToRefresh", () => PullToRefresh);
 @Component({
     selector: "ns-userstrainings",
@@ -16,6 +17,7 @@ registerElement("PullToRefresh", () => PullToRefresh);
 })
 export class UsersTrainingsComponent implements OnInit {
     public trainings: Observable<Training[]>;
+    private training: Training;
 
     constructor(
         private trainingService: TrainingService,
@@ -28,7 +30,10 @@ export class UsersTrainingsComponent implements OnInit {
         this.trainingService
             .getTrainingsForCurrentUser()
             .subscribe((data: any) => {
-                this.trainings = data;
+                    this.trainings = data;
+            },
+            error =>{
+                this.trainings= undefined;
             });
     }
     private delay(ms: number) {
@@ -50,6 +55,26 @@ export class UsersTrainingsComponent implements OnInit {
             .subscribe((data: any) => {
                 this.trainings = data;
             });
+    }
+
+    async viewInfo(id: number) {
+        this.trainingService
+            .getTrainingById(id)
+            .subscribe(async (data: any) => {
+                this.training = data;
+            });
+
+        await this.delay(200);
+        let output = "";
+        this.training.users.forEach((user: any) => {
+            output += user.username + "\n";
+        });
+        let options = {
+            title: "Users that also joined this training",
+            message: output,
+            okButtonText: "Okay",
+        };
+        alert(options).then(() => {});
     }
 
     goToGyms() {

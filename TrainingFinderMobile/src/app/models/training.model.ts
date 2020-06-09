@@ -6,7 +6,8 @@ export class Training {
         public trainingId: number,
         public description: string,
         public dateTime: Date,
-        public gymId: number
+        public gymId: number,
+        public users: []
     ) {}
 }
 @Injectable({
@@ -18,7 +19,8 @@ export class TrainingAdapter implements Adapter<Training> {
             item.trainingId,
             item.description,
             item.dateTime,
-            item.gymId
+            item.gymId,
+            item.users
         );
     }
 }
