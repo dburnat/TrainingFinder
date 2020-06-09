@@ -31,10 +31,11 @@
                     <Label class="h3" text="You have " textWrap="true"></Label>
                     <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
                     <Label class="h3" text="trainings" textWrap="true"></Label>
-                    <Label class="h5"  text="Your next training" textWrap="true"></Label>
+                    <Label class="h5" text="Your next training" textWrap="true"></Label>
                     <StackLayout orientation="horizontal">
-                        <Label class="h5" paddingLeft="20" text="FBW" textWrap="true" ></Label>
-                        <Label class="h5" paddingLeft="19" text="17:45 10-06-2020" textWrap="true"></Label>
+
+                        <Label class="h5" paddingLeft="20" *ngIf="trainings.length > 0" [text]="trainings[0].description" textWrap="true" ></Label>
+                        <Label class="h5" paddingLeft="19" *ngIf="trainings.length > 0" [text]="trainings[0].dateTime" textWrap="true"></Label>
                     </StackLayout>
                 </StackLayout>
             </MDCardView>

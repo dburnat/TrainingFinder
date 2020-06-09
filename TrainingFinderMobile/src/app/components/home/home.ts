@@ -14,6 +14,7 @@ import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
 import { Observable } from "rxjs";
 import { TrainingService } from "~/app/services/training.service";
+import { Training } from "~/app/models/training.model";
 
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit {
     public user = this.authenticationService.currentUserValue;
 
     public gyms: Observable<Gym[]>;
+    public trainings: Training[] = [];
     public userLocation: userLocation;
     private mapView: MapView;
     public trainingCounter: Number = 0;
@@ -46,20 +48,23 @@ export class HomeComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         //this.page.actionBarHidden = true;
         await this.delay(1000);
-        this.userLocation = this.appDataService.retrieveLocation();
-        this.gymService.getGymsFromApi().subscribe((data: any) => {
-            this.gyms = data;
+        this.userLocation = await this.appDataService.retrieveLocation();
+        this.gymService.getGymsFromApi().subscribe(async (data: any) => {
+            this.gyms = await data;
         });
+
     }
 
     async onPageLoaded(): Promise<void> {
         await this.delay(500);
         this.trainingService
-            .getTrainingsForCurrentUser()
-            .subscribe((data: any) => {
-                this.trainingCounter = data.length;
-            });
+        .getTrainingsForCurrentUser()
+        .subscribe((data: any) => {
+            this.trainings = data;
+            this.trainingCounter = this.trainings.length;
+        });
     }
+
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -86,7 +91,7 @@ export class HomeComponent implements OnInit {
         this.mapView.zoom = 11;
         this.mapView.myLocationEnabled = true;
         this.mapView.settings.zoomGesturesEnabled = true;
-        this.gMapsService.createMarkers(this.mapView, this.gyms);
+        await this.gMapsService.createMarkers(this.mapView, this.gyms);
     }
 
     onMarkerInfoWindowTapped(args) {

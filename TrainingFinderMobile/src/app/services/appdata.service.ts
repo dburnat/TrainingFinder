@@ -30,7 +30,7 @@ OnInit(): void{
         this.myLocation = userLocation;
     }
 
-    retrieveLocation() {
+    async retrieveLocation() {
         return this.myLocation;
     }
 
