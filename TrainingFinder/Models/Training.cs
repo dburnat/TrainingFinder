@@ -19,7 +19,7 @@ namespace TrainingFinder.Models
 
         [Required]
         [Display(Name = "Date and time")]
-        [JsonConverter(typeof(JsonDateConverter))]
+        [JsonConverter(typeof(JsonDateConverterFromApi))]
         public DateTime DateTime { get; set; }
 
         [Display(Name ="GymId")]
