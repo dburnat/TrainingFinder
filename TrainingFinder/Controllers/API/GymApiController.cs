@@ -37,7 +37,7 @@ namespace TrainingFinder.Controllers.API
         {
             try
             {
-                var gyms = _gymRepository.Gyms.ToList();
+                var gyms = _gymRepository.Gyms.Where( c => c.IsAddedByUser == false).ToList();
                 var model = _mapper.Map<IList<GetGymDto>>(gyms);
                 return StatusCode(200, model);
             }
