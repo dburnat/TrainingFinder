@@ -41,6 +41,6 @@ export class AuthenticationService {
 
     logout() {
         appSettings.remove("currentUser");
-        this.currentUserSubject.next(null);
+        this.currentUserSubject.next(new User);
     }
 }

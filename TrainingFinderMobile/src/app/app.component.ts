@@ -2,11 +2,7 @@ import { AuthenticationService } from "./services/authentication.service";
 import { Component, OnInit } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
-import {
-    DrawerTransitionBase,
-    RadSideDrawer,
-    SlideInOnTopTransition,
-} from "nativescript-ui-sidedrawer";
+import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition} from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
 
@@ -40,8 +36,6 @@ export class AppComponent implements OnInit {
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
-        if (!this.userName)
-            this.userName = this.authenticationService.currentUserValue.username;
         return this._sideDrawerTransition;
     }
 
@@ -64,9 +58,10 @@ export class AppComponent implements OnInit {
         this.drawer = <RadSideDrawer>app.getRootView();
         this.drawer.closeDrawer();
         setTimeout(async () => {
-            this.userName = " ";
             await this.authenticationService.logout();
-            this.routerExtensions.navigateByUrl("login",{clearHistory: true});
+            this.routerExtensions.navigateByUrl("login", {
+                clearHistory: true,
+            });
         }, 500);
     }
 }
