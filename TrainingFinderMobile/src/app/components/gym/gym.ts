@@ -5,7 +5,7 @@ import { googleMapsService } from "./../../services/googleMaps.service";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { AppDataService } from "./../../services/appdata.service";
 import { Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
@@ -15,10 +15,12 @@ import { confirm } from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toast";
 import { MapView } from "nativescript-google-maps-sdk";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
+import { BasePage } from "~/app/helpers/base-page.decorator";
+import { Subscription } from "rxjs";
 registerElement("MapView", () => MapView);
 registerElement("CardView", () => CardView);
 registerElement("PullToRefresh", () => PullToRefresh);
-
+@BasePage()
 @Component({
     selector: "gym",
     templateUrl: "gym.html",
@@ -27,10 +29,9 @@ registerElement("PullToRefresh", () => PullToRefresh);
 export class GymComponent implements OnInit {
     gymId: number;
     gym: Gym;
-    userId: number;
-    isDataAvailable: boolean = false;
     private mapView: MapView;
     userTrainings: Training[] = [];
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private router: Router,
@@ -38,20 +39,27 @@ export class GymComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private gMapsService: googleMapsService,
         private trainingService: TrainingService,
-        private gymService: GymService
+        private gymService: GymService,
+        private injector: Injector
     ) {}
 
     async ngOnInit(): Promise<void> {
-        await this.delay(500);
+
         this.gym = this.appDataService.retrieveGym();
-        this.userId = this.authenticationService.currentUserValue.id;
-        this.trainingService
-            .getTrainingsForCurrentUser()
-            .subscribe((data: any) => {
-                this.userTrainings = data;
-            });
-        this.isDataAvailable = true;
+        this.subscriptions.push(
+            this.trainingService
+                .getTrainingsForCurrentUser()
+                .subscribe((data: any) => {
+                    this.userTrainings = data;
+                })
+        );
+        await this.delay(500);
     }
+
+    async ngOnDestroy(): Promise<void> {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    }
+
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
@@ -92,28 +100,33 @@ export class GymComponent implements OnInit {
         };
         this.authenticationService.currentUserValue.id;
         confirm(options).then((result: boolean) => {
-            if (result) this.joinTrainingRequest(this.userId, id);
+            if (result) this.joinTrainingRequest(id);
         });
     }
 
-    private joinTrainingRequest(userId: number, trainingId: number) {
-        if (userId === null || trainingId === null) return;
+    private joinTrainingRequest(trainingId: number) {
+        if (trainingId === null) return;
 
-        this.trainingService.joinTrainingRequest(userId, trainingId).subscribe(
-            () => {
-                Toast.makeText(
-                    "Joined training with id: " + trainingId,
-                    "long"
-                ).show();
-            },
-            (error) => {
-                Toast.makeText(
-                    "Something went wrong. Try again",
-                    "long"
-                ).show();
-                console.log(error);
-            }
-        );
+        this.trainingService
+            .joinTrainingRequest(
+                this.authenticationService.currentUserValue.id,
+                trainingId
+            )
+            .subscribe(
+                () => {
+                    Toast.makeText(
+                        "Joined training with id: " + trainingId,
+                        "long"
+                    ).show();
+                },
+                (error) => {
+                    Toast.makeText(
+                        "Something went wrong. Try again",
+                        "long"
+                    ).show();
+                    console.log(error);
+                }
+            );
     }
 
     addTraining() {

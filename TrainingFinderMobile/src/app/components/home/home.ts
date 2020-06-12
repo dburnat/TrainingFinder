@@ -12,13 +12,15 @@ import { Gym } from "~/app/models/gym.model";
 import { CardView } from "nativescript-cardview";
 import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { TrainingService } from "~/app/services/training.service";
 import { Training } from "~/app/models/training.model";
+import { BasePage } from "~/app/helpers/base-page.decorator";
 
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
 
+@BasePage()
 @Component({
     selector: "Home",
     templateUrl: "home.html",
@@ -31,12 +33,13 @@ export class HomeComponent {
         private router: Router,
         private gMapsService: googleMapsService,
         private gymService: GymService,
-        private trainingService: TrainingService
+        private trainingService: TrainingService,
+        private injector: Injector
     ) {
         // Use the component constructor to inject providers.
     }
 
-    public user = this.authenticationService.currentUserValue;
+    public user = this.authenticationService.currentUser;
 
     public gyms: Observable<Gym[]>;
     public trainings: Training[] = [];
@@ -44,28 +47,32 @@ export class HomeComponent {
     private mapView: MapView;
     public trainingCounter: Number = 0;
     public drawer: RadSideDrawer;
+    private subscriptions: Subscription[] = [];
 
     async ngOnInit(): Promise<void> {
         //this.page.actionBarHidden = true;
         await this.delay(1000);
         this.userLocation = await this.appDataService.retrieveLocation();
-        this.gymService.getGymsFromApi().subscribe(async (data: any) => {
-            this.gyms = await data;
-        });
-
+        this.subscriptions.push(
+            this.trainingService.getTrainingsForCurrentUser().subscribe(
+                (data: any) => {
+                    this.trainings = data;
+                    this.trainingCounter = this.trainings.length;
+                },
+                (error) => {
+                    this.trainings = [];
+                }
+            )
+        );
+        this.subscriptions.push(
+            this.gymService.getGymsFromApi().subscribe(async (data: any) => {
+                this.gyms = await data;
+            })
+        );
     }
 
-    async onPageLoaded(): Promise<void> {
-        await this.delay(500);
-        this.trainingService.getTrainingsForCurrentUser().subscribe(
-            (data: any) => {
-                this.trainings = data;
-                this.trainingCounter = this.trainings.length;
-            },
-            (error) => {
-                this.trainings = [];
-            }
-        );
+    async ngOnDestroy(): Promise<void> {
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 
     ngAfterViewInit() {

@@ -1,4 +1,3 @@
-import { AppDataService } from "./../../services/appdata.service";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { Router } from "@angular/router";
 import { Component } from "@angular/core";
@@ -38,9 +37,7 @@ export class LoginComponent {
                 this.router.navigate(["home"]);
             },
             (error) => {
-                Toast.makeText(error, "long").show();
-                console.log(error);
-                // this.loading = false;
+                Toast.makeText("Something went wrong. Try again", "long").show();
             }
         );
     }

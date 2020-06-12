@@ -2,14 +2,16 @@ import { Training } from "./../../models/training.model";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "./../../services/authentication.service";
 import { TrainingService } from "./../../services/training.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { registerElement } from "nativescript-angular/element-registry";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { alert } from "tns-core-modules/ui/dialogs";
+import { BasePage } from "~/app/helpers/base-page.decorator";
 registerElement("PullToRefresh", () => PullToRefresh);
+@BasePage()
 @Component({
     selector: "ns-userstrainings",
     templateUrl: "./userstrainings.component.html",
@@ -18,24 +20,35 @@ registerElement("PullToRefresh", () => PullToRefresh);
 export class UsersTrainingsComponent implements OnInit {
     public trainings: Observable<Training[]>;
     private training: Training;
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private trainingService: TrainingService,
         private authenticationService: AuthenticationService,
-        private router: Router
+        private router: Router,
+        private injector: Injector
     ) {}
 
     async ngOnInit(): Promise<void> {
-        await this.delay(500);
-        this.trainingService
-            .getTrainingsForCurrentUser()
-            .subscribe((data: any) => {
+        this.subscriptions.push(
+            this.trainingService.getTrainingsForCurrentUser().subscribe(
+                (data: any) => {
                     this.trainings = data;
-            },
-            error =>{
-                this.trainings= undefined;
-            });
+                },
+                (error) => {
+                    this.trainings = undefined;
+                }
+            )
+        );
+        await this.delay(500);
     }
+
+    async ngOnDestroy(): Promise<void> {
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
+    }
+
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }

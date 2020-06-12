@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import { environment } from "./../../../environments/environment";
 import { Component } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Router } from "@angular/router";
@@ -19,15 +19,12 @@ export class RegisterComponent {
         password: string
     ) {
         this.http
-            .post(
-                `${environment.apiUrl}/api/user/register`,
-                {
-                    firstName: firstName,
-                    lastName: lastName,
-                    username: userName,
-                    password: password,
-                }
-            )
+            .post(`${environment.apiUrl}/api/user/register`, {
+                firstName: firstName,
+                lastName: lastName,
+                username: userName,
+                password: password,
+            })
             .subscribe(
                 (result) => {
                     Toast.makeText("Account created", "long").show();

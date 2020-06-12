@@ -9,24 +9,17 @@ import { map, catchError } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class TrainingService {
-    private userId: number;
     constructor(
         private http: HttpClient,
         private adapter: TrainingAdapter,
         private authenticationService: AuthenticationService
-    ) {
-        this.userId = this.authenticationService.currentUserValue.id;
-    }
-
-    // OnInit(): void {
-    //     this.gymService.getGyms().subscribe((data: any) => {
-    //         this.myGyms = data;
-    //     });
-    // }
+    ) {}
 
     getTrainingsForCurrentUser(): Observable<any> {
         return this.http
-            .get(`${environment.apiUrl}/api/traininguser/${this.userId}`)
+            .get(
+                `${environment.apiUrl}/api/traininguser/${this.authenticationService.currentUserValue.id}`
+            )
             .pipe(
                 map((data: any[]) =>
                     data.map((item) => this.adapter.adapt(item))
