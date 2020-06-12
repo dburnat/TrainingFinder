@@ -1,9 +1,9 @@
 import { Training } from "~/app/models/training.model";
-import { GymService } from "./../../services/gym.service";
-import { TrainingService } from "./../../services/training.service";
-import { googleMapsService } from "./../../services/googleMaps.service";
-import { AuthenticationService } from "./../../services/authentication.service";
-import { AppDataService } from "./../../services/appdata.service";
+import { GymService } from "../../services/gym.service";
+import { TrainingService } from "../../services/training.service";
+import { googleMapsService } from "../../services/googleMaps.service";
+import { AuthenticationService } from "../../services/authentication.service";
+import { AppDataService } from "../../services/appdata.service";
 import { Router } from "@angular/router";
 import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -23,8 +23,8 @@ registerElement("PullToRefresh", () => PullToRefresh);
 @BasePage()
 @Component({
     selector: "gym",
-    templateUrl: "gym.html",
-    styleUrls: ["gym.css"],
+    templateUrl: "gym.component.html",
+    styleUrls: ["gym.component.css"],
 })
 export class GymComponent implements OnInit {
     gymId: number;
@@ -130,7 +130,6 @@ export class GymComponent implements OnInit {
     }
 
     addTraining() {
-        console.log("Create training button");
         this.router.navigate(["trainingCreate"]);
     }
     delay(ms: number) {

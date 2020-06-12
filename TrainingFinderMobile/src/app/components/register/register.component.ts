@@ -1,16 +1,33 @@
-import { environment } from "./../../../environments/environment";
-import { Component } from "@angular/core";
+import { environment } from "../../../environments/environment";
+import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Router } from "@angular/router";
 import * as Toast from "nativescript-toast";
 import "rxjs/Rx";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "register",
-    templateUrl: "register.html",
+    templateUrl: "register.component.html",
+    styleUrls: ["register.component.css"],
 })
-export class RegisterComponent {
-    public constructor(private http: HttpClient, private router: Router) {}
+export class RegisterComponent implements OnInit {
+    registerForm: FormGroup;
+
+    public constructor(
+        private http: HttpClient,
+        private router: Router,
+        private formBuilder: FormBuilder
+    ) {}
+
+    async ngOnInit(): Promise<void> {
+        this.registerForm = this.formBuilder.group({
+            username: ["", Validators.required],
+            password: ["", Validators.required],
+            firstName: ["", Validators.required],
+            lastName: ["", Validators.required],
+        });
+    }
 
     public register(
         userName: string,

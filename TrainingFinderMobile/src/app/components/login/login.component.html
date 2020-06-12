@@ -1,0 +1,16 @@
+<ActionBar title="Training Finder"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="50" paddingRight="50">
+    <Label text="Login to Training Finder" class="h2 text-center"></Label>
+    <StackLayout  [formGroup]="loginForm">
+        <StackLayout class="input-field">
+            <MDTextField variant="outline" hint="Username" #userName formControlName="username" class="input input-border" autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <MDTextField variant="outline" hint="Password" #password formControlName="password"  secure="true" autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <MDButton text="Login" class="loginBtn" (tap)="login(userName.text, password.text)" ></MDButton>
+            <MDButton text="Register" class="registerBtn" (tap)="goToRegister()" ></MDButton>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

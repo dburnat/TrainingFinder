@@ -1,4 +1,4 @@
-import { GymService } from "./../../services/gym.service";
+import { GymService } from "../../services/gym.service";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
@@ -8,8 +8,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
     selector: "gym",
-    templateUrl: "gymcreate.html",
-    styleUrls: ["gymcreate.css"],
+    templateUrl: "gymcreate.component.html",
+    styleUrls: ["gymcreate.component.css"],
 })
 export class GymCreateComponent implements OnInit {
     newGymForm: FormGroup;

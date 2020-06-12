@@ -1,0 +1,12 @@
+MDTextField{
+    ripple-color: #3A54FF;
+    elevation: 4;
+    stroke-color: #3A54FF;
+    floating-color: #3A54FF;
+}
+MDButton.loginBtn{
+    ripple-color: #03a9f4;
+}
+MDButton.registerBtn{
+    ripple-color: #d50000;
+}

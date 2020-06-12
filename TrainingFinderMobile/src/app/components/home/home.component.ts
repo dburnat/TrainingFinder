@@ -1,10 +1,10 @@
 import { getRootView } from "tns-core-modules/application/application";
-import { GymService } from "./../../services/gym.service";
-import { googleMapsService } from "./../../services/googleMaps.service";
+import { GymService } from "../../services/gym.service";
+import { googleMapsService } from "../../services/googleMaps.service";
 import { Router } from "@angular/router";
-import { AppDataService } from "./../../services/appdata.service";
-import { userLocation } from "./../../models/userlocation.model";
-import { AuthenticationService } from "./../../services/authentication.service";
+import { AppDataService } from "../../services/appdata.service";
+import { userLocation } from "../../models/userlocation.model";
+import { AuthenticationService } from "../../services/authentication.service";
 import { Component, OnInit, DoCheck, OnDestroy, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
@@ -23,8 +23,8 @@ registerElement("MapView", () => MapView);
 @BasePage()
 @Component({
     selector: "Home",
-    templateUrl: "home.html",
-    styleUrls: ["home.css"],
+    templateUrl: "home.component.html",
+    styleUrls: ["home.component.css"],
 })
 export class HomeComponent {
     constructor(

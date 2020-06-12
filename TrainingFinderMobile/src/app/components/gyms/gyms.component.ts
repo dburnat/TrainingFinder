@@ -1,6 +1,6 @@
 import { TrainingService } from "~/app/services/training.service";
-import { GymService } from "./../../services/gym.service";
-import { AppDataService } from "./../../services/appdata.service";
+import { GymService } from "../../services/gym.service";
+import { AppDataService } from "../../services/appdata.service";
 import { Gym } from "../../models/gym.model";
 import { Router } from "@angular/router";
 import { Component, OnInit, Injector } from "@angular/core";
@@ -16,8 +16,8 @@ registerElement("PullToRefresh", () => PullToRefresh);
 @BasePage()
 @Component({
     selector: "gym",
-    templateUrl: "gyms.html",
-    styleUrls: ["gyms.css"],
+    templateUrl: "gyms.component.html",
+    styleUrls: ["gyms.component.css"],
 })
 export class GymsComponent implements OnInit {
     constructor(
@@ -80,7 +80,6 @@ export class GymsComponent implements OnInit {
         this.router.navigate(["gymCreate"]);
     }
     goToGym(gymId: number): void {
-        console.log("Gyms view: " + gymId);
         this.appDataService.saveGym(this.gyms[gymId - 1]);
         this.router.navigate(["gym"]);
     }

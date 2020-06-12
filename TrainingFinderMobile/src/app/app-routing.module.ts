@@ -1,16 +1,16 @@
-import { TrainingcreateComponent } from './components/trainingcreate/trainingcreate.component';
-import { GymComponent } from './components/gym/gym';
-import { GymCreateComponent } from "./components/gymcreate/gymcreate";
-import { GymsComponent } from "./components/gyms/gyms";
 import { AuthGuard } from "./helpers/authguard";
-import { LoginComponent } from "./components/login/login";
 import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
+import { HomeComponent } from "./components/home/home.component";
+import { LoginComponent } from "./components/login/login.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { GymsComponent } from "./components/gyms/gyms.component";
+import { GymCreateComponent } from "./components/gymcreate/gymcreate.component";
+import { GymComponent } from "./components/gym/gym.component";
+import { TrainingcreateComponent } from "./components/trainingcreate/trainingcreate.component";
+import { UsersTrainingsComponent } from "./components/userstrainings/userstrainings.component";
 
-import { RegisterComponent } from "./components/register/register";
-import { HomeComponent } from "./components/home/home";
-import { UsersTrainingsComponent } from './components/userstrainings/userstrainings.component';
 
 const routes: Routes = [
     { path: "", component: HomeComponent, canActivate: [AuthGuard] },
