@@ -9,24 +9,24 @@
         <ScrollView row="1" class="nt-drawer__body">
             <StackLayout>
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/home')" (tap)="onNavItemTap('/home')">
-                    <Label col="0" text="&#xf015;" class="nt-icon fas"></Label>
+                    <Label col="0" text="&#xf015;" class="fas fa-home nt-icon"></Label>
                     <Label col="1" text="Home" class="p-r-10"></Label>
                 </GridLayout>
 
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/gyms')" (tap)="onNavItemTap('/gyms')">
-                    <Label col="0" text="&#xf1ea;" class="nt-icon far"></Label>
+                    <Label col="0" text="&#xf44b;" class="fas fa-dumbbell nt-icon"></Label>
                     <Label col="1" text="Gyms" class="p-r-10"></Label>
                 </GridLayout>
 
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/usersTrainings')" (tap)="onNavItemTap('/usersTrainings')">
-                    <Label col="0" text="&#xf002;" class="nt-icon fas"></Label>
+                    <Label col="0" text="&#xf073;" class="nt-icon fas"></Label>
                     <Label col="1" text="My trainings" class="p-r-10"></Label>
                 </GridLayout>
 
                 <StackLayout class="hr"></StackLayout>
 
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/settings')" (tap)="logoutTap()">
-                    <Label col="0" text="&#xf08b;" class="nt-icon fas"></Label>
+                    <Label col="0" text="&#xf2f5;" class="fas fa-sign-out-alt nt-icon"></Label>
                     <Label col="1" text="Logout" class="p-r-10"></Label>
                 </GridLayout>
             </StackLayout>
