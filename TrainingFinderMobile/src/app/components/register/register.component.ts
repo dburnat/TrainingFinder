@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.registerForm = this.formBuilder.group({
-            username: ["", Validators.required],
+            userName: ["", Validators.required],
             password: ["", Validators.required],
             firstName: ["", Validators.required],
             lastName: ["", Validators.required],
