@@ -61,7 +61,7 @@ namespace TrainingFinder.Controllers.API
                 var getTrainingResponse = _trainingRepository.GetById(id);
                 if (getTrainingResponse.isStatusCodeSuccess())
                 {
-                    var model = _mapper.Map<GetTrainingDtoWithoutUsers>(getTrainingResponse.Data);
+                    var model = _mapper.Map<GetTrainingDto>(getTrainingResponse.Data);
                     return StatusCode(getTrainingResponse.StatusCode, model);
                 }
                 else
