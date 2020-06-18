@@ -72,21 +72,22 @@ export class TrainingcreateComponent implements OnInit {
                     result["month"] +
                     "-" +
                     result["year"];
-                console.log(result);
             })
             .catch((error) => {
                 Toast.makeText(error, "long").show();
-                console.log("Error: " + error);
             });
     }
 
     pickTime() {
         const picker = new ModalPicker.ModalDatetimepicker();
+        var date = new Date();
         picker
             .pickTime({
                 title: "Pick time",
                 theme: "dark",
-                minDate: new Date(),
+                minDate: date,
+                startingHour: date.getHours(),
+                startingMinute: date.getMinutes(),
                 is24HourView: true,
             })
             .then((result) => {

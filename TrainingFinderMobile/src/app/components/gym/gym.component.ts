@@ -94,7 +94,7 @@ export class GymComponent implements OnInit {
         let options = {
             title: "Join training",
             message:
-                "Are you sure you want to join training with id: " + id + "?",
+                "Are you sure you want to join this training?",
             okButtonText: "Yes",
             cancelButtonText: "No",
         };
@@ -115,7 +115,7 @@ export class GymComponent implements OnInit {
             .subscribe(
                 () => {
                     Toast.makeText(
-                        "Joined training with id: " + trainingId,
+                        "Joined training",
                         "long"
                     ).show();
                 },
