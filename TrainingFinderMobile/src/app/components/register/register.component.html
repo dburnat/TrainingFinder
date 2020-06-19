@@ -1,0 +1,21 @@
+<ActionBar title="Register"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="40" paddingRight="40">
+    <Label text="Register" class="h1 text-center"></Label>
+    <StackLayout [formGroup]="registerForm">
+        <StackLayout>
+            <MDTextField #userName formControlName="userName" variant="outline" hint="Username" autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout >
+            <MDTextField #password formControlName="password" secure="true" variant="outline" hint="Password"  autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout >
+            <MDTextField #firstName formControlName="firstName" variant="outline" hint="First name"  autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout>
+            <MDTextField #lastName formControlName="lastName" variant="outline" hint="Last name"  autocorrect="false" autocapitalizationType="none"></MDTextField>
+        </StackLayout>
+        <StackLayout>
+            <MDButton class="registerBtn" text="Submit" (tap)="register(userName.text, firstName.text, lastName.text, password.text)" ></MDButton>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>
