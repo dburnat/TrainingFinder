@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # TrainingFinder
 ASP.NET Core with Angular app to find new people to train with on gym
 
@@ -25,4 +24,3 @@ export const environment = {
     <string name="nativescript_google_maps_api_key">YOUR_GOOGLE_API_KEY_HERE</string>
 </resources>
 ```
->>>>>>> origin/mobileapp
