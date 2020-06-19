@@ -77,7 +77,7 @@ namespace TrainingFinder.Services.TrainingUserService
                     return new ResultModel<List<GetTrainingDtoWithoutUsers>>(null, StatusCodes.Status400BadRequest);
                 }
 
-                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).Select(c => c.Training).ToList();
+                var trainings = _ctx.TrainingUsers.Where(c => c.UserId == id).Select(c => c.Training).OrderBy(c => c.DateTime).ToList();
                 var model = _mapper.Map<List<GetTrainingDtoWithoutUsers>>(trainings);
 
                 if (!trainings.Any())

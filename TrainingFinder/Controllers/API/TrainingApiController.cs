@@ -111,7 +111,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResult = _trainingRepository.Create(training);
-                    return StatusCode(createResult.StatusCode, createResult.Data);
+                    return StatusCode(createResult.StatusCode);
                 }
                 else
                     return BadRequest();
