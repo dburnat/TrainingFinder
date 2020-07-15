@@ -3,6 +3,11 @@ ASP.NET Core with NativeScript(using Angular) app to find new people to train wi
 
 [![Build Status](https://dev.azure.com/szymondomalik/Training%20Finder/_apis/build/status/dburnat.TrainingFinder?branchName=master)](https://dev.azure.com/szymondomalik/Training%20Finder/_build/latest?definitionId=3&branchName=master)
 =======
+### Screenshots
+Home            |  Gym
+:-------------------------:|:-------------------------:
+![](https://github.com/dburnat/TrainingFinder/blob/master/Screenshots/home.jpg)  |  ![](https://github.com/dburnat/TrainingFinder/blob/master/Screenshots/gyms.jpg)
+
 ### Configure Google API Key
 1. Go to the [Google Developers Console](https://console.developers.google.com/), create a project, and enable the **Google Maps SDK for Android**, **Google Maps SDK for iOS** and **Geocoding API**. Then under credentials, create an API key.
 2. (Server)Edit appsettings.json which is located in `TrainingFinder\TrainingFinder`
