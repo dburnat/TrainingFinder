@@ -1,11 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import * as app from "tns-core-modules/application";
-import { EventData } from "tns-core-modules/data/observable";
-import { ListPicker } from "tns-core-modules/ui/list-picker";
 import * as Toast from "nativescript-toast";
-import { CardView } from "nativescript-cardview";
-import { registerElement } from "nativescript-angular/element-registry";
 import * as ModalPicker from "nativescript-modal-datetimepicker";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Gym } from "~/app/models/gym.model";
@@ -13,6 +8,10 @@ import { AppDataService } from "~/app/services/appdata.service";
 import { TrainingService } from "~/app/services/training.service";
 import { Router } from "@angular/router";
 registerElement("CardView", () => CardView);
+import { Application, EventData, ListPicker } from "@nativescript/core";
+import { registerElement } from "@nativescript/angular";
+import { CardView } from "@nstudio/nativescript-cardview";
+const rootView = Application.getRootView();
 
 @Component({
     selector: "ns-trainingcreate",
@@ -41,7 +40,7 @@ export class TrainingcreateComponent implements OnInit {
         private formBuilder: FormBuilder,
         private appDataService: AppDataService,
         private trainingService: TrainingService,
-        private router: Router,
+        private router: Router
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -100,7 +99,11 @@ export class TrainingcreateComponent implements OnInit {
 
     async addTrainingClick(): Promise<void> {
         let dateTime = this.time + " " + this.date;
-        this.createNewTrainingRequest(dateTime, this.description, this.gym.gymId);
+        this.createNewTrainingRequest(
+            dateTime,
+            this.description,
+            this.gym.gymId
+        );
         await this.delay(500);
         this.router.navigate(["gym"]);
     }
@@ -111,21 +114,26 @@ export class TrainingcreateComponent implements OnInit {
         gymId: number
     ) {
         if (dateTime === null || description === " " || gymId === null) return;
-        this.trainingService.createNewTrainingRequest(
-            dateTime,
-            this.description,
-            this.gym.gymId
-        ).subscribe(
-            () => {
-                Toast.makeText(
-                    "Successfully added new training",
-                    "long"
-                ).show();
-            },
-            (error) => {
-                Toast.makeText("Something went wrong. Try again", "long").show();
-            }
-        );
+        this.trainingService
+            .createNewTrainingRequest(
+                dateTime,
+                this.description,
+                this.gym.gymId
+            )
+            .subscribe(
+                () => {
+                    Toast.makeText(
+                        "Successfully added new training",
+                        "long"
+                    ).show();
+                },
+                (error) => {
+                    Toast.makeText(
+                        "Something went wrong. Try again",
+                        "long"
+                    ).show();
+                }
+            );
     }
 
     public onSelectedIndexChanged(args: EventData) {
@@ -134,7 +142,7 @@ export class TrainingcreateComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.showDrawer();
     }
 }

@@ -7,19 +7,19 @@ import { AppDataService } from "../../services/appdata.service";
 import { Router } from "@angular/router";
 import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
-import { registerElement } from "nativescript-angular/element-registry";
-import { CardView } from "nativescript-cardview";
-import { confirm } from "tns-core-modules/ui/dialogs";
 import * as Toast from "nativescript-toast";
 import { MapView } from "nativescript-google-maps-sdk";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { BasePage } from "~/app/helpers/base-page.decorator";
 import { Subscription } from "rxjs";
+import { registerElement } from "@nativescript/angular";
+import { Application, Dialogs } from "@nativescript/core";
+import { CardView } from "@nativescript-community/ui-material-cardview";
 registerElement("MapView", () => MapView);
 registerElement("CardView", () => CardView);
 registerElement("PullToRefresh", () => PullToRefresh);
+const rootView = Application.getRootView();
 @BasePage()
 @Component({
     selector: "gym",
@@ -44,7 +44,6 @@ export class GymComponent implements OnInit {
     ) {}
 
     async ngOnInit(): Promise<void> {
-
         this.gym = this.appDataService.retrieveGym();
         this.subscriptions.push(
             this.trainingService
@@ -57,11 +56,13 @@ export class GymComponent implements OnInit {
     }
 
     async ngOnDestroy(): Promise<void> {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.showDrawer();
     }
     refreshList(args) {
@@ -93,13 +94,12 @@ export class GymComponent implements OnInit {
     joinTrainingClick(id: number) {
         let options = {
             title: "Join training",
-            message:
-                "Are you sure you want to join this training?",
+            message: "Are you sure you want to join this training?",
             okButtonText: "Yes",
             cancelButtonText: "No",
         };
         this.authenticationService.currentUserValue.id;
-        confirm(options).then((result: boolean) => {
+        Dialogs.confirm(options).then((result: boolean) => {
             if (result) this.joinTrainingRequest(id);
         });
     }
@@ -114,10 +114,7 @@ export class GymComponent implements OnInit {
             )
             .subscribe(
                 () => {
-                    Toast.makeText(
-                        "Joined training",
-                        "long"
-                    ).show();
+                    Toast.makeText("Joined training", "long").show();
                 },
                 (error) => {
                     Toast.makeText(
@@ -139,11 +136,13 @@ export class GymComponent implements OnInit {
     async onMapReady(args): Promise<void> {
         await this.delay(500);
         this.mapView = args.object;
+        console.log(this.mapView);
 
         this.mapView.latitude = this.gym.latitude;
         this.mapView.longitude = this.gym.longitude;
         this.mapView.zoom = 15;
         this.mapView.settings.zoomGesturesEnabled = true;
         this.gMapsService.createMarker(this.mapView, this.gym);
+        console.log("mapa");
     }
 }

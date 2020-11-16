@@ -1,7 +1,7 @@
 import { environment } from "./../../environments/environment";
 import { User } from "../models/user.model";
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 const appSettings = require("application-settings");
@@ -22,11 +22,9 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(userName: string, password: string) : Observable<any> {
-
+    login(userName: string, password: string): Observable<any> {
         return this.http
-            .post<any>(`${environment.apiUrl}/api/user/authenticate`,
-            {
+            .post<any>(`${environment.apiUrl}/api/user/authenticate`, {
                 username: userName,
                 password: password,
             })
@@ -41,6 +39,6 @@ export class AuthenticationService {
 
     logout() {
         appSettings.remove("currentUser");
-        this.currentUserSubject.next(new User);
+        this.currentUserSubject.next(new User());
     }
 }

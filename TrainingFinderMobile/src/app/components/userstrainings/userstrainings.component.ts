@@ -4,12 +4,12 @@ import { AuthenticationService } from "./../../services/authentication.service";
 import { TrainingService } from "./../../services/training.service";
 import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import * as app from "tns-core-modules/application";
 import { Observable, Subscription } from "rxjs";
-import { registerElement } from "nativescript-angular/element-registry";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
-import { alert } from "tns-core-modules/ui/dialogs";
 import { BasePage } from "~/app/helpers/base-page.decorator";
+import { Application, Dialogs } from "@nativescript/core";
+import { registerElement } from "@nativescript/angular";
+const rootView = Application.getRootView();
 registerElement("PullToRefresh", () => PullToRefresh);
 @BasePage()
 @Component({
@@ -54,7 +54,7 @@ export class UsersTrainingsComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.showDrawer();
     }
 
@@ -87,7 +87,7 @@ export class UsersTrainingsComponent implements OnInit {
             message: output,
             okButtonText: "Okay",
         };
-        alert(options).then(() => {});
+        Dialogs.alert(options).then(() => {});
     }
 
     goToGyms() {

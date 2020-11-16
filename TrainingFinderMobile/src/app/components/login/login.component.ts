@@ -3,9 +3,9 @@ import { Router } from "@angular/router";
 import { Component } from "@angular/core";
 import * as Toast from "nativescript-toast";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { getRootView } from "tns-core-modules/application/application";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
+import { Application } from "@nativescript/core";
+const rootView = Application.getRootView();
 @Component({
     selector: "login",
     templateUrl: "login.component.html",
@@ -40,7 +40,7 @@ export class LoginComponent {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.drawer = <RadSideDrawer>getRootView();
+            this.drawer = <RadSideDrawer>rootView;
             this.drawer.gesturesEnabled = false;
         }, 100);
     }

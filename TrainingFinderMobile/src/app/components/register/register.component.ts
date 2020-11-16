@@ -1,6 +1,6 @@
 import { environment } from "../../../environments/environment";
 import { Component, OnInit } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import * as Toast from "nativescript-toast";
 import "rxjs/Rx";

@@ -1,21 +1,22 @@
-import { getRootView } from "tns-core-modules/application/application";
 import { GymService } from "../../services/gym.service";
 import { googleMapsService } from "../../services/googleMaps.service";
 import { Router } from "@angular/router";
 import { AppDataService } from "../../services/appdata.service";
 import { userLocation } from "../../models/userlocation.model";
 import { AuthenticationService } from "../../services/authentication.service";
-import { Component, OnInit, DoCheck, OnDestroy, Injector } from "@angular/core";
+import { Component, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import * as app from "tns-core-modules/application";
 import { Gym } from "~/app/models/gym.model";
-import { CardView } from "nativescript-cardview";
-import { registerElement } from "nativescript-angular/element-registry";
 import { MapView } from "nativescript-google-maps-sdk";
 import { Observable, Subscription } from "rxjs";
 import { TrainingService } from "~/app/services/training.service";
 import { Training } from "~/app/models/training.model";
 import { BasePage } from "~/app/helpers/base-page.decorator";
+import { Application } from "@nativescript/core";
+import { registerElement } from "@nativescript/angular";
+import { getRootView } from "@nativescript/core/application";
+import { CardView } from "@nstudio/nativescript-cardview";
+const rootView = Application.getRootView();
 
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
@@ -72,7 +73,9 @@ export class HomeComponent {
     }
 
     async ngOnDestroy(): Promise<void> {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
 
     ngAfterViewInit() {
@@ -87,7 +90,7 @@ export class HomeComponent {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.showDrawer();
     }
 

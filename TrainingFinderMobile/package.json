@@ -1,55 +1,55 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.TrainingFinderMobile",
-    "tns-android": {
-      "version": "6.5.0"
-    },
-    "tns-ios": {
-      "version": "6.5.0"
-    }
-  },
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
+  "scripts": {
+    "ngcc": "ngcc --properties es2015 module main --first-only",
+    "postinstall": "npm run ngcc"
+  },
   "dependencies": {
-    "@angular/animations": "~8.2.0",
-    "@angular/common": "~8.2.0",
-    "@angular/compiler": "~8.2.0",
-    "@angular/core": "~8.2.0",
-    "@angular/forms": "~8.2.0",
-    "@angular/platform-browser": "~8.2.0",
-    "@angular/platform-browser-dynamic": "~8.2.0",
-    "@angular/router": "~8.2.0",
-    "@nativescript/theme": "~2.3.3",
-    "@nstudio/nativescript-pulltorefresh": "^1.1.1",
-    "acorn": "^7.2.0",
-    "nativescript-angular": "^8.21.0",
-    "nativescript-cardview": "^3.2.0",
+    "@angular/animations": "~10.0.0",
+    "@angular/common": "~10.0.0",
+    "@angular/compiler": "~10.0.0",
+    "@angular/core": "~10.0.0",
+    "@angular/forms": "~10.0.0",
+    "@angular/platform-browser": "~10.0.0",
+    "@angular/platform-browser-dynamic": "~10.0.0",
+    "@angular/router": "~10.0.0",
+    "@nativescript-community/ui-material-button": "^5.1.4",
+    "@nativescript-community/ui-material-cardview": "^5.1.4",
+    "@nativescript-community/ui-material-textfield": "^5.1.4",
+    "@nativescript/angular": "^10.1.7",
+    "@nativescript/core": "^7.0.13",
+    "@nativescript/theme": "^3.0.0",
+    "@nstudio/nativescript-cardview": "^2.0.1",
+    "@nstudio/nativescript-pulltorefresh": "^3.0.1",
+    "acorn": "^8.0.4",
     "nativescript-geolocation": "^5.1.0",
-    "nativescript-google-maps-sdk": "^2.9.1",
-    "nativescript-material-button": "^3.2.6",
-    "nativescript-material-cardview": "^3.2.6",
-    "nativescript-material-textfield": "^3.2.6",
-    "nativescript-modal-datetimepicker": "^1.2.2",
+    "nativescript-google-maps-sdk": "^3.0.1",
+    "nativescript-modal-datetimepicker": "^2.1.2",
     "nativescript-toast": "^2.0.0",
-    "nativescript-ui-sidedrawer": "^8.0.1",
+    "nativescript-ui-sidedrawer": "^9.0.3",
+    "npm-check": "^5.9.2",
+    "platform": "^1.3.6",
     "reflect-metadata": "~0.1.12",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.0",
     "rxjs-compat": "^6.5.5",
-    "tns-core-modules": "^6.5.2",
     "tslint": "^5.16.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "^0.11.3"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^8.2.14",
-    "@nativescript/schematics": "^1.0.0",
-    "@ngtools/webpack": "^9.1.6",
+    "@angular/compiler-cli": "~10.0.0",
+    "@nativescript/android": "7.0.1",
+    "@nativescript/schematics": "^10.1.0",
+    "@nativescript/types": "~7.0.0",
+    "@nativescript/webpack": "^3.0.8",
+    "@ngtools/webpack": "~10.0.0",
     "@schematics/angular": "^9.1.4",
     "eslint": "^6.8.0",
-    "nativescript-dev-webpack": "~1.5.1",
     "node-sass": "^4.14.1",
-    "typescript": "^3.5.3"
+    "typescript": "~3.9.0"
   },
   "gitHead": "2250137db8c1e0bd0eb543e8e4563cb71480c00d",
-  "readme": "NativeScript Application"
+  "readme": "NativeScript Application",
+  "main": "main.js"
 }

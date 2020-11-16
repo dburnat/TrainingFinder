@@ -1,3 +1,4 @@
+import { ModalDatetimepicker } from "nativescript-modal-datetimepicker";
 import { environment } from "~/environments/environment";
 import { GymComponent } from "./components/gym/gym.component";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
@@ -5,13 +6,8 @@ import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { GymCreateComponent } from "./components/gymcreate/gymcreate.component";
 import { LoginComponent } from "./components/login/login.component";
 import { AuthGuard } from "./helpers/authguard";
-import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
-import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
-import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
-import * as platform from "tns-core-modules/platform";
 declare var GMSServices: any;
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -23,11 +19,17 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TrainingcreateComponent } from "./components/trainingcreate/trainingcreate.component";
 import { UsersTrainingsComponent } from "./components/userstrainings/userstrainings.component";
 
-import { NativeScriptMaterialButtonModule } from "nativescript-material-button/angular";
-import { NativeScriptMaterialCardViewModule } from "nativescript-material-cardview/angular";
-import { NativeScriptMaterialTextFieldModule } from "nativescript-material-textfield/angular";
-import { ModalDatetimepicker } from "nativescript-modal-datetimepicker"
 import { ReactiveFormsModule } from "@angular/forms";
+import {
+    NativeScriptModule,
+    NativeScriptFormsModule,
+    NativeScriptHttpClientModule,
+    NativeScriptRouterModule,
+} from "@nativescript/angular";
+import { NativeScriptMaterialButtonModule } from "@nativescript-community/ui-material-button/angular";
+import { NativeScriptMaterialCardViewModule } from "@nativescript-community/ui-material-cardview/angular";
+import { NativeScriptMaterialTextFieldModule } from "@nativescript-community/ui-material-textfield/angular";
+import * as platform from "platform";
 
 let routes = [
     { path: "", component: RegisterComponent },
@@ -47,7 +49,7 @@ let routes = [
         NativeScriptMaterialButtonModule,
         NativeScriptMaterialCardViewModule,
         NativeScriptMaterialTextFieldModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
     declarations: [
         AppComponent,
@@ -63,7 +65,7 @@ let routes = [
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        ModalDatetimepicker
+        ModalDatetimepicker,
     ],
     schemas: [NO_ERRORS_SCHEMA],
 })

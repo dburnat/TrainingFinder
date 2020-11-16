@@ -5,14 +5,15 @@ import { Gym } from "../../models/gym.model";
 import { Router } from "@angular/router";
 import { Component, OnInit, Injector } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import * as app from "tns-core-modules/application";
-import { CardView } from "nativescript-cardview";
-import { registerElement } from "nativescript-angular/element-registry";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { Observable, Subscription } from "rxjs";
 import { BasePage } from "~/app/helpers/base-page.decorator";
 registerElement("CardView", () => CardView);
 registerElement("PullToRefresh", () => PullToRefresh);
+import { Application } from "@nativescript/core";
+import { registerElement } from "@nativescript/angular";
+import { CardView } from "@nstudio/nativescript-cardview";
+const rootView = Application.getRootView();
 @BasePage()
 @Component({
     selector: "gym",
@@ -56,14 +57,16 @@ export class GymsComponent implements OnInit {
     }
 
     async ngOnDestroy(): Promise<void> {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
     private delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.showDrawer();
     }
     refreshList(args) {

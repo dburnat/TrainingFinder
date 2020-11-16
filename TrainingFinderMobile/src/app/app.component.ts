@@ -1,10 +1,15 @@
 import { AuthenticationService } from "./services/authentication.service";
 import { Component, OnInit } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
-import { RouterExtensions } from "nativescript-angular/router";
-import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition} from "nativescript-ui-sidedrawer";
+import {
+    DrawerTransitionBase,
+    RadSideDrawer,
+    SlideInOnTopTransition,
+} from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
-import * as app from "tns-core-modules/application";
+import { RouterExtensions } from "@nativescript/angular";
+import { Application } from "@nativescript/core";
+const rootView = Application.getRootView();
 
 @Component({
     selector: "ns-app",
@@ -19,7 +24,7 @@ export class AppComponent implements OnInit {
     constructor(
         private router: Router,
         private routerExtensions: RouterExtensions,
-        private authenticationService: AuthenticationService
+        public authenticationService: AuthenticationService
     ) {
         // Use the component constructor to inject services.
     }
@@ -50,12 +55,12 @@ export class AppComponent implements OnInit {
             },
         });
 
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer = <RadSideDrawer>rootView;
         sideDrawer.closeDrawer();
     }
 
     logoutTap() {
-        this.drawer = <RadSideDrawer>app.getRootView();
+        this.drawer = <RadSideDrawer>rootView;
         this.drawer.closeDrawer();
         setTimeout(async () => {
             await this.authenticationService.logout();
