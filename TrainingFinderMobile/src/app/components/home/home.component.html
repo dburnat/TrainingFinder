@@ -42,7 +42,11 @@
   >
     <MDCardView rippleColor="blue" elevation="1" col="0">
       <StackLayout class="cardContent" orientation="vertical" margin="5">
-        <Label class="h3" text="Hello Dawid" textWrap="true"></Label>
+        <Label
+          class="h3"
+          text="Hello {{ user.firstName }}"
+          textWrap="true"
+        ></Label>
         <Label class="h5" text="Your current weight" textWrap="true"></Label>
         <Label class="h4" text="78 kg" textWrap="true"></Label>
       </StackLayout>

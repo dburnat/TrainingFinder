@@ -38,7 +38,7 @@ export class HomeComponent {
         // Use the component constructor to inject providers.
     }
 
-    public user = this.authenticationService.currentUser;
+    public user = this.authenticationService.currentUserValue;
 
     public gyms: Observable<Gym[]>;
     public trainings: Training[] = [];
