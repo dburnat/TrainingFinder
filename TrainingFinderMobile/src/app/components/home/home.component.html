@@ -40,7 +40,12 @@
     colSpan="2"
     row="1"
   >
-    <MDCardView rippleColor="blue" elevation="1" col="0">
+    <MDCardView
+      rippleColor="blue"
+      elevation="1"
+      col="0"
+      (tap)="onProfileClick()"
+    >
       <ng-container *ngIf="userProfile">
         <StackLayout class="cardContent" orientation="vertical" margin="5">
           <Label
@@ -61,7 +66,7 @@
       rippleColor="blue"
       elevation="1"
       col="1"
-      (tap)="trainingClick()"
+      (tap)="onTrainingClick()"
     >
       <ng-container *ngIf="this.trainings">
         <StackLayout class="cardContent" orientation="vertical">

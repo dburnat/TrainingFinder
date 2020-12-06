@@ -7,7 +7,3 @@ MDTextField {
 MDButton.registerBtn {
   ripple-color: #d50000;
 }
-.invalid {
-  stroke-color: #d50000 !important;
-  floating-color: #d50000 !important;
-}

@@ -36,6 +36,10 @@ export class AuthenticationService {
                 })
             );
     }
+    register(data: { username: string; password: string }): Observable<any> {
+        console.log(data);
+        return this.http.post(`${environment.apiUrl}/api/user/register`, data);
+    }
 
     logout() {
         appSettings.remove("currentUser");

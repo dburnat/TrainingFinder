@@ -1,3 +1,4 @@
+import { ProfileComponent } from "./components/profile/profile.component";
 import { ModalDatetimepicker } from "nativescript-modal-datetimepicker";
 import { environment } from "~/environments/environment";
 import { GymComponent } from "./components/gym/gym.component";
@@ -61,6 +62,7 @@ let routes = [
         GymComponent,
         TrainingcreateComponent,
         UsersTrainingsComponent,
+        ProfileComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

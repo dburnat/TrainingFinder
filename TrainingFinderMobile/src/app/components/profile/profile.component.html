@@ -1,11 +1,10 @@
-<ActionBar title="Register"></ActionBar>
+<ActionBar title="Profile"></ActionBar>
 <StackLayout verticalAlignment="center" paddingLeft="40" paddingRight="40">
-  <Label text="Register" class="h1 text-center"></Label>
+  <Label text="Profile" class="h1 text-center"></Label>
   <StackLayout [formGroup]="registerForm">
     <StackLayout>
       <MDTextField
-        [ngClass]="{ invalid: invalidUsername }"
-        [formControl]="registerForm.get('username')"
+        formControlName="userName"
         variant="outline"
         hint="Username"
         autocorrect="false"
@@ -14,11 +13,18 @@
     </StackLayout>
     <StackLayout>
       <MDTextField
-        [ngClass]="{ invalid: invalidPassword }"
-        formControlName="password"
-        secure="true"
+        formControlName="firstName"
         variant="outline"
-        hint="Password"
+        hint="First name"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout>
+      <MDTextField
+        formControlName="lastName"
+        variant="outline"
+        hint="Last name"
         autocorrect="false"
         autocapitalizationType="none"
       ></MDTextField>

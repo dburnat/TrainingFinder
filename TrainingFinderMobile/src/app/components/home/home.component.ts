@@ -121,8 +121,12 @@ export class HomeComponent {
         this.router.navigate(["gym"]);
     }
 
-    async trainingClick() {
+    async onTrainingClick() {
         await this.delay(300);
         this.router.navigate(["usersTrainings"]);
+    }
+    async onProfileClick() {
+        await this.delay(300);
+        this.router.navigate(["profile"]);
     }
 }
