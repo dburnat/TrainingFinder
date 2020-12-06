@@ -36,3 +36,4 @@ typings/
 #sensitive
 .nsremote.env.json
 src/environments
+/App_Resources/Android/src/main/res/values/nativescript_google_maps_api.xml
