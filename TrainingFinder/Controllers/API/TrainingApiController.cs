@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Dtos.Training;
 using TrainingFinder.Dtos.TrainingUser;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API

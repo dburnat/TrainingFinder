@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Dtos.Gym;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
