@@ -23,43 +23,43 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Triceps",
-                    DateTime = new DateTime(2020, 3, 27, 17, 45, 0),
+                    DateTime = new DateTime(2020, 12, 27, 17, 45, 0),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Full Body Workout",
-                    DateTime = new DateTime(2020, 5, 8, 16, 20, 00),
+                    DateTime = new DateTime(2020, 11, 22, 16, 20, 00),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Cardio",
-                    DateTime = new DateTime(2020, 5, 12, 12, 40, 00),
+                    DateTime = new DateTime(2020, 11, 21, 12, 40, 00),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Klatka",
-                    DateTime = new DateTime(2020, 5, 13, 14, 30, 00),
+                    DateTime = new DateTime(2020, 11, 26, 14, 30, 00),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Nogi",
-                    DateTime = new DateTime(2020, 5, 11, 19, 20, 00),
+                    DateTime = new DateTime(2020, 11, 29, 19, 20, 00),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Plecy",
-                    DateTime = new DateTime(2020, 5, 12, 20, 00, 00),
+                    DateTime = new DateTime(2020, 11, 30, 20, 00, 00),
                     GymId = 1
                 },
                 new Training()
                 {
                     Description = "Full Body Workout",
-                    DateTime = new DateTime(2020, 5, 8, 16, 20, 00),
+                    DateTime = new DateTime(2020, 12, 12, 16, 20, 00),
                     GymId = 1
                 },
             };
@@ -68,7 +68,7 @@ namespace TrainingFinder.Data
                 new Training
                 {
                     Description = "Plecy",
-                    DateTime = new DateTime(2020, 5, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 11, 27, 12, 00, 00),
                     GymId = 2
                 }
             };
@@ -77,7 +77,7 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Biceps",
-                    DateTime = new DateTime(2020, 6, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 11, 27, 12, 30, 00),
                     GymId = 2
                 }
             };
@@ -86,7 +86,7 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Klatka",
-                    DateTime = new DateTime(2020, 5, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 11, 27, 12, 00, 00),
                     GymId = 2
                 }
             };
@@ -95,7 +95,7 @@ namespace TrainingFinder.Data
                 new Training()
                 {
                     Description = "Push",
-                    DateTime = new DateTime(2020, 6, 27, 12, 00, 00),
+                    DateTime = new DateTime(2020, 11, 28, 12, 00, 00),
                     GymId = 2
                 }
             };
