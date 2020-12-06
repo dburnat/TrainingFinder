@@ -12,11 +12,9 @@ import { Observable, Subscription } from "rxjs";
 import { TrainingService } from "~/app/services/training.service";
 import { Training } from "~/app/models/training.model";
 import { BasePage } from "~/app/helpers/base-page.decorator";
-import { Application } from "@nativescript/core";
 import { registerElement } from "@nativescript/angular";
 import { getRootView } from "@nativescript/core/application";
 import { CardView } from "@nstudio/nativescript-cardview";
-const rootView = Application.getRootView();
 
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
@@ -90,7 +88,7 @@ export class HomeComponent {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
 

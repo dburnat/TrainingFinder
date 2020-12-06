@@ -8,10 +8,10 @@ import { AppDataService } from "~/app/services/appdata.service";
 import { TrainingService } from "~/app/services/training.service";
 import { Router } from "@angular/router";
 registerElement("CardView", () => CardView);
-import { Application, EventData, ListPicker } from "@nativescript/core";
+import {  EventData, ListPicker } from "@nativescript/core";
 import { registerElement } from "@nativescript/angular";
 import { CardView } from "@nstudio/nativescript-cardview";
-const rootView = Application.getRootView();
+import { getRootView } from "@nativescript/core/application";
 
 @Component({
     selector: "ns-trainingcreate",
@@ -142,7 +142,7 @@ export class TrainingcreateComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
 }

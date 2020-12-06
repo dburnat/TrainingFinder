@@ -8,8 +8,7 @@ import {
 } from "nativescript-ui-sidedrawer";
 import { filter } from "rxjs/operators";
 import { RouterExtensions } from "@nativescript/angular";
-import { Application } from "@nativescript/core";
-const rootView = Application.getRootView();
+import { getRootView } from "@nativescript/core/application";
 
 @Component({
     selector: "ns-app",
@@ -55,12 +54,12 @@ export class AppComponent implements OnInit {
             },
         });
 
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.closeDrawer();
     }
 
     logoutTap() {
-        this.drawer = <RadSideDrawer>rootView;
+        this.drawer = <RadSideDrawer>getRootView();
         this.drawer.closeDrawer();
         setTimeout(async () => {
             await this.authenticationService.logout();

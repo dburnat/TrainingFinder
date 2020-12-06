@@ -4,8 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as Toast from "nativescript-toast";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Application } from "@nativescript/core";
-const rootView = Application.getRootView();
+import { getRootView } from "@nativescript/core/application";
 
 @Component({
     selector: "gym",
@@ -31,7 +30,7 @@ export class GymCreateComponent implements OnInit {
         await this.delay(500);
     }
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
 

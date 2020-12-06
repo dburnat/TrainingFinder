@@ -7,9 +7,9 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { Observable, Subscription } from "rxjs";
 import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { BasePage } from "~/app/helpers/base-page.decorator";
-import { Application, Dialogs } from "@nativescript/core";
+import { Dialogs } from "@nativescript/core";
 import { registerElement } from "@nativescript/angular";
-const rootView = Application.getRootView();
+import { getRootView } from "@nativescript/core/application";
 registerElement("PullToRefresh", () => PullToRefresh);
 @BasePage()
 @Component({
@@ -54,7 +54,7 @@ export class UsersTrainingsComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
 

@@ -1,54 +1,91 @@
 <ActionBar>
-    <!--
+  <!--
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
     -->
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!--
+  <NavigationButton
+    ios:visibility="collapsed"
+    icon="res://menu"
+    (tap)="onDrawerButtonTap()"
+  ></NavigationButton>
+  <!--
     Use the ActionItem for IOS with position set to left. Using the
     NavigationButton as a side-drawer button in iOS is not possible,
     because its function is to always navigate back in the application.
     -->
-    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
-    </ActionItem>
-    <Label text="Gym view"></Label>
+  <ActionItem
+    icon="res://menu"
+    android:visibility="collapsed"
+    (tap)="onDrawerButtonTap()"
+    ios.position="left"
+  >
+  </ActionItem>
+  <Label text="Gym view"></Label>
 </ActionBar>
-<GridLayout class="background" columns="2*,*" rows="2*,auto,2*"  paddingLeft = "20" paddingRight="20">
-    <MDCardView col="0" colSpan="2" row="1" elevation="1">
-        <GridLayout class="cardContent" rows="auto,auto,auto,auto" >
-            <Label row="0" [text]="gym.name" class="h2" textWrap="true" ></Label>
-            <StackLayout row="1"  orientation="horizontal">
-                <Label [text]="gym.street" class="h4" ></Label>
-                <Label [text]="gym.number" class="h4" paddingLeft="5"></Label>
-            </StackLayout>
-            <StackLayout row="2"  orientation="horizontal">
-                <Label  [text]="gym.postCode" class="h4"></Label>
-                <Label  [text]="gym.city" class="h4"></Label>
-            </StackLayout>
-            <StackLayout  row="3"  orientation="horizontal">
-                <Label  text="Liczba treningów" class="h4"></Label>
-                <Label  [text]="gym.trainings.length" class="h4" paddingLeft="5"></Label>
-            </StackLayout>
-        </GridLayout>
-    </MDCardView>
-    <MDCardView  col="0" row="0" elevation="1">
-        <MapView row="0" col="2" (mapReady)="onMapReady($event)" iosOverflowSafeArea="true"></MapView>
-    </MDCardView>
-    <MDCardView  elevation="1" col="0" row="2" colSpan="2">
-        <PullToRefresh (refresh)="refreshList($event)">
-            <ListView [items]="gym.trainings" >
-                <ng-template let-item="item">
-                    <GridLayout rows="auto" columns="*">
-                        <Label row="0" [text]="item.description"></Label>
-                        <Label row="0"  horizontalAlignment="center"[text]="item.dateTime"></Label>
-                        <MDButton  row="0" horizontalAlignment="right" [text]="checkIfJoinedText(item.trainingId)" [isEnabled]="checkIfJoined(item.trainingId)" (tap)="joinTrainingClick(item.trainingId)" ></MDButton>
-                    </GridLayout>
-                </ng-template>
-            </ListView>
+<GridLayout
+  class="background"
+  columns="2*,*"
+  rows="2*,auto,2*"
+  paddingLeft="20"
+  paddingRight="20"
+>
+  <MDCardView col="0" colSpan="2" row="1" elevation="1">
+    <GridLayout class="cardContent" rows="auto,auto,auto,auto">
+      <Label row="0" [text]="gym.name" class="h2" textWrap="true"></Label>
+      <StackLayout row="1" orientation="horizontal">
+        <Label [text]="gym.street" class="h4"></Label>
+        <Label [text]="gym.number" class="h4" paddingLeft="5"></Label>
+      </StackLayout>
+      <StackLayout row="2" orientation="horizontal">
+        <Label [text]="gym.postCode" class="h4"></Label>
+        <Label [text]="gym.city" class="h4"></Label>
+      </StackLayout>
+      <StackLayout row="3" orientation="horizontal">
+        <Label text="Trainings count" class="h4"></Label>
+        <Label [text]="gym.trainings.length" class="h4" paddingLeft="5"></Label>
+      </StackLayout>
+    </GridLayout>
+  </MDCardView>
+  <MDCardView col="0" row="0" elevation="1">
+    <MapView
+      row="0"
+      col="2"
+      (mapReady)="onMapReady($event)"
+      iosOverflowSafeArea="true"
+    ></MapView>
+  </MDCardView>
+  <MDCardView elevation="1" col="0" row="2" colSpan="2">
+    <PullToRefresh (refresh)="refreshList($event)">
+      <ListView [items]="gym.trainings">
+        <ng-template let-item="item">
+          <GridLayout rows="auto" columns="*">
+            <Label row="0" [text]="item.description"></Label>
+            <Label
+              row="0"
+              horizontalAlignment="center"
+              [text]="item.dateTime"
+            ></Label>
+            <MDButton
+              row="0"
+              horizontalAlignment="right"
+              [text]="checkIfJoinedText(item.trainingId)"
+              [isEnabled]="checkIfJoined(item.trainingId)"
+              (tap)="joinTrainingClick(item.trainingId)"
+            ></MDButton>
+          </GridLayout>
+        </ng-template>
+      </ListView>
     </PullToRefresh>
-    </MDCardView>
-    <MDButton rippleColor="blue" class="primary" col="2" row="0" text="Add training" (tap)="addTraining()" verticalAlignment="bottom"></MDButton>
+  </MDCardView>
+  <MDButton
+    rippleColor="blue"
+    class="primary"
+    col="2"
+    row="0"
+    text="Add training"
+    (tap)="addTraining()"
+    verticalAlignment="bottom"
+  ></MDButton>
 </GridLayout>
 <!-- <StackLayout verticalAlignment="center" paddingLeft="50" paddingRight="50">
     <Label [text]="gym.name" class="h2"></Label>

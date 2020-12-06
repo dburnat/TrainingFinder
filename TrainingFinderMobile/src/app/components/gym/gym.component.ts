@@ -14,12 +14,12 @@ import { PullToRefresh } from "@nstudio/nativescript-pulltorefresh";
 import { BasePage } from "~/app/helpers/base-page.decorator";
 import { Subscription } from "rxjs";
 import { registerElement } from "@nativescript/angular";
-import { Application, Dialogs } from "@nativescript/core";
+import { Dialogs } from "@nativescript/core";
 import { CardView } from "@nativescript-community/ui-material-cardview";
+import { getRootView } from "@nativescript/core/application";
 registerElement("MapView", () => MapView);
 registerElement("CardView", () => CardView);
 registerElement("PullToRefresh", () => PullToRefresh);
-const rootView = Application.getRootView();
 @BasePage()
 @Component({
     selector: "gym",
@@ -62,7 +62,7 @@ export class GymComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
     refreshList(args) {

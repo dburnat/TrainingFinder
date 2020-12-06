@@ -10,10 +10,9 @@ import { Observable, Subscription } from "rxjs";
 import { BasePage } from "~/app/helpers/base-page.decorator";
 registerElement("CardView", () => CardView);
 registerElement("PullToRefresh", () => PullToRefresh);
-import { Application } from "@nativescript/core";
 import { registerElement } from "@nativescript/angular";
 import { CardView } from "@nstudio/nativescript-cardview";
-const rootView = Application.getRootView();
+import { getRootView } from "@nativescript/core/application";
 @BasePage()
 @Component({
     selector: "gym",
@@ -66,7 +65,7 @@ export class GymsComponent implements OnInit {
     }
 
     onDrawerButtonTap(): void {
-        const sideDrawer = <RadSideDrawer>rootView;
+        const sideDrawer = <RadSideDrawer>getRootView();
         sideDrawer.showDrawer();
     }
     refreshList(args) {
