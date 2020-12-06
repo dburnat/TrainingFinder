@@ -35,3 +35,4 @@ typings/
 
 #sensitive
 .nsremote.env.json
+src/environments
