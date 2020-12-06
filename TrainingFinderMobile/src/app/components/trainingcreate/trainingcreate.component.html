@@ -1,34 +1,74 @@
 <ActionBar>
-    <!--
+  <!--
     Use the NavigationButton as a side-drawer button in Android
     because ActionItems are shown on the right side of the ActionBar
     -->
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!--
+  <NavigationButton
+    ios:visibility="collapsed"
+    icon="res://menu"
+    (tap)="onDrawerButtonTap()"
+  ></NavigationButton>
+  <!--
     Use the ActionItem for IOS with position set to left. Using the
     NavigationButton as a side-drawer button in iOS is not possible,
     because its function is to always navigate back in the application.
     -->
-    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
-    </ActionItem>
+  <ActionItem
+    icon="res://menu"
+    android:visibility="collapsed"
+    (tap)="onDrawerButtonTap()"
+    ios.position="left"
+  >
+  </ActionItem>
+  <Label text="Add training"></Label>
 </ActionBar>
-<GridLayout class="background" columns="*,*" rows="*,3*,auto"  paddingLeft = "20" paddingRight="20">
-    <MDCardView col="0" row="1" colSpan="2" elevation="1">
-        <GridLayout rows="*,*,auto" columns="*,*" [formGroup]="newTrainingForm">
-            <StackLayout row="0"  class="cardContent" >
-                <Label text="Date" class="h4"></Label>
-                <TextField formControlName="date" [text]="this.date"  hint="Pick date"  (tap)="pickDate()" editable="false" ></TextField>
-            </StackLayout>
-            <StackLayout row="0" col="1"  class="cardContent">
-                <Label text="Time" class="h4"></Label>
-                <TextField formControlName="time" [text]="this.time" hint="Pick time" (tap)="pickTime()" editable="false" ></TextField>
-            </StackLayout>
-            <StackLayout row="1" col="0" colSpan="2" class="cardContent">
-                <Label text="Training type" class="h4"></Label>
-                <ListPicker formControlName="description" [items]="trainings" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
-            </StackLayout>
-        </GridLayout>
-    </MDCardView>
-    <MDButton class="primary"  col="3" row="2" text="Add training" rippleColor="blue" [isEnabled]="newTrainingForm.valid" (tap)="addTrainingClick()"></MDButton>
+<GridLayout
+  class="background"
+  columns="*,*"
+  rows="*,3*,auto"
+  paddingLeft="20"
+  paddingRight="20"
+>
+  <MDCardView col="0" row="1" colSpan="2" elevation="1">
+    <GridLayout rows="*,*,auto" columns="*,*" [formGroup]="newTrainingForm">
+      <StackLayout row="0" class="cardContent">
+        <Label text="Date" class="h4"></Label>
+        <TextField
+          formControlName="date"
+          [text]="this.date"
+          hint="Pick date"
+          (tap)="pickDate()"
+          editable="false"
+        ></TextField>
+      </StackLayout>
+      <StackLayout row="0" col="1" class="cardContent">
+        <Label text="Time" class="h4"></Label>
+        <TextField
+          formControlName="time"
+          [text]="this.time"
+          hint="Pick time"
+          (tap)="pickTime()"
+          editable="false"
+        ></TextField>
+      </StackLayout>
+      <StackLayout row="1" col="0" colSpan="2" class="cardContent">
+        <Label text="Training type" class="h4"></Label>
+        <ListPicker
+          formControlName="description"
+          [items]="trainings"
+          selectedIndex="0"
+          (selectedIndexChange)="onSelectedIndexChanged($event)"
+        ></ListPicker>
+      </StackLayout>
+    </GridLayout>
+  </MDCardView>
+  <MDButton
+    class="primary"
+    col="3"
+    row="2"
+    text="Add training"
+    rippleColor="blue"
+    [isEnabled]="newTrainingForm.valid"
+    (tap)="addTrainingClick()"
+  ></MDButton>
 </GridLayout>

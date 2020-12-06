@@ -38,6 +38,11 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gyms = _gymRepository.Gyms.Where( c => c.IsAddedByUser == false).ToList();
+                foreach (var gym in gyms)
+                {
+                    var trainings = gym.Trainings.OrderBy(x => x.DateTime).ToList();
+                    gym.Trainings = trainings;
+                }
                 var model = _mapper.Map<IList<GetGymDto>>(gyms);
                 return StatusCode(200, model);
             }
@@ -59,7 +64,6 @@ namespace TrainingFinder.Controllers.API
             try
             {
                 var gym = _gymRepository.Gyms.FirstOrDefault(x => x.GymId == id);
-                gym.Trainings = gym.Trainings.OrderBy(c => c.DateTime).ToList();
                 var model = _mapper.Map<GetGymDto>(gym);
                 return StatusCode(200, model);
             }
