@@ -1,21 +1,30 @@
 import { UserProfile } from "./../models/user-profile.model";
-import { User } from "../models/user.model";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 import { environment } from "./../../environments/environment";
+import { AuthenticationService } from "./authentication.service";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private authenticationService: AuthenticationService
+    ) {}
+    private currentUserProfileSubject = new Subject<UserProfile>();
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    public get currentUserProfile(): Observable<UserProfile> {
+        return this.currentUserProfileSubject.asObservable();
     }
-    getById(id: number): Observable<UserProfile> {
-        return this.http.get<UserProfile>(
-            `${environment.apiUrl}/api/user/` + id
-        );
+    public getCurrentUserProfile(): void {
+        this.http
+            .get<UserProfile>(
+                `${environment.apiUrl}/api/user/` +
+                    this.authenticationService.currentUserValue.id
+            )
+            .subscribe((data: UserProfile) => {
+                this.currentUserProfileSubject.next(data);
+            });
     }
 }

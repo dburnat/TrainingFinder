@@ -17,6 +17,7 @@ import { BasePage } from "~/app/helpers/base-page.decorator";
 import { registerElement } from "@nativescript/angular";
 import { getRootView } from "@nativescript/core/application";
 import { CardView } from "@nstudio/nativescript-cardview";
+import { filter } from "rxjs/operators";
 
 registerElement("CardView", () => CardView);
 registerElement("MapView", () => MapView);
@@ -41,7 +42,6 @@ export class HomeComponent {
         // Use the component constructor to inject providers.
     }
 
-    public user = this.authenticationService.currentUserValue;
     userProfile: UserProfile;
 
     public gyms: Observable<Gym[]>;
@@ -56,13 +56,18 @@ export class HomeComponent {
         //this.page.actionBarHidden = true;
         await this.delay(1000);
         this.userLocation = await this.appDataService.retrieveLocation();
+        this.userService.getCurrentUserProfile();
+        this.initializeSubscriptions();
+    }
+
+    private initializeSubscriptions() {
         this.subscriptions.push(
             this.trainingService.getTrainingsForCurrentUser().subscribe(
                 (data: any) => {
                     this.trainings = data;
                     this.trainingCounter = this.trainings.length;
                 },
-                (error) => {
+                () => {
                     this.trainings = [];
                 }
             )
@@ -73,9 +78,10 @@ export class HomeComponent {
             })
         );
         this.subscriptions.push(
-            this.userService
-                .getById(this.user.id)
+            this.userService.currentUserProfile
+                .pipe(filter(Boolean))
                 .subscribe((data: UserProfile) => {
+                    console.log(data);
                     this.userProfile = data;
                 })
         );
