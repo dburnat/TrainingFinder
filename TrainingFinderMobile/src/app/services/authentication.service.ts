@@ -22,10 +22,10 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(userName: string, password: string): Observable<any> {
+    login(username: string, password: string): Observable<any> {
         return this.http
             .post<any>(`${environment.apiUrl}/api/user/authenticate`, {
-                username: userName,
+                username: username,
                 password: password,
             })
             .pipe(

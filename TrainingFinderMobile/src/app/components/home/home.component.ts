@@ -1,3 +1,5 @@
+import { UserProfile } from "./../../models/user-profile.model";
+import { UserService } from "./../../services/user.service";
 import { GymService } from "../../services/gym.service";
 import { googleMapsService } from "../../services/googleMaps.service";
 import { Router } from "@angular/router";
@@ -33,18 +35,20 @@ export class HomeComponent {
         private gMapsService: googleMapsService,
         private gymService: GymService,
         private trainingService: TrainingService,
-        private injector: Injector
+        private injector: Injector,
+        private userService: UserService
     ) {
         // Use the component constructor to inject providers.
     }
 
     public user = this.authenticationService.currentUserValue;
+    userProfile: UserProfile;
 
     public gyms: Observable<Gym[]>;
-    public trainings: Training[] = [];
+    public trainings: Training[];
     public userLocation: userLocation;
     private mapView: MapView;
-    public trainingCounter: Number = 0;
+    public trainingCounter: number = 0;
     public drawer: RadSideDrawer;
     private subscriptions: Subscription[] = [];
 
@@ -67,6 +71,13 @@ export class HomeComponent {
             this.gymService.getGymsFromApi().subscribe(async (data: any) => {
                 this.gyms = await data;
             })
+        );
+        this.subscriptions.push(
+            this.userService
+                .getById(this.user.id)
+                .subscribe((data: UserProfile) => {
+                    this.userProfile = data;
+                })
         );
     }
 

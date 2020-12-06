@@ -65,9 +65,6 @@ namespace TrainingFinder.Controllers.API
             return Ok(new
             {
                 Id = user.Data.Id,
-                Username = user.Data.Username,
-                FirstName = user.Data.FirstName,
-                LastName = user.Data.LastName,
                 Token = tokenString
             });
         }
@@ -115,7 +112,7 @@ namespace TrainingFinder.Controllers.API
         public IActionResult GetById(int id)
         {
             var user = _userRepository.GetById(id);
-            var model = _mapper.Map<AppUser>(user);
+            var model = _mapper.Map<UserProfile>(user.Data);
             return Ok(model);
         }
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TrainingFinder.Entities
 {
-    public class AppUser
+    public class UserProfile
     {
         [Required]
         public int Id { get; set; }
@@ -16,5 +16,6 @@ namespace TrainingFinder.Entities
         [Required]
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
+        public float Weight { get; set; }
         }
 }

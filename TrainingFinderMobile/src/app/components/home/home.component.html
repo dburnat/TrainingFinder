@@ -41,15 +41,21 @@
     row="1"
   >
     <MDCardView rippleColor="blue" elevation="1" col="0">
-      <StackLayout class="cardContent" orientation="vertical" margin="5">
-        <Label
-          class="h3"
-          text="Hello {{ user.firstName }}"
-          textWrap="true"
-        ></Label>
-        <Label class="h5" text="Your current weight" textWrap="true"></Label>
-        <Label class="h4" text="78 kg" textWrap="true"></Label>
-      </StackLayout>
+      <ng-container *ngIf="userProfile">
+        <StackLayout class="cardContent" orientation="vertical" margin="5">
+          <Label
+            class="h3"
+            text="Hello {{ userProfile.firstName }}"
+            textWrap="true"
+          ></Label>
+          <Label class="h5" text="Your current weight" textWrap="true"></Label>
+          <Label
+            class="h4"
+            text="{{ userProfile.weight }} kg"
+            textWrap="true"
+          ></Label>
+        </StackLayout>
+      </ng-container>
     </MDCardView>
     <MDCardView
       rippleColor="blue"
@@ -57,33 +63,38 @@
       col="1"
       (tap)="trainingClick()"
     >
-      <StackLayout class="cardContent" orientation="vertical">
-        <Label class="h3" text="You have " textWrap="true"></Label>
-        <Label class="h2" [text]="this.trainingCounter" textWrap="true"></Label>
-        <Label class="h3" text="trainings" textWrap="true"></Label>
-        <Label
-          class="h5"
-          *ngIf="trainings.length > 0"
-          text="Your next training"
-          textWrap="true"
-        ></Label>
-        <StackLayout orientation="horizontal">
+      <ng-container *ngIf="this.trainings">
+        <StackLayout class="cardContent" orientation="vertical">
+          <Label class="h3" text="You have " textWrap="true"></Label>
           <Label
-            class="h5"
-            paddingLeft="20"
-            *ngIf="trainings.length > 0"
-            [text]="trainings[0].description"
+            class="h2"
+            text="{{ this.trainingCounter }}"
             textWrap="true"
           ></Label>
           <Label
-            class="h5"
-            paddingLeft="19"
-            *ngIf="trainings.length > 0"
-            [text]="trainings[0].dateTime"
+            class="h3"
+            text="{{ this.trainingCounter === 1 ? 'training' : 'trainings' }}"
             textWrap="true"
           ></Label>
+          <ng-container *ngIf="this.trainingCounter > 0">
+            <Label class="h5" text="Your next training" textWrap="true"></Label>
+            <StackLayout orientation="horizontal">
+              <Label
+                class="h5"
+                paddingLeft="20"
+                [text]="trainings[0].description"
+                textWrap="true"
+              ></Label>
+              <Label
+                class="h5"
+                paddingLeft="19"
+                [text]="trainings[0].dateTime"
+                textWrap="true"
+              ></Label>
+            </StackLayout>
+          </ng-container>
         </StackLayout>
-      </StackLayout>
+      </ng-container>
     </MDCardView>
   </GridLayout>
 </GridLayout>
