@@ -13,6 +13,8 @@ import { getRootView } from "@nativescript/core/application";
 export class LoginComponent {
     public drawer: RadSideDrawer;
     public loginForm: FormGroup;
+    invalidUsername = false;
+    invalidPassword = false;
 
     public constructor(
         private router: Router,
@@ -25,12 +27,15 @@ export class LoginComponent {
         }
     }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
+        this.initializeFormGroup();
+    }
+
+    private initializeFormGroup() {
         this.loginForm = this.formBuilder.group({
             username: ["", Validators.required],
             password: ["", Validators.required],
         });
-        await this.delay(500);
     }
 
     delay(ms: number) {
@@ -44,14 +49,35 @@ export class LoginComponent {
         }, 100);
     }
 
-    public login(userName: string, password: string) {
-        if (userName === null || password === null) return;
+    public onLoginTap() {
+        const usernameControl = this.loginForm.get("username");
+        const passwordControl = this.loginForm.get("password");
+        this.invalidPassword = passwordControl.invalid;
+        this.invalidUsername = usernameControl.invalid;
+        if (this.invalidPassword || this.invalidUsername) {
+            let output = "";
+            if (this.invalidUsername) {
+                output += "Username is required";
+            }
+            if (this.invalidPassword) {
+                if (output.length > 0) {
+                    output += "\n";
+                }
+                output += "Password is required";
+            }
+            Toast.makeText(output, "long").show();
+            return;
+        }
+        const data = {
+            username: usernameControl.value,
+            password: passwordControl.value,
+        };
 
-        return this.authenticationService.login(userName, password).subscribe(
-            (result) => {
+        return this.authenticationService.login(data).subscribe(
+            () => {
                 this.router.navigate(["home"]);
             },
-            (error) => {
+            () => {
                 Toast.makeText(
                     "Something went wrong. Try again",
                     "long"

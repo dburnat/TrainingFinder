@@ -15,7 +15,7 @@
     <StackLayout>
       <MDTextField
         [ngClass]="{ invalid: invalidPassword }"
-        formControlName="password"
+        [formControl]="registerForm.get('password')"
         secure="true"
         variant="outline"
         hint="Password"
@@ -24,7 +24,11 @@
       ></MDTextField>
     </StackLayout>
     <StackLayout>
-      <MDButton class="registerBtn" text="Submit" (tap)="register()"></MDButton>
+      <MDButton
+        class="registerBtn"
+        text="Submit"
+        (tap)="onRegisterTap()"
+      ></MDButton>
     </StackLayout>
   </StackLayout>
 </StackLayout>

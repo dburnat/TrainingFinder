@@ -22,14 +22,12 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username: string, password: string): Observable<any> {
+    login(data: { username: string; password: string }): Observable<any> {
         return this.http
-            .post<any>(`${environment.apiUrl}/api/user/authenticate`, {
-                username: username,
-                password: password,
-            })
+            .post<any>(`${environment.apiUrl}/api/user/authenticate`, data)
             .pipe(
                 map((user) => {
+                    console.log(user);
                     appSettings.setString("currentUser", JSON.stringify(user));
                     this.currentUserSubject.next(user);
                     return user;

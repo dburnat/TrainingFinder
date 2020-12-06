@@ -23,14 +23,18 @@ export class RegisterComponent implements OnInit {
         private authenticationService: AuthenticationService
     ) {}
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
+        this.initializeFormGroup();
+    }
+
+    private initializeFormGroup() {
         this.registerForm = this.formBuilder.group({
             username: ["", Validators.required],
             password: ["", Validators.required, Validators.min(6)],
         });
     }
 
-    public register() {
+    public onRegisterTap() {
         const usernameControl = this.registerForm.get("username");
         const passwordControl = this.registerForm.get("password");
         this.invalidPassword = passwordControl.invalid;
@@ -38,14 +42,14 @@ export class RegisterComponent implements OnInit {
         if (this.invalidPassword || this.invalidUsername) {
             let output = "";
             if (this.invalidUsername) {
-                output += "Username is required.";
+                output += "Username is required";
             }
             if (this.invalidPassword) {
                 if (output.length > 0) {
                     output += "\n";
                 }
                 output +=
-                    "Password is required and should consist of minimum 6 characters.";
+                    "Password is required and should consist of minimum 6 characters";
             }
             Toast.makeText(output, "long").show();
             return;

@@ -65,7 +65,8 @@ namespace TrainingFinder.Controllers.API
             return Ok(new
             {
                 Id = user.Data.Id,
-                Token = tokenString
+                Token = tokenString,
+                Username = user.Data.Username
             });
         }
 
