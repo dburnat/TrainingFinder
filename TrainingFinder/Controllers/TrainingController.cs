@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers

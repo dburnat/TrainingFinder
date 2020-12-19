@@ -1,0 +1,52 @@
+/* .cardStyle {
+  background-color: rgb(237, 237, 237);
+  color: rgb(43, 43, 43);
+  margin: 10, 10, 10, 0;
+} */
+
+MDCardView {
+  margin: 10, 10, 10, 0;
+  text-align: right;
+}
+
+.cardContent {
+  padding: 15;
+  font-weight: bold;
+  font-size: 30;
+}
+
+button {
+  font-size: 15;
+  horizontal-align: center;
+}
+
+RadSideDrawer .drawerContentText {
+  font-size: 13;
+  padding: 10;
+}
+
+RadSideDrawer .drawerContentButton {
+  margin: 10;
+  horizontal-align: left;
+}
+
+.sideStackLayout {
+  background-color: gray;
+}
+
+.sideTitleStackLayout {
+  text-align: center;
+  vertical-align: center;
+}
+
+.sideLabel {
+  padding: 10;
+}
+
+.sideLightGrayLabel {
+  background-color: lightgray;
+}
+
+GridLayout{
+  background-color: #f6f6f6;
+}

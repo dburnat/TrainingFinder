@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Models.Users;
 using TrainingFinder.Models.ViewModels;
 using TrainingFinder.Data;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 using TrainingFinder.Services.GymLocationService;
 

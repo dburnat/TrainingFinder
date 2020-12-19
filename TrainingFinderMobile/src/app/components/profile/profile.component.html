@@ -1,0 +1,36 @@
+<ActionBar title="Profile"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="40" paddingRight="40">
+  <Label text="Profile" class="h1 text-center"></Label>
+  <StackLayout [formGroup]="registerForm">
+    <StackLayout>
+      <MDTextField
+        formControlName="userName"
+        variant="outline"
+        hint="Username"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout>
+      <MDTextField
+        formControlName="firstName"
+        variant="outline"
+        hint="First name"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout>
+      <MDTextField
+        formControlName="lastName"
+        variant="outline"
+        hint="Last name"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout>
+      <MDButton class="registerBtn" text="Submit" (tap)="register()"></MDButton>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

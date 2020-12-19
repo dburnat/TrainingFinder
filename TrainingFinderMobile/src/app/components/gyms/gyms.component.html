@@ -1,0 +1,59 @@
+<StackLayout>
+    <ActionBar>
+        <!--
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+            ios.position="left">
+        </ActionItem>
+        <Label text="Gyms"></Label>
+    </ActionBar>
+    <GridLayout class="background" columns="*,*,*" rows="*,*,auto"  paddingLeft = "20" paddingRight="20">
+        <!-- <StackLayout col="0" row="0" colSpan="3" orientation="horizontal">
+            <Label text="Name" horizontalAlignment="stretch" class="h3" backgroundColor="red"></Label>
+            <Label text="Street"  horizontalAlignment="stretch" class="h3"  backgroundColor="green"></Label>
+            <Label text="ID"  horizontalAlignment="stretch" class="h3" backgroundColor="blue"></Label>
+        </StackLayout> -->
+        <MDCardView col="0" colSpan="3" row="0" elevation="1">
+            <GridLayout class="cardContent" rows="auto,auto,auto,auto" >
+                <Label row="0" text="Gyms in our database" class="h2" textWrap="true" ></Label>
+                <StackLayout row="1"  orientation="vertical">
+                    <StackLayout orientation="horizontal">
+                        <Label text="There are currently" class="h4" ></Label>
+                        <Label [text]="this.gymCounter" class="h4" paddingLeft="5"></Label>
+                        <Label text=" gyms" class="h4"></Label>
+                    </StackLayout>
+                    <StackLayout orientation="horizontal">
+                        <Label text="and" class="h4"></Label>
+                        <Label [text]="this.trainingCounter" class="h4" paddingLeft="5"></Label>
+                        <Label text=" trainings" class="h4"></Label>
+                    </StackLayout>
+                    <StackLayout orientation="horizontal">
+                        <Label text="Join one of them!" class="h3"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </GridLayout>
+        </MDCardView>
+        <MDCardView  col="0" row="1" colSpan="3" elevation="1">
+            <PullToRefresh (refresh)="refreshList($event)">
+                <ListView [items]="gyms" >
+                    <ng-template let-item="item">
+                        <GridLayout rows="auto" cols="auto">
+                            <Label row="0" [text]="item.name" (tap)="goToGym(item.gymId)"></Label>
+                            <Label row="0" horizontalAlignment="center" [text]="item.street" (tap)="goToGym(item.gymId)"></Label>
+                            <Label row="0" horizontalAlignment="right" [text]="item.trainings.length" (tap)="goToGym(item.gymId)"></Label>
+                        </GridLayout>
+                    </ng-template>
+                </ListView>
+        </PullToRefresh>
+        </MDCardView>
+        <MDButton class="primary" rippleColor="blue" col="3" row="3" text="Add gym" (tap)="goToGymCreate()" ></MDButton>
+    </GridLayout>
+</StackLayout>

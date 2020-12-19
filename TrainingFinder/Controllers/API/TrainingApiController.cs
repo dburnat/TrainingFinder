@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainingFinder.Data;
 using TrainingFinder.Dtos.Training;
 using TrainingFinder.Dtos.TrainingUser;
+using TrainingFinder.Entities;
 using TrainingFinder.Models;
 
 namespace TrainingFinder.Controllers.API
@@ -61,7 +62,7 @@ namespace TrainingFinder.Controllers.API
                 var getTrainingResponse = _trainingRepository.GetById(id);
                 if (getTrainingResponse.isStatusCodeSuccess())
                 {
-                    var model = _mapper.Map<GetTrainingDtoWithoutUsers>(getTrainingResponse.Data);
+                    var model = _mapper.Map<GetTrainingDto>(getTrainingResponse.Data);
                     return StatusCode(getTrainingResponse.StatusCode, model);
                 }
                 else
@@ -111,7 +112,7 @@ namespace TrainingFinder.Controllers.API
                 if (ModelState.IsValid)
                 {
                     var createResult = _trainingRepository.Create(training);
-                    return StatusCode(createResult.StatusCode, createResult.Data);
+                    return StatusCode(createResult.StatusCode);
                 }
                 else
                     return BadRequest();

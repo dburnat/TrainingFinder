@@ -1,0 +1,36 @@
+<ActionBar title="Training Finder"></ActionBar>
+<StackLayout verticalAlignment="center" paddingLeft="50" paddingRight="50">
+  <Label text="Login to Training Finder" class="h2 text-center"></Label>
+  <StackLayout [formGroup]="loginForm">
+    <StackLayout>
+      <MDTextField
+        [ngClass]="{ invalid: invalidUsername }"
+        [formControl]="loginForm.get('username')"
+        variant="outline"
+        hint="Username"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout>
+      <MDTextField
+        [ngClass]="{ invalid: invalidPassword }"
+        [formControl]="loginForm.get('password')"
+        variant="outline"
+        hint="Password"
+        formControlName="password"
+        secure="true"
+        autocorrect="false"
+        autocapitalizationType="none"
+      ></MDTextField>
+    </StackLayout>
+    <StackLayout c>
+      <MDButton text="Login" class="loginBtn" (tap)="onLoginTap()"></MDButton>
+      <MDButton
+        text="Register"
+        class="registerBtn"
+        (tap)="goToRegister()"
+      ></MDButton>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>

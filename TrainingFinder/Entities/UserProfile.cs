@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TrainingFinder.Models
+namespace TrainingFinder.Entities
 {
-    public class AppUser
+    public class UserProfile
     {
         [Required]
         public int Id { get; set; }
@@ -19,5 +16,6 @@ namespace TrainingFinder.Models
         [Required]
         [Display(Name = "Birthday")]
         public DateTime Birthday { get; set; }
+        public float Weight { get; set; }
         }
 }

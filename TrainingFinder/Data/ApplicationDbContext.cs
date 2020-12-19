@@ -46,7 +46,7 @@ namespace TrainingFinder.Data
         public new DbSet<Entities.User> Users { get; set; }
         public DbSet<Gym> Gyms { get; set; }
         public DbSet<Training> Trainings { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<UserProfile> AppUsers { get; set; }
         public DbSet<TrainingUser> TrainingUsers { get; set; }
         public DbSet<BodyDimension> BodyDimensions { get; set; }
     }
