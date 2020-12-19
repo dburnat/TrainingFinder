@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainingFinder.Data;
 
 namespace TrainingFinder.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200521141843_addedBodyDimensionModelAndRelationWithUser")]
+    partial class addedBodyDimensionModelAndRelationWithUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.10")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -154,7 +156,40 @@ namespace TrainingFinder.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TrainingFinder.Entities.AppUser", b =>
+            modelBuilder.Entity("TrainingFinder.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TrainingFinder.Models.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,13 +207,11 @@ namespace TrainingFinder.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
                 });
+
             modelBuilder.Entity("TrainingFinder.Models.BodyDimension", b =>
                 {
                     b.Property<int>("Id")
@@ -217,9 +250,10 @@ namespace TrainingFinder.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BodyDimensions");
+                    b.ToTable("BodyDimension");
                 });
-            modelBuilder.Entity("TrainingFinder.Entities.Gym", b =>
+
+            modelBuilder.Entity("TrainingFinder.Models.Gym", b =>
                 {
                     b.Property<int>("GymId")
                         .ValueGeneratedOnAdd()
@@ -259,7 +293,7 @@ namespace TrainingFinder.Data.Migrations
                     b.ToTable("Gyms");
                 });
 
-            modelBuilder.Entity("TrainingFinder.Entities.Training", b =>
+            modelBuilder.Entity("TrainingFinder.Models.Training", b =>
                 {
                     b.Property<int>("TrainingId")
                         .ValueGeneratedOnAdd()
@@ -283,7 +317,7 @@ namespace TrainingFinder.Data.Migrations
                     b.ToTable("Trainings");
                 });
 
-            modelBuilder.Entity("TrainingFinder.Entities.TrainingUser", b =>
+            modelBuilder.Entity("TrainingFinder.Models.TrainingUser", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -296,42 +330,6 @@ namespace TrainingFinder.Data.Migrations
                     b.HasIndex("TrainingId");
 
                     b.ToTable("TrainingUsers");
-                });
-
-            modelBuilder.Entity("TrainingFinder.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TrainingFinder.Models.Users.AdminUser", b =>
@@ -449,24 +447,26 @@ namespace TrainingFinder.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
+
             modelBuilder.Entity("TrainingFinder.Models.BodyDimension", b =>
                 {
                     b.HasOne("TrainingFinder.Entities.User", "User")
                         .WithMany("BodyDimensions")
                         .HasForeignKey("UserId");
                 });
-            modelBuilder.Entity("TrainingFinder.Entities.Training", b =>
+
+            modelBuilder.Entity("TrainingFinder.Models.Training", b =>
                 {
-                    b.HasOne("TrainingFinder.Entities.Gym", "Gym")
+                    b.HasOne("TrainingFinder.Models.Gym", "Gym")
                         .WithMany("Trainings")
                         .HasForeignKey("GymId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TrainingFinder.Entities.TrainingUser", b =>
+            modelBuilder.Entity("TrainingFinder.Models.TrainingUser", b =>
                 {
-                    b.HasOne("TrainingFinder.Entities.Training", "Training")
+                    b.HasOne("TrainingFinder.Models.Training", "Training")
                         .WithMany("TrainingUsers")
                         .HasForeignKey("TrainingId")
                         .OnDelete(DeleteBehavior.Cascade)

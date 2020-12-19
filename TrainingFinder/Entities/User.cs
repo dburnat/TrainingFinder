@@ -19,6 +19,7 @@ namespace TrainingFinder.Entities
         public string Email { get; set; }
         public float Weight { get; set; }
         public virtual ICollection<TrainingUser> TrainingUsers { get; set; }
+        public virtual ICollection<BodyDimension> BodyDimensions { get; set; }
 
     }
 }

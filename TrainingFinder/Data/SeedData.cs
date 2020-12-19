@@ -159,7 +159,7 @@ namespace TrainingFinder.Data
                         Latitude = 50.088539,
                         Longitude = 20.023891
                     });
-            }
+            }           
 
             context.SaveChanges();
         }

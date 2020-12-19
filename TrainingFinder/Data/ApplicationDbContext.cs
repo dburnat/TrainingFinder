@@ -37,6 +37,9 @@ namespace TrainingFinder.Data
                 .HasOne(c => c.Gym)
                 .WithMany(d => d.Trainings)
                 .HasForeignKey(d => d.GymId);
+            builder.Entity<User>()
+                .HasMany(u => u.BodyDimensions)
+                .WithOne(b => b.User);
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
@@ -45,5 +48,6 @@ namespace TrainingFinder.Data
         public DbSet<Training> Trainings { get; set; }
         public DbSet<UserProfile> AppUsers { get; set; }
         public DbSet<TrainingUser> TrainingUsers { get; set; }
+        public DbSet<BodyDimension> BodyDimensions { get; set; }
     }
 }

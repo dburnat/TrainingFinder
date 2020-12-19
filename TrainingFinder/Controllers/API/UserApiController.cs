@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TrainingFinder.Data;
+using TrainingFinder.Dtos.User;
 using TrainingFinder.Entities;
 using TrainingFinder.Helpers;
 using TrainingFinder.Models;
@@ -101,7 +102,10 @@ namespace TrainingFinder.Controllers.API
         public IActionResult GetAll()
         {
             var users = _userRepository.GetAll();
-            return Ok(users);
+
+            var model = _mapper.Map<IList<GetUserDto>>(users);
+
+            return Ok(model);
         }
 
         /// <summary>
